@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="wms_test" content="width=device-width, initial-scale=1.0">
+    <title>WMS_test</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+    <header>
+        <div class="highest_div">
+            <p>MAGAZYN MASTER</p>
+        </div>
+
+        <div tabindex="-1"></div>
+
+        <div class="second_div">
+            <p> hej, kurwo</p>
+        </div>
+        
+    </header>
+    
+
+    
+    <div>
+        <button onclick="sendGetRequest()">Send GET Request</button>
+    </div>
+    
+    <div>
+        <input type="text" id="message" placeholder="Enter message">
+        <button onclick="sendPostRequest()">Send POST Request</button>
+    </div>
+
+    <p id="response"></p>
+
+    <script>
+        async function sendGetRequest() {
+            try {
+                const response = await fetch('http://localhost:8080/test');
+                const data = await response.json();
+                document.getElementById('response').textContent = data.message;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function sendPostRequest() {
+            const message = document.getElementById('message').value;
+            try {
+                const response = await fetch('http://localhost:8080/test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+                const data = await response.json();
+                document.getElementById('response').textContent = data.message;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('response').textContent = 'Error occurred!';
+            }
+        }
+
+        async function sendPostRequest() {
+            const message = document.getElementById('message').value;
+            if (!message) {
+                alert('Please enter a message!');
+                return;
+            }
+            try {
+                const response = await fetch('http://localhost:8080/test', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                document.getElementById('response').textContent = data.message;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('response').textContent = 'Error occurred!';
+            }
+        }
+    </script>
+
+    
+    <span>Seks w magazynie, skurwysynie.</span>
+    <p>Seks z dawidkiem.</p>
+
+    <img src="logo.png" alt="Logo firmy" style="width:600px;height:600px;margin: 20px auto;">
+
+    
+</body>
+</html>
