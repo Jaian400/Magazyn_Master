@@ -23,19 +23,72 @@ span{
     color:aqua;
 }
 
-.highest_div{
-    height: 100%; 
+.highest_div {
+    display: flex;
+    align-items: center;
     background-color: white;
     color: white;
-    padding:0px;
-    p{
-        font-size: 40px;
-        margin: 5px; /* Zmniejsza odstępy wokół nagłówka */
-        padding: 0; /* Usuwa wewnętrzne odstępy (jeśli są) */
-    }
+    padding: 0px;
 }
 
-.second_div{
-    height:6.57%;
+.highest_div p {
+    font-size: 40px;
+    margin: 5px;
+    padding: 0;
+    color: black; /* Zmień kolor tekstu na widoczny */
+}
+
+.logo-button {
+    margin-right: 15px; /* Odstęp między logo a tekstem */
+}
+
+.logo-image {
+    width: 50px; /* Szerokość logo */
+    height: 50px; /* Wysokość logo */
+    object-fit: contain; /* Dopasowanie logo */
+    border-radius: 5px; /* Opcjonalne zaokrąglenie */
+    cursor: pointer; /* Zmiana kursora na kliknięcie */
+    transition: transform 0.3s ease; /* Efekt najechania */
+}
+
+.logo-image:hover {
+    transform: scale(1.1); /* Powiększenie logo przy najechaniu */
+}
+
+
+.second_div {
+    height: 6.57%;
     background-color: #00916e;
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+}
+
+.section-label {
+    font-size: 20px;
+    color: white;
+    margin-right: 50px; /* Większy odstęp między napisem a pierwszym przyciskiem */
+    white-space: nowrap; /* Zapobiega zawijaniu tekstu */
+}
+
+.buttons {
+    display: flex;
+    gap: 20px; /* Odstępy między przyciskami */
+    flex-grow: 1; /* Przyciski rozciągają się na dostępne miejsce */
+    justify-content: flex-start;
+}
+
+.button {
+    text-decoration: none;
+    color: white;
+    background-color: #005f50;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #007d6c;
 }
