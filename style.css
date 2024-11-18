@@ -128,7 +128,7 @@ span{
 }
 
 .second_div {
-    height: 6.57%;
+    height: 6.5%;
     background-color: #00916e;
     display: flex;
     align-items: center;
@@ -138,30 +138,35 @@ span{
 .section-label {
     font-size: 20px;
     color: white;
-    margin-right: 50px; /* Większy odstęp między napisem a pierwszym przyciskiem */
+    margin-right: 21%; /* Większy odstęp między napisem a pierwszym przyciskiem */
     white-space: nowrap; /* Zapobiega zawijaniu tekstu */
 }
-
+/* Stylizacja kontenera z przyciskami sekcji */
 .buttons {
     display: flex;
-    gap: 20px; /* Odstępy między przyciskami */
-    flex-grow: 1; /* Przyciski rozciągają się na dostępne miejsce */
-    justify-content: flex-start;
+    justify-content: center; /* Wyśrodkowanie przycisków w poziomie */
+    gap: 30px; /* Odstęp między przyciskami */
+    padding: 10px 0; /* Dodatkowy odstęp od góry i dołu */
 }
 
 .button {
-    text-decoration: none;
-    color: white;
-    background-color: #005f50;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 16px;
+    width: 120px; /* Stała szerokość przycisków */
+    height: 40px; /* Stała wysokość przycisków */
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 0px;
     text-align: center;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    line-height: 40px;
+    text-decoration: none;
 }
 
 .button:hover {
-    background-color: #007d6c;
+    background-color: white;
+    transform: scale(1.05);
 }
 
 /* Stylizacja panelu logowania */
@@ -224,7 +229,7 @@ input[type="password"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 0px;
     font-size: 14px;
     box-sizing: border-box;
 }
@@ -233,11 +238,11 @@ input[type="password"] {
 .submit-button {
     margin-top: 20px;
     padding: 10px 20px;
-    width: 100%;
+    width: 40%;
     background-color: #00916e;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
