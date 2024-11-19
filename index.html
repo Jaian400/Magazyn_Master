@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="wms_test" content="width=device-width, initial-scale=1.0">
-    <title>WMS_test</title>
+    <title>WMS</title>
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="icon" type="image/x-icon" href="logofav.png">
 </head>
@@ -13,12 +13,25 @@
             <a href="index.html" class="logo-button">
                 <img src="logo.png" alt="Logo firmy" class="logo-image">
             </a>
-            <p>MAGAZYN MASTER</p>
+            <div class="search-bar">
+                <input type="text" placeholder="Wyszukaj..." class="search-input">
+    <button class="search-button">
+        <img src="lupa.png" alt="Szukaj" class="search-icon">
+    </button>
+        </div>
+        <div class="header-buttons">
+            <button class="icon-button">
+                <img src="sklep.png" alt="Sklep" class="icon-image">
+            </button>
+            <button class="icon-button">
+                <img src="wyloguj.png" alt="Wyloguj" class="icon-image">
+            </button>
+            </div>
         </div>
         <div tabindex="-1"></div>
             
         <div class="second_div">
-            <p class="section-label">SEKCJE</p>
+            <p class="section-label"></p>
             <div class="buttons">
                 <a href="Technika.html" class="button">Technika</a>
                 <a href="Mieszkanie.html" class="button">Mieszkanie</a>
@@ -31,74 +44,23 @@
         
     </header>
     
-/*Komentarz*/
-    
-    <div>
-        <button onclick="sendGetRequest()">Send GET Request</button>
+<div class="auth-panel">
+    <div class="auth-buttons">
+        <button class="auth-tab">Logowanie</button>
+        <button class="auth-tab">Rejestracja</button>
     </div>
-    
-    <div>
-        <input type="text" id="message" placeholder="Enter message">
-        <button onclick="sendPostRequest()">Send POST Request</button>
-    </div>
-
-    <p id="response"></p>
-
-    <script>
-        async function sendGetRequest() {
-            try {
-                const response = await fetch('http://localhost:8080/test');
-                const data = await response.json();
-                document.getElementById('response').textContent = data.message;
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
-        async function sendPostRequest() {
-            const message = document.getElementById('message').value;
-            try {
-                const response = await fetch('http://localhost:8080/test', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ message: message })
-                });
-                const data = await response.json();
-                document.getElementById('response').textContent = data.message;
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('response').textContent = 'Error occurred!';
-            }
-        }
-
-        async function sendPostRequest() {
-            const message = document.getElementById('message').value;
-            if (!message) {
-                alert('Please enter a message!');
-                return;
-            }
-            try {
-                const response = await fetch('http://localhost:8080/test', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ message: message })
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                document.getElementById('response').textContent = data.message;
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('response').textContent = 'Error occurred!';
-            }
-        }
-    </script>
-    <img src="logo.png" alt="Logo firmy" style="width:600px;height:600px;margin: 20px auto;">
+    <form class="auth-form">
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="Wpisz e-mail">
+        </div>
+        <div class="form-group">
+            <label for="password">Hasło</label>
+            <input type="password" id="password" placeholder="Wpisz hasło">
+        </div>
+        <button type="submit" class="submit-button">Zaloguj się</button>
+    </form>
+</div>
 
     
 </body>

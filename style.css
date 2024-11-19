@@ -26,38 +26,109 @@ span{
 .highest_div {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Rozdziela logo, pasek wyszukiwania i przyciski */
     background-color: white;
-    color: white;
-    padding: 0px;
-}
-
-.highest_div p {
-    font-size: 40px;
-    margin: 5px;
-    padding: 0;
-    color: black; /* Zmień kolor tekstu na widoczny */
+    padding: 0 20px; /* Odstępy wewnętrzne z lewej i prawej strony */
 }
 
 .logo-button {
-    margin-right: 15px; /* Odstęp między logo a tekstem */
+    margin-right: 30px;
+}
+
+.search-bar {
+    flex-grow: 1; /* Pasek wyszukiwania zajmuje pozostałą przestrzeń */
+    display: flex;
+    align-items: center;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    padding: 5px;
+    max-width: 400px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px; /* Odstęp między przyciskami */
+}
+
+.icon-button {
+    background-color: transparent; /* Brak tła przycisku */
+    border: none; /* Usunięcie obramowania */
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.icon-button:hover {
+    transform: scale(1.1); /* Powiększenie przycisku przy najechaniu */
+}
+
+.logo-image,
+.icon-image {
+    width: 50px; /* Dopasowanie szerokości */
+    height: 50px; /* Dopasowanie wysokości */
+    object-fit: contain; /* Dopasowanie zawartości w obrębie przycisku */
 }
 
 .logo-image {
-    width: 50px; /* Szerokość logo */
-    height: 50px; /* Wysokość logo */
-    object-fit: contain; /* Dopasowanie logo */
-    border-radius: 5px; /* Opcjonalne zaokrąglenie */
-    cursor: pointer; /* Zmiana kursora na kliknięcie */
-    transition: transform 0.3s ease; /* Efekt najechania */
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .logo-image:hover {
     transform: scale(1.1); /* Powiększenie logo przy najechaniu */
 }
 
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #e0e0e0; /* Obecny kolor tła */
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+    max-width: 400px; /* Maksymalna szerokość paska wyszukiwania */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.search-button {
+    background-color: #007d6c; /* Dopasowanie koloru tła */
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.search-icon {
+    width: 16px; /* Rozmiar obrazu lupy */
+    height: 16px;
+    object-fit: contain;
+}
+
+.search-button:hover {
+    transform: scale(1.1); /* Efekt powiększenia na hover */
+}
 
 .second_div {
-    height: 6.57%;
+    height: 6.5%;
     background-color: #00916e;
     display: flex;
     align-items: center;
@@ -67,28 +138,116 @@ span{
 .section-label {
     font-size: 20px;
     color: white;
-    margin-right: 50px; /* Większy odstęp między napisem a pierwszym przyciskiem */
+    margin-right: 21%; /* Większy odstęp między napisem a pierwszym przyciskiem */
     white-space: nowrap; /* Zapobiega zawijaniu tekstu */
 }
-
+/* Stylizacja kontenera z przyciskami sekcji */
 .buttons {
     display: flex;
-    gap: 20px; /* Odstępy między przyciskami */
-    flex-grow: 1; /* Przyciski rozciągają się na dostępne miejsce */
-    justify-content: flex-start;
+    justify-content: center; /* Wyśrodkowanie przycisków w poziomie */
+    gap: 30px; /* Odstęp między przyciskami */
+    padding: 10px 0; /* Dodatkowy odstęp od góry i dołu */
 }
 
 .button {
-    text-decoration: none;
-    color: white;
-    background-color: #005f50;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 16px;
+    width: 120px; /* Stała szerokość przycisków */
+    height: 40px; /* Stała wysokość przycisków */
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 0px;
     text-align: center;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    line-height: 40px;
+    text-decoration: none;
 }
 
 .button:hover {
-    background-color: #007d6c;
+    background-color: white;
+    transform: scale(1.05);
+}
+
+/* Stylizacja panelu logowania */
+.auth-panel {
+    width: 400px;
+    margin: 50px auto; /* Pozycjonowanie panelu na środku */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Górne przyciski (Logowanie i Rejestracja) */
+.auth-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #00916e;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.auth-tab:hover {
+    background-color: #007a5b;
+}
+
+/* Pola formularza */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Przycisk "Zaloguj się" */
+.submit-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    width: 40%;
+    background-color: #00916e;
+    color: white;
+    border: none;
+    border-radius: 0px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #007a5b;
 }
