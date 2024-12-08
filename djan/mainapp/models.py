@@ -30,19 +30,6 @@ class ProductWarehouse(models.Model):
     def __str__(self):
         return f"{self.product_name} ({self.product_amount})"
 
-# CUSTOMOWY USERRRR == gowno
-
-# class AppUser(AbstractUser):
-#     USER_TYPE_CHOICES = (
-#         (1, 'Employee'),
-#         (2, 'Client'),
-#     )
-
-#     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
-
-#     def __str__(self):
-#         return self.email if self.email else self.username
-
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -59,3 +46,16 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"Product {self.order_product.product_name} in Order {self.order.order_id}"
+    
+# CUSTOMOWY USERRRR == gowno, nie patrzec na to bo mozna sie zalamac
+
+# class AppUser(AbstractUser):
+#     USER_TYPE_CHOICES = (
+#         (1, 'Employee'),
+#         (2, 'Client'),
+#     )
+
+#     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
+
+#     def __str__(self):
+#         return self.email if self.email else self.username
