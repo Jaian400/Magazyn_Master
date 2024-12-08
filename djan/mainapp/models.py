@@ -30,22 +30,22 @@ class ProductWarehouse(models.Model):
     def __str__(self):
         return f"{self.product_name} ({self.product_amount})"
 
-# CUSTOMOWY USERRRR
+# CUSTOMOWY USERRRR == gowno
 
-class AppUser(AbstractUser):
-    USER_TYPE_CHOICES = (
-        (1, 'Employee'),
-        (2, 'Client'),
-    )
+# class AppUser(AbstractUser):
+#     USER_TYPE_CHOICES = (
+#         (1, 'Employee'),
+#         (2, 'Client'),
+#     )
 
-    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
+#     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
 
-    def __str__(self):
-        return self.email if self.email else self.username
+#     def __str__(self):
+#         return self.email if self.email else self.username
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

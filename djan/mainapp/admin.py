@@ -1,16 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import AppUser
+from django.contrib.auth.models import User
 
+# # Rozszerzenie UserAdmin (jeśli chcesz dostosować pola)
+# class CustomUserAdmin(UserAdmin):
+#     fieldsets = (
+#         (None, {'fields': ('username', 'password')}),
+#         ('Personal Info', {'fields': ('first_name', 'last_name', 'email')}),
+#         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+#         ('Important Dates', {'fields': ('last_login', 'date_joined')}),
+#     )
 
-class CustomUserAdmin(UserAdmin):
-    model = AppUser
-    fieldsets = UserAdmin.fieldsets + (
-        ('Additional Info', {'fields': ('user_type',)}),
-    )
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        ('Additional Info', {'fields': ('user_type',)}),
-    )
-
-
-admin.site.register(AppUser, CustomUserAdmin)
+# # Rejestracja modelu User z nową konfiguracją
+# admin.site.unregister(User)
+# admin.site.register(User, CustomUserAdmin)

@@ -15,8 +15,6 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
-AUTH_USER_MODEL = 'mainapp.AppUser'
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -29,7 +27,6 @@ SECRET_KEY = 'django-insecure-16fz^_*u0na6@0&5kp1^f$p-pp7cx2^*o^^d$$+xy)pifd$0k7
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -102,7 +99,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'janpawel',
         'USER': 'janpawel',
-        'PASSWORD': '4s3Gn3D3WzRzYAWz',
+        'PASSWORD': 'mv9Sbz5MKVACy36V',
         'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
         'PORT': '3306',             # Domyślny port MySQL
     }
