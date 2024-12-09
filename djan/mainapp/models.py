@@ -11,7 +11,7 @@ class Supplier(models.Model):
     def __str__(self):
         return self.supplier_name
 
-class ProductMarket(models.Model):
+class MarketProduct(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=255)
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -24,27 +24,31 @@ class ProductMarket(models.Model):
 #     obligation_amount = models.
 #     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
 
-class ProductWarehouse(models.Model):
+class WarehouseProduct(models.Model):
     product_name = models.CharField(max_length=255)
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
     product_quantity = models.IntegerField()
     product_category = models.CharField(max_length=255)
-    product_market = models.ForeignKey(ProductMarket, on_delete=models.SET_NULL, null=True)
+    product_market = models.ForeignKey(MarketProduct, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return f"{self.product_name} ({self.product_amount})"
+        return f"{self.product_name} ({self.product_quantity})"
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def total_value(self):
+        total = sum(item.order_product_price * item.order_product_quantity for item in self.orderproduct_set.all())
+        return total
+
     def __str__(self):
         return f"Order {self.order_id} by {self.user.username}"
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    order_product = models.ForeignKey(ProductWarehouse, on_delete=models.SET_NULL, null=True)
+    order_product = models.ForeignKey(WarehouseProduct, on_delete=models.SET_NULL, null=True)
     order_product_price = models.DecimalField(max_digits=10, decimal_places=2)
     order_product_quantity = models.IntegerField()
 
