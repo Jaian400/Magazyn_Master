@@ -20,10 +20,14 @@ class ProductMarket(models.Model):
     def __str__(self):
         return self.product_name
 
+# class SupplierObligation(models.Model):
+#     obligation_amount = models.
+#     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+
 class ProductWarehouse(models.Model):
     product_name = models.CharField(max_length=255)
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
-    product_amount = models.IntegerField()
+    product_quantity = models.IntegerField()
     product_category = models.CharField(max_length=255)
     product_market = models.ForeignKey(ProductMarket, on_delete=models.SET_NULL, null=True)
 
@@ -42,7 +46,7 @@ class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     order_product = models.ForeignKey(ProductWarehouse, on_delete=models.SET_NULL, null=True)
     order_product_price = models.DecimalField(max_digits=10, decimal_places=2)
-    order_product_amount = models.IntegerField()
+    order_product_quantity = models.IntegerField()
 
     def __str__(self):
         return f"Product {self.order_product.product_name} in Order {self.order.order_id}"
