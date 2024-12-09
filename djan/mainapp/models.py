@@ -20,9 +20,47 @@ class MarketProduct(models.Model):
     def __str__(self):
         return self.product_name
 
+# TO TRZEBA BEDZIE ZBUDOWAC
+
 # class SupplierObligation(models.Model):
-#     obligation_amount = models.
+#     obligation_id = models.AutoField(primary_key=True)
 #     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+#     obligation_amount = models.DecimalField(max_digits=15, decimal_places=2)
+#     obligation_date = models.DateField(auto_now_add=True)
+#     status_choices = [
+#         ('pending', 'Pending'),
+#         ('paid', 'Paid'),
+#         ('overdue', 'Overdue'),
+#     ]
+#     status = models.CharField(max_length=10, choices=status_choices, default='pending')
+
+#     def __str__(self):
+#         return f"Obligation {self.obligation_id} to {self.supplier.supplier_name}: {self.obligation_amount} ({self.status})"
+
+#     def mark_as_paid(self):
+#         self.status = 'paid'
+#         self.save()
+
+#     def is_overdue(self):
+#         from django.utils import timezone
+#         return self.status == 'pending' and self.obligation_date < timezone.now().date()
+
+# class WarehouseBalance(models.Model):
+#     date = models.DateField(auto_now_add=True)
+#     total_inventory_value = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+#     total_liabilities = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+#     net_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+
+#     def calculate_total_liabilities(self):
+#         self.total_liabilities = sum(obligation.obligation_amount for obligation in SupplierObligation.objects.all())
+    
+#     def calculate_balance(self):
+#         self.calculate_total_liabilities() 
+#         self.net_balance = self.total_inventory_value - self.total_liabilities
+#         self.save()
+
+#     def __str__(self):
+#         return f"Balance on {self.date}: {self.net_balance}"
 
 class WarehouseProduct(models.Model):
     product_name = models.CharField(max_length=255)
