@@ -1,26 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from .models import WarehouseProduct
 
 # INDEX -> STRONA GŁOWNA
 
 def index_view(request):
-    # context -> proby
-    user_data = {
-        "name": budownictwo_view,
-        "vip": False
-    }
+
+    return render(request, 'index.html')
+
+# LOGOWANIE I REJESTRACJA
+
+def logowanie_view(request):
 
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
         return HttpResponse(f"E-mail: {email} Pass: {password}")
-    
-    return render(request, 'index.html', user_data)
 
-# LOGOWANIE I REJESTRACJA
-
-def logowanie_view(request):
     return render(request, 'logowanie.html')
 
 def rejestracja_view(request):

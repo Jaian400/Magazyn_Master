@@ -62,6 +62,8 @@ class MarketProduct(models.Model):
 #     def __str__(self):
 #         return f"Balance on {self.date}: {self.net_balance}"
 
+# TOWAR NA MAGAZYNIE TU:
+
 class WarehouseProduct(models.Model):
     product_name = models.CharField(max_length=255)
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
