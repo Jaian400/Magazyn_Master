@@ -70,7 +70,7 @@ class WarehouseProduct(models.Model):
     product_quantity = models.IntegerField()
     product_category = models.CharField(max_length=255)
     product_market = models.ForeignKey(MarketProduct, on_delete=models.SET_NULL, null=True)
-
+    # product_image = models.ImageField(upload_to='products/')
     def __str__(self):
         return f"{self.product_name} ({self.product_quantity})"
 
