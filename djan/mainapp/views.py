@@ -1,13 +1,34 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from .models import WarehouseProduct
+
+# INDEX -> STRONA GŁOWNA
 
 def index_view(request):
+
+    return render(request, 'index.html')
+
+# LOGOWANIE I REJESTRACJA
+
+def logowanie_view(request):
+
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
         return HttpResponse(f"E-mail: {email} Pass: {password}")
-    return render(request, 'index.html')
+
+    return render(request, 'logowanie.html')
+
+def rejestracja_view(request):
+    return render(request, 'rejestracja.html')
+
+# KOSZYK
+
+def koszyk_view(request):
+    return render(request, 'koszyk.html')
+
+# PODSTRONY PRODUKTOW
 
 def budownictwo_view(request):
     return render(request, 'budownictwo.html')

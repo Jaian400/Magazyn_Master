@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mainapp.views import (
-    index_view, budownictwo_view,
-    kuchnia_view, lazienka_view, mieszkanie_view, ogrod_view, technika_view
+    index_view, 
+    budownictwo_view, kuchnia_view, lazienka_view, mieszkanie_view, ogrod_view, technika_view,
+    rejestracja_view, logowanie_view,
+    koszyk_view
 )
 
 urlpatterns = [
@@ -30,4 +32,7 @@ urlpatterns = [
     path('mieszkanie/', mieszkanie_view, name='mieszkanie'),
     path('ogrod/', ogrod_view, name='ogrod'),
     path('technika/', technika_view, name='technika'),
+    path('rejestracja/', rejestracja_view, name='rejestracja'),
+    path('logowanie/', logowanie_view, name='logowanie'),
+    path('koszyk/', koszyk_view, name='koszyk'),
 ]
