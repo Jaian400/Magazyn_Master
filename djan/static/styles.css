@@ -32,6 +32,7 @@ span{
 }
 
 .logo-button {
+    margin-top: 10px;
     margin-right: 30px;
 }
 
@@ -251,3 +252,6 @@ input[type="password"] {
 .submit-button:hover {
     background-color: #007a5b;
 }
+
+
+
