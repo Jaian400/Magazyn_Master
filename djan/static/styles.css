@@ -253,5 +253,111 @@ input[type="password"] {
     background-color: #007a5b;
 }
 
+/*Index.html*/
 
+.banner-container {
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie poziome */
+    margin-top: 15px; /* Odstęp 15px od sekcji menu */
+}
+
+.banner-wrapper {
+    position: relative;
+    width: 80%; /* Skalowanie banera - zmniejszenie */
+    max-width: 800px; /* Maksymalna szerokość */
+}
+
+.banner-image {
+    width: 100%; /* Skalowanie względem wrappera */
+    height: auto;
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efekt cienia */
+}
+
+.banner-button {
+    position: absolute; /* Pozycjonowanie na banerze */
+    bottom: 5%; /* Umieszczenie przycisku w dolnej części banera */
+    left: 17%;
+    transform: translate(-50%, 0); /* Wyśrodkowanie przycisku */
+    background-color: #d8d8d8; /* Dopasowany kolor */
+    color: rgb(0, 0, 0);
+    font-size: 11px;
+    border: none;
+    padding: 6px 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.banner-button:hover {
+    background-color: #9b9b9b;
+}
+
+/*Rejestracja*/
+
+/* Styl panelu rejestracji */
+.registration-panel {
+    width: 400px;
+    margin: 50px auto; /* Wyśrodkowanie na stronie */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Nagłówek z przyciskami Logowanie i Rejestracja */
+.registration-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px 5px 0 0;
+}
+
+.tab-button.active {
+    background-color: #ffffff;
+    font-weight: bold;
+    border-bottom: 2px solid #007a5b;
+}
+
+/* Pola formularza */
+.registration-form .input-field {
+    width: calc(90% - 20px); /* Stała szerokość dla wszystkich pól */
+    padding: 10px;
+    margin: 10px auto; /* Wyśrodkowanie pola */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box; /* Padding nie powiększa szerokości */
+}
+
+
+/* Przycisk "Zarejestruj się" */
+.submit-button2 {
+    width: 90%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #007a5b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button2:hover {
+    background-color: #007a5b;
+}
 
