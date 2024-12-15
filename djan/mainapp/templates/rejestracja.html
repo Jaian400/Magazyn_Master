@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="wms_test" content="width=device-width, initial-scale=1.0">
+    <title>WMS</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logofav.png' %}">
+</head>
+<body>
+    <header>
+        <div class="highest_div">
+            <a href={%url 'index'%} class="logo-button">
+                <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
+            </a>
+            <div class="search-bar">
+                <input type="text" placeholder="Wyszukaj..." class="search-input">
+                <button class="search-button">
+                    <img src="{%static 'images/lupa.png'%}" alt="Szukaj" class="search-icon">
+                </button>
+            </div>
+            
+            <div class="header-buttons">
+                <button class="icon-button" onclick="window.location.href='{% url 'koszyk' %}'">
+                    <img src="{%static 'images/sklep.png'%}" alt="Sklep" class="icon-image">
+                </button>
+
+                <button class="icon-button" onclick="window.location.href='{% url 'logowanie' %}'">
+                    <img src="{%static 'images/wyloguj.png' %}" alt="Wyloguj" class="icon-image">
+                </button>
+            </div>
+        </div>
+
+
+        <div tabindex="-1"></div>
+            
+        <div class="second_div">
+            <p class="section-label"></p>
+            <div class="buttons">
+                <a href="{% url 'technika' %}" class="button">Technika</a>
+                <a href="{% url 'mieszkanie' %}" class="button">Mieszkanie</a>
+                <a href="{% url 'budownictwo' %}" class="button">Budownictwo</a>
+                <a href="{% url 'ogrod' %}" class="button">Ogród</a>
+                <a href="{% url 'lazienka' %}" class="button">Łazienka</a>
+                <a href="{% url 'kuchnia' %}" class="button">Kuchnia</a>
+            </div>    
+        </div>
+        
+    </header>
+
+    <div class="registration-panel">
+        <!-- Przyciski Logowanie i Rejestracja -->
+        <div class="auth-buttons">
+            <button class="auth-tab" onclick="window.location.href='{% url 'logowanie' %}'">Logowanie</button>
+            <button class="auth-tab" onclick="window.location.href='{% url 'rejestracja' %}'">Rejestracja</button>
+        </div>
+    
+        <!-- Formularz rejestracji --> <!--Trzeba dorobić osobną klasę dla pól tekstowych-->
+        <form class="registration-form">
+            {% csrf_token %}
+            <input type="text" placeholder="Imię" class="input-field">
+            <input type="text" placeholder="Nazwisko" class="input-field">
+            <input type="email" placeholder="Adres e-mail" class="input-field">
+            <input type="password" placeholder="Hasło" class="input-field">
+            <button type="submit" class="submit-button">Zarejestruj się</button>
+        </form>
+    </div>
+    
+</body>
+</html>
