@@ -4,6 +4,7 @@ from django.template import loader
 from .models import WarehouseProduct
 from django.contrib.auth.models import User
 from django.contrib.auth.models import UserManager
+from django.contrib.auth import authenticate, login
 
 # INDEX -> STRONA GŁOWNA
 
@@ -14,32 +15,92 @@ def index_view(request):
 # LOGOWANIE I REJESTRACJA
 
 def logowanie_view(request):
-
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
-        #return HttpResponse(f"E-mail: {email} Pass: {password}")
+        username = email.split('@')[0]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            if "magazynmaster.pl" in email.split('@')[1]:
+                login(request, user)
+                return render(request, "kuchnia.html")
+            login(request, user)
+            return render(request, 'index.html')
+        else:
+            return render(request, 'logowanie.html', {"error": "Niepoprawny e-mail lub hasło."})
     return render(request, 'logowanie.html')
 
 def rejestracja_view(request):
-    
-    if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-        repeat_password = request.POST.get("repeat_password")
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
+    try:
+        if request.method == "POST":
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+            repeat_password = request.POST.get("repeat_password")
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            user = None
+        
+            if len(password) <= 8:
+                return render(
+                    request, 
+                    'rejestracja.html', 
+                    {
+                        "error": "Hasło musi mieć ponad 8 znaków.",
+                        "email": email,
+                        "first_name": first_name,
+                        "last_name": last_name
+                    }
+                )
 
-        if (password==repeat_password):
-            user = User.objects.create_user(
-                username=email.split('@')[0],  # Default username from email
-                email=email,
-                password=password,
-                first_name=first_name,
-                last_name=last_name,
-            )
-        else:
-            return render(request, 'rejestracja.html', {"error": "Hasła nie są takie same."})
+            elif not any(char.isdigit() for char in password):
+                return render(
+                    request,
+                    'rejestracja.html',
+                    {
+                        "error": "Hasło musi zawierać cyfrę.",
+                        "email": email,
+                        "first_name": first_name,
+                        "last_name": last_name
+                    }
+                    )
+            
+            elif not any(char.isupper() for char in password):
+                return render(
+                    request,
+                    'rejestracja.html',
+                    {
+                        "error": "Hasło musi zawierać wielką literę.",
+                        "email": email,
+                        "first_name": first_name,
+                        "last_name": last_name
+                    }
+                    )
+
+            else:
+                if (password==repeat_password):
+                    user = User.objects.create_user(
+                        username=email.split('@')[0],  # nazwa uzytkownika generowana z maila
+                        email=email,
+                        password=password,
+                        first_name=first_name,
+                        last_name=last_name,
+                    )
+                else:
+                    return render(
+                        request,
+                        'rejestracja.html',
+                        {
+                            "error": "Hasła nie są takie same.",
+                            "email": email,
+                            "first_name": first_name,
+                            "last_name": last_name
+                        }
+                    )
+            if user is not None:
+                login(request, user)
+                return render(request, 'index.html')
+    except :
+        return render(request, 'rejestracja.html', {"error_email_taken": "Użytkownik o takim adresie email już istnieje.", "first_name": first_name, "last_name": last_name })
     return render(request, 'rejestracja.html')
 
 # KOSZYK

@@ -59,7 +59,7 @@
             <!-- Error Message Section -->
 
             <div class="form-group">
-                <input type="email" id="email" name="email" placeholder="Adres e-mail" required>
+                <input type="email" id="email" name="email" placeholder="Adres e-mail" value="{{ email|default:'' }}" required>
             </div>
 
             <div class="form-group">
@@ -77,14 +77,21 @@
             {% endif %}
 
             <div class="form-group">
-                <input type="text" id="first_name" name="first_name" placeholder="Imię" required>
+                <input type="text" id="first_name" name="first_name" placeholder="Imię" value="{{ first_name|default:'' }}" required>
             </div>
 
             <div class="form-group">
-                <input type="text" id="last_name" name="last_name" placeholder="Nazwisko" required>
+                <input type="text" id="last_name" name="last_name" placeholder="Nazwisko" value="{{ last_name|default:'' }}" required>
             </div>
+            
+            {% if error_email_taken %}
+            <div class="error-message">
+                <p>{{ error_email_taken}}</p>
+            </div>
+            {% endif %}
 
             <button type="submit" class="submit-button">Zarejestruj się</button>
+            
         </form>
     </div>
 </body>
