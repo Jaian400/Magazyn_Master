@@ -62,6 +62,8 @@ class MarketProduct(models.Model):
 #     def __str__(self):
 #         return f"Balance on {self.date}: {self.net_balance}"
 
+
+
 # TOWAR NA MAGAZYNIE TU:
 
 class WarehouseProduct(models.Model):
@@ -71,15 +73,21 @@ class WarehouseProduct(models.Model):
     product_category = models.CharField(max_length=255)
     product_market = models.ForeignKey(MarketProduct, on_delete=models.SET_NULL, null=True)
     # product_image = models.ImageField(upload_to='products/')
+    # product_description = models.CharField(max_length=255)
     def __str__(self):
         return f"{self.product_name} ({self.product_quantity})"
+
+
+# ZAMOWIENIE
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=255, default='pending')
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.)
 
-    def total_value(self):
+    def _total_price(self):
         total = sum(item.order_product_price * item.order_product_quantity for item in self.orderproduct_set.all())
         return total
 
@@ -94,16 +102,3 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"Product {self.order_product.product_name} in Order {self.order.order_id}"
-    
-# CUSTOMOWY USERRRR == gowno, nie patrzec na to bo mozna sie zalamac
-
-# class AppUser(AbstractUser):
-#     USER_TYPE_CHOICES = (
-#         (1, 'Employee'),
-#         (2, 'Client'),
-#     )
-
-#     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
-
-#     def __str__(self):
-#         return self.email if self.email else self.username
