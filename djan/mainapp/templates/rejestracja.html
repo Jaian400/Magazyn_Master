@@ -11,30 +11,29 @@
 <body>
     <header>
         <div class="highest_div">
-            <a href={%url 'index'%} class="logo-button">
+            <a href={% url 'index' %} class="logo-button">
                 <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
             </a>
             <div class="search-bar">
                 <input type="text" placeholder="Wyszukaj..." class="search-input">
                 <button class="search-button">
-                    <img src="{%static 'images/lupa.png'%}" alt="Szukaj" class="search-icon">
+                    <img src="{% static 'images/lupa.png' %}" alt="Szukaj" class="search-icon">
                 </button>
             </div>
-            
+
             <div class="header-buttons">
                 <button class="icon-button" onclick="window.location.href='{% url 'koszyk' %}'">
-                    <img src="{%static 'images/sklep.png'%}" alt="Sklep" class="icon-image">
+                    <img src="{% static 'images/sklep.png' %}" alt="Sklep" class="icon-image">
                 </button>
 
                 <button class="icon-button" onclick="window.location.href='{% url 'logowanie' %}'">
-                    <img src="{%static 'images/wyloguj.png' %}" alt="Wyloguj" class="icon-image">
+                    <img src="{% static 'images/wyloguj.png' %}" alt="Wyloguj" class="icon-image">
                 </button>
             </div>
         </div>
 
-
         <div tabindex="-1"></div>
-            
+
         <div class="second_div">
             <p class="section-label"></p>
             <div class="buttons">
@@ -44,9 +43,8 @@
                 <a href="{% url 'ogrod' %}" class="button">Ogród</a>
                 <a href="{% url 'lazienka' %}" class="button">Łazienka</a>
                 <a href="{% url 'kuchnia' %}" class="button">Kuchnia</a>
-            </div>    
+            </div>
         </div>
-        
     </header>
 
     <div class="registration-panel">
@@ -55,19 +53,11 @@
             <button class="auth-tab" onclick="window.location.href='{% url 'logowanie' %}'">Logowanie</button>
             <button class="auth-tab" onclick="window.location.href='{% url 'rejestracja' %}'">Rejestracja</button>
         </div>
-    
-        <!-- Formularz rejestracji --> <!--Trzeba dorobić osobną klasę dla pól tekstowych-->
-        {% comment %} <form class="registration-form">
-            {% csrf_token %}
-            <input type="text" placeholder="Imię" class="input-field">
-            <input type="text" placeholder="Nazwisko" class="input-field">
-            <input type="email" placeholder="Adres e-mail" class="input-field">
-            <input type="password" placeholder="Hasło" class="input-field">
-            <input type="password" placeholder="Powtórz hasło" class="input-field">
-            <button type="submit" class="submit-button">Zarejestruj się</button>
-        </form> {% endcomment %}
+
         <form class="registration-form" action="" method="POST">
             {% csrf_token %}
+            <!-- Error Message Section -->
+
             <div class="form-group">
                 <input type="email" id="email" name="email" placeholder="Adres e-mail" required>
             </div>
@@ -79,15 +69,21 @@
             <div class="form-group">
                 <input type="password" id="repeat_password" name="repeat_password" placeholder="Powtórz hasło" required>
             </div>
+            
+            {% if error %}
+            <div class="error-message">
+                <p>{{ error }}</p>
+            </div>
+            {% endif %}
 
             <div class="form-group">
-                <input type="email" id="first_name" name="first_name" placeholder="Imię" required>
+                <input type="text" id="first_name" name="first_name" placeholder="Imię" required>
             </div>
 
             <div class="form-group">
                 <input type="text" id="last_name" name="last_name" placeholder="Nazwisko" required>
             </div>
-        
+
             <button type="submit" class="submit-button">Zarejestruj się</button>
         </form>
     </div>

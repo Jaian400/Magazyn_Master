@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import WarehouseProduct
 from django.contrib.auth.models import User
+from django.contrib.auth.models import UserManager
 
 # INDEX -> STRONA GŁOWNA
 
@@ -17,11 +18,28 @@ def logowanie_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
-        return HttpResponse(f"E-mail: {email} Pass: {password}")
-
+        #return HttpResponse(f"E-mail: {email} Pass: {password}")
     return render(request, 'logowanie.html')
 
 def rejestracja_view(request):
+    
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        repeat_password = request.POST.get("repeat_password")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+
+        if (password==repeat_password):
+            user = User.objects.create_user(
+                username=email.split('@')[0],  # Default username from email
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+            )
+        else:
+            return render(request, 'rejestracja.html', {"error": "Hasła nie są takie same."})
     return render(request, 'rejestracja.html')
 
 # KOSZYK
