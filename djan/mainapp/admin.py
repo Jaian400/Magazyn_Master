@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import MarketProduct,WarehouseProduct, Supplier, Order
+from django.utils.html import format_html
+from .models import MarketProduct,WarehouseProduct, Supplier, Order, WarehouseBalance
 from django.core.exceptions import ValidationError
 
 @admin.register(MarketProduct)
@@ -14,6 +15,21 @@ class ProductMarketAdmin(admin.ModelAdmin):
 class SupplierAdmin(admin.ModelAdmin):
     list_display = ('supplier_name',)
     search_fields = ('supplier_name',)
+
+
+# BALANS KALKULACJA I INNE
+
+@admin.register(WarehouseBalance)
+class WarehouseBalanceAdmin(admin.ModelAdmin):
+    list_display = ('date', 'total_inventory_value', 'total_liabilities', 'total_income', 'net_balance')
+    readonly_fields = ('total_inventory_value', 'total_liabilities', 'total_income', 'net_balance')
+    actions = ['recalculate_balance']
+
+    @admin.action(description="Przelicz balans dla wybranych dni")
+    def recalculate_balance(self, request, queryset):
+        for balance in queryset:
+            balance.calculate_balance()
+        self.message_user(request, "Saldo zostało przeliczone dla wybranych dni.")
 
 @admin.register(WarehouseProduct)
 class ProductWarehouseAdmin(admin.ModelAdmin):
