@@ -19,17 +19,32 @@ class SupplierAdmin(admin.ModelAdmin):
 
 # BALANS KALKULACJA I INNE
 
+from django.contrib import admin
+from .models import WarehouseBalance
+
 @admin.register(WarehouseBalance)
 class WarehouseBalanceAdmin(admin.ModelAdmin):
-    list_display = ('date', 'total_inventory_value', 'total_liabilities', 'total_income', 'net_balance')
-    readonly_fields = ('total_inventory_value', 'total_liabilities', 'total_income', 'net_balance')
-    actions = ['recalculate_balance']
+    list_display = ('date', 'total_inventory_value', 'total_liabilities', 'total_income', 'net_balance', 'recalculate_button')
+    list_filter = ('date',)
+    ordering = ('-date',)
+    actions = ['recalculate_selected_balances']
 
-    @admin.action(description="Przelicz balans dla wybranych dni")
-    def recalculate_balance(self, request, queryset):
+    def recalculate_button(self, obj):
+        """
+        Przyciski do przeliczenia balansu na poziomie każdego rekordu.
+        """
+        return f'<button onclick="location.href=\'/admin/recalculate/{obj.id}/\'">Przelicz</button>'
+    recalculate_button.short_description = "Przelicz balans"
+    recalculate_button.allow_tags = True  # Pozwala na renderowanie HTML w Django Admin
+
+    @admin.action(description="Przelicz wybrane dzienne salda")
+    def recalculate_selected_balances(self, request, queryset):
+        """
+        Przelicz balans dla zaznaczonych rekordów.
+        """
         for balance in queryset:
             balance.calculate_balance()
-        self.message_user(request, "Saldo zostało przeliczone dla wybranych dni.")
+        self.message_user(request, "Wybrane salda zostały przeliczone.")
 
 @admin.register(WarehouseProduct)
 class ProductWarehouseAdmin(admin.ModelAdmin):
