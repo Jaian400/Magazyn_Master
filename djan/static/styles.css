@@ -235,7 +235,7 @@ input[type="password"] {
     box-sizing: border-box;
 }
 
-/* Przycisk "Zaloguj się" */
+/* Przyciski */
 .submit-button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -333,18 +333,16 @@ input[type="password"] {
 
 /* Pola formularza */
 .registration-form .input-field {
-    width: calc(90% - 20px); /* Stała szerokość dla wszystkich pól */
-    padding: 10px;
-    margin: 10px auto; /* Wyśrodkowanie pola */
+    width: calc(100%); /* szerokość dla wszystkich pól */
+    padding: 10px; /* w polu dookola tekstu */
+    margin: 7px auto; /* między kolejnymi polami */
     border: 1px solid #ccc;
-    border-radius: 5px;
     font-size: 14px;
     box-sizing: border-box; /* Padding nie powiększa szerokości */
 }
 
-
-/* Przycisk "Zarejestruj się" */
-.submit-button2 {
+/* Przycisk "Zarejestruj się" - bez sensu, lepiej użyj tego do logowania, będzie spójniej*/
+/* .submit-button2 {
     width: 90%;
     padding: 10px;
     margin-top: 15px;
@@ -355,9 +353,9 @@ input[type="password"] {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
+} */
 
-.submit-button2:hover {
+/* .submit-button2:hover {
     background-color: #007a5b;
-}
+} */
 
