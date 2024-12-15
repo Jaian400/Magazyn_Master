@@ -5,6 +5,9 @@ from .models import WarehouseProduct
 from django.contrib.auth.models import User
 from django.contrib.auth.models import UserManager
 from django.contrib.auth import authenticate, login
+from django.contrib import admin
+from django.shortcuts import redirect
+from django.urls import reverse
 
 # INDEX -> STRONA GŁOWNA
 
@@ -23,7 +26,7 @@ def logowanie_view(request):
         if user is not None:
             if "magazynmaster.pl" in email.split('@')[1]:
                 login(request, user)
-                #return render(request, admin.html) 
+                return redirect(reverse('admin:index')) 
             login(request, user)
             return render(request, 'index.html')
         else:
