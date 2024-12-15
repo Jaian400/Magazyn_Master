@@ -23,7 +23,7 @@ def logowanie_view(request):
         if user is not None:
             if "magazynmaster.pl" in email.split('@')[1]:
                 login(request, user)
-                return render(request, "kuchnia.html")
+                #return render(request, admin.html) 
             login(request, user)
             return render(request, 'index.html')
         else:
@@ -100,7 +100,14 @@ def rejestracja_view(request):
                 login(request, user)
                 return render(request, 'index.html')
     except :
-        return render(request, 'rejestracja.html', {"error_email_taken": "Użytkownik o takim adresie email już istnieje.", "first_name": first_name, "last_name": last_name })
+        return render(
+            request, 'rejestracja.html',
+                {
+                    "error_email_taken": "Użytkownik o takim adresie email już istnieje.",
+                    "first_name": first_name,
+                    "last_name": last_name 
+                }
+        )
     return render(request, 'rejestracja.html')
 
 # KOSZYK
