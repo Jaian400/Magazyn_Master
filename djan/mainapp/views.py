@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import WarehouseProduct
+from django.contrib.auth.models import User
 
 # INDEX -> STRONA GŁOWNA
 

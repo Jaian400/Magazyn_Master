@@ -57,15 +57,39 @@
         </div>
     
         <!-- Formularz rejestracji --> <!--Trzeba dorobić osobną klasę dla pól tekstowych-->
-        <form class="registration-form">
+        {% comment %} <form class="registration-form">
             {% csrf_token %}
             <input type="text" placeholder="Imię" class="input-field">
             <input type="text" placeholder="Nazwisko" class="input-field">
             <input type="email" placeholder="Adres e-mail" class="input-field">
             <input type="password" placeholder="Hasło" class="input-field">
+            <input type="password" placeholder="Powtórz hasło" class="input-field">
+            <button type="submit" class="submit-button">Zarejestruj się</button>
+        </form> {% endcomment %}
+        <form class="registration-form" action="" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Adres e-mail" required>
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Hasło" required>
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="repeat_password" name="repeat_password" placeholder="Powtórz hasło" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" id="first_name" name="first_name" placeholder="Imię" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="last_name" name="last_name" placeholder="Nazwisko" required>
+            </div>
+        
             <button type="submit" class="submit-button">Zarejestruj się</button>
         </form>
     </div>
-    
 </body>
 </html>
