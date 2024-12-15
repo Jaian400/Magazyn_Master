@@ -57,8 +57,8 @@ class WarehouseBalance(models.Model):
     net_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Saldo netto
 
     class Meta:
-        verbose_name = "Dzienne saldo"
-        verbose_name_plural = "Dzienny balans"
+        # verbose_name = "Dzienne saldo"
+        verbose_name_plural = "Daily balance"
         ordering = ['-date']
 
     def __str__(self):
@@ -113,7 +113,6 @@ class Order(models.Model):
     status = models.CharField(max_length=255, choices=status_choices, default='pending')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.)
     
-
     def _total_price(self):
         total = sum(item.order_product_price * item.order_product_quantity for item in self.orderproduct_set.all())
         return total

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
-from .models import MarketProduct,WarehouseProduct, Supplier, Order, WarehouseBalance
+from .models import *
 from django.core.exceptions import ValidationError
 
 @admin.register(MarketProduct)
@@ -16,35 +16,32 @@ class SupplierAdmin(admin.ModelAdmin):
     list_display = ('supplier_name',)
     search_fields = ('supplier_name',)
 
+@admin.register(SupplierObligation)
+class SupplierObligationAdmin(admin.ModelAdmin):
+    list_display = ('supplier', 'obligation_amount', 'obligation_date','obligation_deadline')
+    search_fields = ('supplier', 'obligation_amount', 'obligation_date','obligation_deadline')
+    list_filter = ('supplier','obligation_date','obligation_deadline')
 
+# ------------------------------------------------------------------------------------------------------------
 # BALANS KALKULACJA I INNE
-
-from django.contrib import admin
-from .models import WarehouseBalance
+# ------------------------------------------------------------------------------------------------------------
 
 @admin.register(WarehouseBalance)
 class WarehouseBalanceAdmin(admin.ModelAdmin):
-    list_display = ('date', 'total_inventory_value', 'total_liabilities', 'total_income', 'net_balance', 'recalculate_button')
+    list_display = ('date', 'total_inventory_value', 'total_liabilities', 'total_income', 'net_balance')
     list_filter = ('date',)
     ordering = ('-date',)
     actions = ['recalculate_selected_balances']
 
-    def recalculate_button(self, obj):
-        """
-        Przyciski do przeliczenia balansu na poziomie każdego rekordu.
-        """
-        return f'<button onclick="location.href=\'/admin/recalculate/{obj.id}/\'">Przelicz</button>'
-    recalculate_button.short_description = "Przelicz balans"
-    recalculate_button.allow_tags = True  # Pozwala na renderowanie HTML w Django Admin
-
     @admin.action(description="Przelicz wybrane dzienne salda")
     def recalculate_selected_balances(self, request, queryset):
-        """
-        Przelicz balans dla zaznaczonych rekordów.
-        """
         for balance in queryset:
             balance.calculate_balance()
         self.message_user(request, "Wybrane salda zostały przeliczone.")
+
+# ------------------------------------------------------------------------------------------------------------
+# PRODUKTY NA MAGAZYNIE
+# ------------------------------------------------------------------------------------------------------------
 
 @admin.register(WarehouseProduct)
 class ProductWarehouseAdmin(admin.ModelAdmin):
@@ -61,6 +58,10 @@ class ProductWarehouseAdmin(admin.ModelAdmin):
         if not obj.product_market:
             raise ValidationError("Produkt musi pochodzić z rynku.")
         super().save_model(request, obj, form, change)
+
+# ------------------------------------------------------------------------------------------------------------
+# ZAMOWIENIA
+# ------------------------------------------------------------------------------------------------------------
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
