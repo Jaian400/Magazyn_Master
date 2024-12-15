@@ -11,8 +11,9 @@
 <body>
     <header>
         <div class="highest_div">
-            <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
-
+            <a href={%url 'index'%} class="logo-button">
+                <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
+            </a>
             <div class="search-bar">
                 <input type="text" placeholder="Wyszukaj..." class="search-input">
                 <button class="search-button">
@@ -51,20 +52,18 @@
     <div class="auth-panel">
 
         <div class="auth-buttons">
-            <button class="auth-tab">Logowanie</button>
-            <button class="auth-tab">Rejestracja</button>
+            <button class="auth-tab" onclick="window.location.href='{% url 'logowanie' %}'">Logowanie</button>
+            <button class="auth-tab" onclick="window.location.href='{% url 'rejestracja' %}'">Rejestracja</button>
         </div>
 
         <form class="auth-form" action="" method="POST">
             {% csrf_token %}
             <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" placeholder="Wpisz e-mail" required>
+                <input type="email" id="email" name="email" placeholder="Adres e-mail" required>
             </div>
 
             <div class="form-group">
-                <label for="password">Hasło</label>
-                <input type="password" id="password" name="password" placeholder="Wpisz hasło" required>
+                <input type="password" id="password" name="password" placeholder="Hasło" required>
             </div>
 
             <button type="submit" class="submit-button">Zaloguj się</button>
