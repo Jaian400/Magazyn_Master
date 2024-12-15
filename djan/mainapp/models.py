@@ -22,14 +22,16 @@ class MarketProduct(models.Model):
     def __str__(self):
         return self.product_name
 
+# ------------------------------------------------------------------------------------------------------------
 # ZOBOWIAZANIA
+# ------------------------------------------------------------------------------------------------------------
 
 class SupplierObligation(models.Model):
     obligation_id = models.AutoField(primary_key=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     obligation_amount = models.DecimalField(max_digits=15, decimal_places=2)
-    obligation_date = models.DateField(auto_now_add=True)
-    obligation_deadline = models.DateField(null=True)
+    obligation_date = models.DateField(auto_now_add=True) # data zakupu
+    obligation_deadline = models.DateField(null=True) # deadline
     status_choices = [
         ('pending', 'Pending'),
         ('paid', 'Paid'),
@@ -49,11 +51,16 @@ class SupplierObligation(models.Model):
             self.status = 'overdue'
             self.save()
 
+# ------------------------------------------------------------------------------------------------------------
+# BILANS -> do przemyslenia i pracy
+# ------------------------------------------------------------------------------------------------------------
+
 class WarehouseBalance(models.Model):
-    date = models.DateField(default=now, unique=True)  # Data balansu, unikalna dla każdego dnia
-    total_inventory_value = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Wartość magazynu
+    date = models.DateField(default=now, unique=True)  # Data - jedna na dzien to ma byc daily
+    total_inventory_value = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Wartość inwentarza
     total_liabilities = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Zobowiązania
     total_income = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Dochody (narazie z zamówień)
+    # daily_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Dzienne saldo
     net_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Saldo netto
 
     class Meta:
@@ -71,31 +78,41 @@ class WarehouseBalance(models.Model):
         )
         self.total_liabilities = sum(
             obligation.obligation_amount
-            for obligation in SupplierObligation.objects.filter(status="pending")
+            for obligation in SupplierObligation.objects.all()
+            # for obligation in SupplierObligation.objects.filter(status="pending")
         )
         self.total_income = sum(
             order.total_price
-            for order in Order.objects.filter(created_at__date=self.date)
+            for order in Order.objects.all()
+            # for order in Order.objects.filter(created_at__date=self.date)
         )
 
         self.net_balance = self.total_income + self.total_inventory_value - self.total_liabilities
         self.save()
 
-# TOWAR NA MAGAZYNIE TU:
+# ------------------------------------------------------------------------------------------------------------
+# TOWAR NA MAGAZYNIE TU
+# ------------------------------------------------------------------------------------------------------------
 
 class WarehouseProduct(models.Model):
     product_name = models.CharField(max_length=255)
-    product_price = models.DecimalField(max_digits=10, decimal_places=2)
+    product_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     product_quantity = models.IntegerField()
     product_category = models.CharField(max_length=255)
     product_market = models.ForeignKey(MarketProduct, on_delete=models.SET_NULL, null=True)
     # product_image = models.ImageField(upload_to='products/')
-    # product_description = models.CharField(max_length=255)
+    # product_description = models.TextField()
+    # product_discount = models.IntegerField(default=0)
+    # margin = models.IntegerField()
     def __str__(self):
         return f"{self.product_name} ({self.product_quantity})"
+    # def calculate_price():
+        # self.product_price = self.product_price * (1 + self.margin)
+        # self.product_price -=  self.product_price * self.product_discount
 
-
-# ZAMOWIENIE
+# ------------------------------------------------------------------------------------------------------------
+# ZAMOWIENIE -> user zamawia od nas
+# ------------------------------------------------------------------------------------------------------------
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
@@ -111,11 +128,12 @@ class Order(models.Model):
     ]
 
     status = models.CharField(max_length=255, choices=status_choices, default='pending')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
     
-    def _total_price(self):
+    def calculate_total_price(self):
         total = sum(item.order_product_price * item.order_product_quantity for item in self.orderproduct_set.all())
-        return total
+        self.total_price = total
+        self.save()
 
     def __str__(self):
         return f"Order {self.order_id} by {self.user.username}"

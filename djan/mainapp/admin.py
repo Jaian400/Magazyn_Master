@@ -65,11 +65,29 @@ class ProductWarehouseAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('order_id', 'user', 'created_at', 'get_total_value')
-    search_fields = ('order_id', 'user', 'created_at')
+    list_display = ('order_id', 'user', 'created_at', 'status','total_price')
+    search_fields = ('order_id', 'user', 'status','created_at')
     list_filter = ('user', 'created_at')
+    actions = ['recalculate_selected_orders']
 
-    def get_total_value(self, obj):
-        return obj.total_value()
+    # def get_total_value(self, obj):
+    #     return obj._total_price()
     
-    get_total_value.short_description = 'Total value' 
+    # get_total_value.short_description = 'Total value' 
+
+    @admin.action(description="Przelicz wartosc calkowita zamowienia")
+    def recalculate_selected_orders(self, request, queryset):
+        for order in queryset:
+            order.calculate_total_price()
+        self.message_user(request, "Wybrane salda zostały przeliczone.")
+
+@admin.register(OrderProduct)
+class OrderProductAdmin(admin.ModelAdmin):
+    list_display = ('order', 'order_product', 'order_product_quantity', 'get_price')
+    search_fields = ('order', 'order_product', 'order_product_quantity')
+    list_filter = ('order', 'order_product')
+
+    def get_price(self, obj):
+        return obj.order_product_quantity * obj.order_product_price
+
+    get_price.short_description = "Total value of product/s"
