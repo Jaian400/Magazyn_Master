@@ -70,9 +70,27 @@
                 <input type="password" id="repeat_password" name="repeat_password" placeholder="Powtórz hasło" required>
             </div>
             
-            {% if error %}
+            {% if error_length %}
             <div class="error-message">
-                <p>{{ error }}</p>
+                <p>{{ error_length }}</p>
+            </div>
+            {% endif %}
+
+            {% if error_number %}
+            <div class="error-message">
+                <p>{{ error_number }}</p>
+            </div>
+            {% endif %}
+
+            {% if error_capital_letter %}
+            <div class="error-message">
+                <p>{{ error_capital_letter }}</p>
+            </div>
+            {% endif %}
+
+            {% if error_repeat %}
+            <div class="error-message">
+                <p>{{ error_repeat }}</p>
             </div>
             {% endif %}
  
