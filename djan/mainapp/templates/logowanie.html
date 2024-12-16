@@ -65,9 +65,14 @@
             <div class="form-group">
                 <input type="password" id="password" name="password" placeholder="Hasło" required>
             </div>
-
+            {% if error %}
+                <div class="error-message">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
             <button type="submit" class="submit-button">Zaloguj się</button>
         </form>
+        
     </div>
 
     
