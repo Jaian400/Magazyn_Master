@@ -103,7 +103,7 @@ class WarehouseProduct(models.Model):
     # product_image = models.ImageField(upload_to='products/')
     # product_description = models.TextField()
     # product_discount = models.IntegerField(default=0)
-    # margin = models.IntegerField()
+    # margin = models.IntegerField(default=10)
     def __str__(self):
         return f"{self.product_name} ({self.product_quantity})"
     # def calculate_price():
