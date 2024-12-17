@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="wms_test" content="width=device-width, initial-scale=1.0">
-    <title>WMS</title>
+    <title>MagazynMaster</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logofav.png' %}">
@@ -11,22 +11,23 @@
 <body>
     <header>
         <div class="highest_div">
-            <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
-
+            <a href={%url 'index'%} class="logo-button">
+                <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
+            </a>
             <div class="search-bar">
                 <input type="text" placeholder="Wyszukaj..." class="search-input">
                 <button class="search-button">
-                    <img src="{%static 'images/lupa.png'%}" alt="Szukaj" class="search-icon">
+                    <img src="{% static 'images/lupa.png'%}" alt="Szukaj" class="search-icon">
                 </button>
             </div>
             
             <div class="header-buttons">
                 <button class="icon-button" onclick="window.location.href='{% url 'koszyk' %}'">
-                    <img src="{%static 'images/sklep.png'%}" alt="Sklep" class="icon-image">
+                    <img src="{% static 'images/sklep.png'%}" alt="Sklep" class="icon-image">
                 </button>
 
-                <button class="icon-button">
-                    <img src="{%static 'images/wyloguj.png' %}" alt="Wyloguj" class="icon-image">
+                <button class="icon-button" onclick="window.location.href='{% url 'logowanie' %}'">
+                    <img src="{% static 'images/wyloguj.png' %}" alt="Wyloguj" class="icon-image">
                 </button>
             </div>
         </div>
@@ -47,6 +48,13 @@
         </div>
         
     </header>
+
+    <div class="banner-container">
+        <div class="banner-wrapper">
+            <img src="{% static 'images/Baner_index.png' %}" alt="Promocja -10%" class="banner-image">
+            <button class="banner-button">Sprawdź!</button>
+        </div>
+    </div>
     
 </body>
 </html>
