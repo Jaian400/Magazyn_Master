@@ -120,6 +120,12 @@ class WarehouseProduct(models.Model):
         # self.product_price -=  self.product_price * (100 - self.product_discount) / 100
 
 # ------------------------------------------------------------------------------------------------------------
+# TABELKI NA KATEGORIE
+# ------------------------------------------------------------------------------------------------------------
+
+
+
+# ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE -> user zamawia od nas
 # ------------------------------------------------------------------------------------------------------------
 
@@ -155,3 +161,4 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"Product {self.order_product.product_name} in Order {self.order.order_id}"
+    
