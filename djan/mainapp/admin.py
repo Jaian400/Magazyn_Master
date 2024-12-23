@@ -28,7 +28,7 @@ class SupplierObligationAdmin(admin.ModelAdmin):
 
 @admin.register(WarehouseBalance)
 class WarehouseBalanceAdmin(admin.ModelAdmin):
-    list_display = ('date', 'total_inventory_value', 'total_liabilities', 'total_income', 'net_balance')
+    list_display = ('date', 'total_inventory_value', 'total_liabilities','daily_income', 'daily_balance','net_balance')
     list_filter = ('date',)
     ordering = ('-date',)
     actions = ['recalculate_selected_balances']

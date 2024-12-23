@@ -58,14 +58,16 @@ class SupplierObligation(models.Model):
 class WarehouseBalance(models.Model):
     date = models.DateField(default=now, unique=True)  # Data - jedna na dzien to ma byc daily
     total_inventory_value = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Wartość inwentarza
-    total_liabilities = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Zobowiązania
-    total_income = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Dochody (narazie z zamówień)
-    # daily_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Dzienne saldo
+    total_liabilities = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+    total_liabilities_total = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Zobowiązania
+    total_income = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Dochody calkowite ever
+    daily_income = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Dochody (narazie z zamówień)
+    daily_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Dzienne saldo
     net_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)  # Saldo netto
 
     class Meta:
         # verbose_name = "Dzienne saldo"
-        verbose_name_plural = "Daily balance"
+        verbose_name_plural = "Balance"
         ordering = ['-date']
 
     def __str__(self):
@@ -78,16 +80,23 @@ class WarehouseBalance(models.Model):
         )
         self.total_liabilities = sum(
             obligation.obligation_amount
+            for obligation in SupplierObligation.objects.filter(status="pending")
+        )
+        self.total_liabilities_total = sum(
+            obligation.obligation_amount
             for obligation in SupplierObligation.objects.all()
-            # for obligation in SupplierObligation.objects.filter(status="pending")
         )
         self.total_income = sum(
             order.total_price
             for order in Order.objects.all()
-            # for order in Order.objects.filter(created_at__date=self.date)
+        )
+        self.daily_income = sum(
+            order.total_price
+            for order in Order.objects.filter(created_at__date=self.date)
         )
 
-        self.net_balance = self.total_income + self.total_inventory_value - self.total_liabilities
+        self.daily_balance= self.daily_income + self.total_inventory_value - self.total_liabilities
+        self.net_balance= self.total_income + self.total_inventory_value - self.total_liabilities_total
         self.save()
 
 # ------------------------------------------------------------------------------------------------------------
@@ -107,8 +116,8 @@ class WarehouseProduct(models.Model):
     def __str__(self):
         return f"{self.product_name} ({self.product_quantity})"
     # def calculate_price():
-        # self.product_price = self.product_price * (1 + self.margin)
-        # self.product_price -=  self.product_price * self.product_discount
+        # self.product_price = self.product_price * (100 + self.margin) / 100
+        # self.product_price -=  self.product_price * (100 - self.product_discount) / 100
 
 # ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE -> user zamawia od nas
