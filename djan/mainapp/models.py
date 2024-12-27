@@ -52,7 +52,7 @@ class SupplierObligation(models.Model):
             self.save()
 
 # ------------------------------------------------------------------------------------------------------------
-# BILANS -> do przemyslenia i pracy
+# BILANS -> do przemyslenia i pracy (mocno)
 # ------------------------------------------------------------------------------------------------------------
 
 class WarehouseBalance(models.Model):
@@ -74,22 +74,27 @@ class WarehouseBalance(models.Model):
         return f"Balans na dzień {self.date}: {self.net_balance} PLN"
 
     def calculate_balance(self):
+        # Suma wartosci inwentarza (to w miare polskie slowo)
         self.total_inventory_value = sum(
             product.product_price * product.product_quantity
             for product in WarehouseProduct.objects.all()
         )
+        # Zobowiazania ktore dalej wisza
         self.total_liabilities = sum(
             obligation.obligation_amount
-            for obligation in SupplierObligation.objects.filter(status="pending")
+            for obligation in SupplierObligation.objects.filter(status="pending" or "overdue") # Dziala???
         )
         self.total_liabilities_total = sum(
             obligation.obligation_amount
             for obligation in SupplierObligation.objects.all()
         )
+
+        # Suma dochodow calkowita - wydajnosc???
         self.total_income = sum(
             order.total_price
             for order in Order.objects.all()
         )
+        # Dochody na dany dzien
         self.daily_income = sum(
             order.total_price
             for order in Order.objects.filter(created_at__date=self.date)
@@ -109,7 +114,7 @@ class WarehouseProduct(models.Model):
     product_quantity = models.IntegerField()
     product_category = models.CharField(max_length=255)
     product_market = models.ForeignKey(MarketProduct, on_delete=models.SET_NULL, null=True)
-    # product_image = models.ImageField(upload_to='products/')
+    # product_image = models.ChatField(max_length=255) # nazwa zdjecia jako podadres do statica
     # product_description = models.TextField()
     # product_discount = models.IntegerField(default=0)
     # margin = models.IntegerField(default=10)
