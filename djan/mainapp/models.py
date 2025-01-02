@@ -115,6 +115,9 @@ class ProductCategory(models.Model):
     category_name = models.CharField(max_length=255, unique=True) # rzekomo to jest najzdrowsze rozwiazanie dla kategorii
     slug = models.SlugField(unique=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = "Product Categories"
+
     def __str__(self):
         return self.category_name
     
@@ -163,6 +166,42 @@ class WarehouseProduct(models.Model):
     
         final_price = price_with_margin * (1 - Decimal(self.product_discount) / 100)
         return round(final_price, 2)
+
+# ------------------------------------------------------------------------------------------------------------
+# KOSZYK - > pomyslec jak chcemy obslugiac
+# ------------------------------------------------------------------------------------------------------------
+
+# class Cart(models.Model):
+#     cart_id = models.AutoField(primary_key=True)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+#     session_key = models.CharField(max_length=40, null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True) 
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     STATUS_CHOICES = [
+#     ('active', 'Active'),
+#     ('closed', 'Closed'),
+#     ('abandoned', 'Abandoned'),
+#     ]
+#     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
+
+#     def total_value(self):
+#         return sum(item.total_price() for item in self.cartproduct_set.all())
+    
+#     def __str__(self):
+#         if self.user:
+#             return f"Koszyk użytkownika {self.user.username} (ID: {self.id})"
+#         else:
+#             return f"Koszyk sesyjny (ID: {self.id})"
+
+# class CartProduct(models.Model):
+#     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+#     product = models.ForeignKey(WarehouseProduct, on_delete=models.CASCADE)
+#     product_price = models.DecimalField(max_digits=10, decimal_places=2)
+#     product_quantity = models.IntegerField(default=1)
+
+#     def total_price(self):
+#         return self.product_price * self.product_quantity
 
 # ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE -> user zamawia od nas
