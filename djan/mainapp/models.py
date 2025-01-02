@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.utils.timezone import now
+from django.utils.text import slugify
 
 # MODELE ALE NIE MODELKI
 
@@ -108,27 +109,32 @@ class WarehouseBalance(models.Model):
 # TOWAR NA MAGAZYNIE TU
 # ------------------------------------------------------------------------------------------------------------
 
+class ProductCategory(models.Model):
+    category_name = models.CharField(max_length=255, unique=True) # rzekomo to jest najzdrowsze rozwiazanie dla kategorii
+
 class WarehouseProduct(models.Model):
     product_name = models.CharField(max_length=255)
     product_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     product_quantity = models.IntegerField()
-    product_category = models.CharField(max_length=255)
+    product_category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     product_market = models.ForeignKey(MarketProduct, on_delete=models.SET_NULL, null=True)
-    # product_image = models.ChatField(max_length=255) # nazwa zdjecia jako podadres do statica
+    # product_image = models.ChatField(max_length=255) # nazwa zdjecia jako podadres w staticu
     # product_description = models.TextField()
     # product_discount = models.IntegerField(default=0)
     # margin = models.IntegerField(default=10)
+
+    slug = models.SlugField(unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.product_name)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.product_name} ({self.product_quantity})"
     # def calculate_price():
         # self.product_price = self.product_price * (100 + self.margin) / 100
         # self.product_price -=  self.product_price * (100 - self.product_discount) / 100
-
-# ------------------------------------------------------------------------------------------------------------
-# TABELKI NA KATEGORIE
-# ------------------------------------------------------------------------------------------------------------
-
-
 
 # ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE -> user zamawia od nas

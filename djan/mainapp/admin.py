@@ -91,3 +91,9 @@ class OrderProductAdmin(admin.ModelAdmin):
         return obj.order_product_quantity * obj.order_product_price
 
     get_price.short_description = "Total value of product/s"
+
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(admin.ModelAdmin):
+    list_display = ('category_name',)
+    search_fields = ('category_name',)
+    list_filter = ('category_name',)
