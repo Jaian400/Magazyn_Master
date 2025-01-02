@@ -111,6 +111,15 @@ class WarehouseBalance(models.Model):
 
 class ProductCategory(models.Model):
     category_name = models.CharField(max_length=255, unique=True) # rzekomo to jest najzdrowsze rozwiazanie dla kategorii
+    slug = models.SlugField(unique=True, blank=True)
+
+    def __str__(self):
+        return self.category_name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.category_name)
+        super().save(*args, **kwargs)
 
 class WarehouseProduct(models.Model):
     product_name = models.CharField(max_length=255)
@@ -118,23 +127,37 @@ class WarehouseProduct(models.Model):
     product_quantity = models.IntegerField()
     product_category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     product_market = models.ForeignKey(MarketProduct, on_delete=models.SET_NULL, null=True)
-    # product_image = models.ChatField(max_length=255) # nazwa zdjecia jako podadres w staticu
-    # product_description = models.TextField()
-    # product_discount = models.IntegerField(default=0)
-    # margin = models.IntegerField(default=10)
+    product_image = models.CharField(max_length=255, null=True, blank=True) # nazwa zdjecia jako podadres w staticu
+    product_description = models.TextField(blank=True)
+    product_discount = models.IntegerField(default=0)  # Rabat w procentach
+    margin = models.IntegerField(default=10) # marża w procentach
 
     slug = models.SlugField(unique=True, blank=True)
 
     def save(self, *args, **kwargs):
+        # if not self.slug:
+        #     base_slug = slugify(self.product_name)
+        #     unique_slug = base_slug
+        #     num = 1
+        #     while WarehouseProduct.objects.filter(slug=unique_slug).exists():
+        #         unique_slug = f"{base_slug}-{num}"
+        #         num += 1
+        #     self.slug = unique_slug
         if not self.slug:
             self.slug = slugify(self.product_name)
+
+        if self.product_price:
+            self.product_price = self.calculate_price()
+        
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.product_name} ({self.product_quantity})"
-    # def calculate_price():
-        # self.product_price = self.product_price * (100 + self.margin) / 100
-        # self.product_price -=  self.product_price * (100 - self.product_discount) / 100
+    
+    def calculate_price(self):
+        price_with_margin = self.product_price * (1 + self.margin / 100)
+        final_price = price_with_margin * (1 - self.product_discount / 100)
+        return round(final_price, 2)
 
 # ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE -> user zamawia od nas

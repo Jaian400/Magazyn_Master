@@ -36,5 +36,5 @@ urlpatterns = [
     path('rejestracja/', rejestracja_view, name='rejestracja'),
     path('logowanie/', logowanie_view, name='logowanie'),
     path('koszyk/', koszyk_view, name='koszyk'),
-    path('produkt/<int:produkt_id>-<slug:slug>/', product_detail_view, name='product_detail'),
+    path('<slug:category_slug>/<slug:product_slug>/', product_detail_view, name='product_detail'),
 ]

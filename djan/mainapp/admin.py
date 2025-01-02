@@ -98,6 +98,6 @@ class OrderProductAdmin(admin.ModelAdmin):
 
 @admin.register(ProductCategory)
 class ProductCategoryAdmin(admin.ModelAdmin):
-    list_display = ('category_name',)
+    list_display = ('category_name', 'slug')
     search_fields = ('category_name',)
     list_filter = ('category_name',)

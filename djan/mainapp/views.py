@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
-from .models import WarehouseProduct
+from .models import WarehouseProduct, ProductCategory
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import admin
@@ -97,10 +97,12 @@ def rejestracja_view(request):
 
 # PRODUKT
 
-def product_detail_view(request, product_id, slug): 
-    product = get_object_or_404(WarehouseProduct, id=product_id, slug=slug)
+def product_detail_view(request,category_slug, product_slug): 
+    category = get_object_or_404(ProductCategory, slug=category_slug)
+
+    product = get_object_or_404(WarehouseProduct, slug=product_slug)
     
-    return render(request, 'product_detail.html', {'product': product})
+    return render(request, 'product_detail.html', {'product': product, 'category': category})
 
 # KOSZYK
 
