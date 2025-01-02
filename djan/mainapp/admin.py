@@ -45,14 +45,18 @@ class WarehouseBalanceAdmin(admin.ModelAdmin):
 
 @admin.register(WarehouseProduct)
 class ProductWarehouseAdmin(admin.ModelAdmin):
-    list_display = ('product_name', 'product_price', 'product_category', 'product_quantity', 'get_supplier') 
+    list_display = ('product_name', 'product_price', 'get_category', 'product_quantity', 'get_supplier') 
     search_fields = ('product_name', 'product_price', 'product_category', 'product_quantity', 'product_market__supplier__supplier_name')  # Wyszukiwanie po dostawcy
     list_filter = ('product_category', 'product_market__supplier',)
 
     def get_supplier(self, obj):
         return obj.product_market.supplier.supplier_name if obj.product_market and obj.product_market.supplier else "-"
     
+    def get_category(self, obj):
+        return obj.product_category.category_name if obj.product_category else "-"
+    
     get_supplier.short_description = 'Supplier' 
+    get_category.short_description = 'Category'
 
     def save_model(self, request, obj, form, change):
         if not obj.product_market:
