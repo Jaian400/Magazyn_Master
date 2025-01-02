@@ -1,4 +1,1 @@
-WMS
-TEST
-WMS
-TEST
+Magazyn Master 

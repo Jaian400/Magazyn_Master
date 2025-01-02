@@ -1,12 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
-from .models import WarehouseProduct
+from .models import WarehouseProduct, ProductCategory
 from django.contrib.auth.models import User
-from django.contrib.auth.models import UserManager
 from django.contrib.auth import authenticate, login
 from django.contrib import admin
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.db import IntegrityError
 
@@ -96,6 +94,15 @@ def rejestracja_view(request):
                 }
         )
     return render(request, 'rejestracja.html')
+
+# PRODUKT
+
+def product_detail_view(request,category_slug, product_slug): 
+    category = get_object_or_404(ProductCategory, slug=category_slug)
+
+    product = get_object_or_404(WarehouseProduct, slug=product_slug)
+    
+    return render(request, 'product_detail.html', {'product': product, 'category': category})
 
 # KOSZYK
 

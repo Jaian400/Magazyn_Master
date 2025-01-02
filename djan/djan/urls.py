@@ -20,7 +20,8 @@ from mainapp.views import (
     index_view, 
     budownictwo_view, kuchnia_view, lazienka_view, mieszkanie_view, ogrod_view, technika_view,
     rejestracja_view, logowanie_view,
-    koszyk_view
+    koszyk_view,
+    product_detail_view
 )
 
 urlpatterns = [
@@ -35,4 +36,5 @@ urlpatterns = [
     path('rejestracja/', rejestracja_view, name='rejestracja'),
     path('logowanie/', logowanie_view, name='logowanie'),
     path('koszyk/', koszyk_view, name='koszyk'),
+    path('<slug:category_slug>/<slug:product_slug>/', product_detail_view, name='product_detail'),
 ]
