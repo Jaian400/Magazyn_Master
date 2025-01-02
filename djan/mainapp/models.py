@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.utils.timezone import now
 from django.utils.text import slugify
+from decimal import Decimal
+
 
 # MODELE ALE NIE MODELKI
 
@@ -155,8 +157,11 @@ class WarehouseProduct(models.Model):
         return f"{self.product_name} ({self.product_quantity})"
     
     def calculate_price(self):
-        price_with_margin = self.product_price * (1 + self.margin / 100)
-        final_price = price_with_margin * (1 - self.product_discount / 100)
+        market_price = self.product_market.product_price
+
+        price_with_margin = market_price * (1 + Decimal(self.margin) / 100)
+    
+        final_price = price_with_margin * (1 - Decimal(self.product_discount) / 100)
         return round(final_price, 2)
 
 # ------------------------------------------------------------------------------------------------------------
