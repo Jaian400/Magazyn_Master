@@ -178,7 +178,8 @@ class WarehouseProduct(models.Model):
 #     created_at = models.DateTimeField(auto_now_add=True) 
 #     updated_at = models.DateTimeField(auto_now=True)
 
-#     STATUS_CHOICES = [
+      # nie wiem czy to bedzie konieczne
+#     STATUS_CHOICES = [ 
 #     ('active', 'Active'),
 #     ('closed', 'Closed'),
 #     ('abandoned', 'Abandoned'),
