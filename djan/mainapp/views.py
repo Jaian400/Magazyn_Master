@@ -99,7 +99,6 @@ def rejestracja_view(request):
 
 def product_detail_view(request,category_slug, product_slug): 
     category = get_object_or_404(ProductCategory, slug=category_slug)
-
     product = get_object_or_404(WarehouseProduct, slug=product_slug)
     
     return render(request, 'product_detail.html', {'product': product, 'category': category})
