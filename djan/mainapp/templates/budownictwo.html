@@ -49,37 +49,19 @@
         </div>
         
     </header>
-    <main>
-        <section class="product-grid">
-            <!-- Szare prostokąty jako miejsca na produkty -->
-            <div class="product-item">Produkt 1</div>
-            <div class="product-item">Produkt 2</div>
-            <div class="product-item">Produkt 3</div>
-            <div class="product-item">Produkt 4</div>
-            <div class="product-item">Produkt 5</div>
-            <div class="product-item">Produkt 6</div>
-            <div class="product-item">Produkt 7</div>
-            <div class="product-item">Produkt 8</div>
-            <div class="product-item">Produkt 9</div>
-            <div class="product-item">Produkt 10</div>
-            <div class="product-item">Produkt 11</div>
-            <div class="product-item">Produkt 12</div>
-            <div class="product-item">Produkt 13</div>
-            <div class="product-item">Produkt 14</div>
-            <div class="product-item">Produkt 15</div>
-            <div class="product-item">Produkt 16</div>
-            <div class="product-item">Produkt 17</div>
-            <div class="product-item">Produkt 18</div>
-            <div class="product-item">Produkt 19</div>
-            <div class="product-item">Produkt 20</div>
-            <div class="product-item">Produkt 21</div>
-            <div class="product-item">Produkt 22</div>
-            <div class="product-item">Produkt 23</div>
-            <div class="product-item">Produkt 24</div>
-            <div class="product-item">Produkt 25</div>
-            <div class="product-item">Produkt 26</div>
-        </section>
-    </main>
+
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="product-item">
+                {% comment %} <img src="{% static product.product_image %}" alt="{{ product.product_name }}" class="product-image"> {% endcomment %}
+                <h3>{{ product.product_name }}</h3>
+                <p>{{ product.product_description }}</p>
+                <p><strong>{{ product.product_price }} zł</strong></p>
+                <a href="{% url 'product_detail' product.product_category.slug product.slug %}" class="button">Zobacz</a>
+            </div>
+        {% endfor %}
+    </div>
+    
     
 </body>
 </html>
