@@ -1,0 +1,37 @@
+.banner-container {
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie poziome */
+    margin-top: 15px; /* Odstęp 15px od sekcji menu */
+}
+
+.banner-wrapper {
+    position: relative;
+    width: 80%; /* Skalowanie banera - zmniejszenie */
+    max-width: 800px; /* Maksymalna szerokość */
+}
+
+.banner-image {
+    width: 100%; /* Skalowanie względem wrappera */
+    height: auto;
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efekt cienia */
+}
+
+.banner-button {
+    position: absolute; /* Pozycjonowanie na banerze */
+    bottom: 5%; /* Umieszczenie przycisku w dolnej części banera */
+    left: 17%;
+    transform: translate(-50%, 0); /* Wyśrodkowanie przycisku */
+    background-color: #d8d8d8; /* Dopasowany kolor */
+    color: rgb(0, 0, 0);
+    font-size: 11px;
+    border: none;
+    padding: 6px 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.banner-button:hover {
+    background-color: #9b9b9b;
+}

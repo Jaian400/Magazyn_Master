@@ -1,0 +1,25 @@
+/* Kontener siatki produktów */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 kolumny */
+    grid-auto-rows: 100px; /* Wysokość każdego wiersza */
+    gap: 25px 1px; /* Pierwsza wartość: odstępy w pionie, druga: odstępy w poziomie */
+    padding: 16px;
+    margin-left: 340px; /* Margines po lewej stronie ekranu */
+}
+
+/* Styl pojedynczego elementu */
+.product-item {
+    background-color: #ccc; /* Szary kolor */
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center; /* Wyśrodkowanie tekstu w pionie */
+    justify-content: center; /* Wyśrodkowanie tekstu w poziomie */
+    font-size: 16px;
+    color: #666;
+    font-weight: bold;
+    height: 100px; /* Krótszy bok jako podstawa */
+    width: 200px; /* Dłuższy bok */
+    margin: 0; /* Brak dodatkowych marginesów */
+}

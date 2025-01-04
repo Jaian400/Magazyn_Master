@@ -6,6 +6,7 @@
     <title>WMS</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'productpages.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logofav.png' %}">
 </head>
 <body>
@@ -48,6 +49,18 @@
         </div>
         
     </header>
-    
+
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="product-item">
+                {% comment %} <img src="{% static product.product_image %}" alt="{{ product.product_name }}" class="product-image"> {% endcomment %}
+                <h3>{{ product.product_name }}</h3>
+                <p>{{ product.product_description }}</p>
+                <p><strong>{{ product.product_price }} zł</strong></p>
+                <a href="{% url 'product_detail' product.product_category.slug product.slug %}" class="button">Zobacz</a>
+            </div>
+        {% endfor %}
+    </div>
+
 </body>
 </html>

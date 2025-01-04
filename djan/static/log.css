@@ -1,0 +1,131 @@
+/* Styl panelu rejestracji */
+.registration-panel {
+    width: 400px;
+    margin: 50px auto; /* Wyśrodkowanie na stronie */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Nagłówek z przyciskami Logowanie i Rejestracja */
+.registration-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px 5px 0 0;
+}
+
+.tab-button.active {
+    background-color: #ffffff;
+    font-weight: bold;
+    border-bottom: 2px solid #007a5b;
+}
+
+/* Pola formularza */
+.registration-form .input-field {
+    width: calc(100%); /* szerokość dla wszystkich pól */
+    padding: 10px; /* w polu dookola tekstu */
+    margin: 7px auto; /* między kolejnymi polami */
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box; /* Padding nie powiększa szerokości */
+}
+
+.submit-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    width: 40%;
+    background-color: #00916e;
+    color: white;
+    border: none;
+    border-radius: 0px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #007a5b;
+}
+
+/* Pola formularza */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: left;
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"]
+    {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 0px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.error-message {
+    color: rgb(196, 6, 6) !important;
+    margin-bottom: 10px;
+    font-size: 8px;
+}
+
+/* Górne przyciski (Logowanie i Rejestracja) */
+.auth-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    background-color: #00916e;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Stylizacja panelu logowania */
+.auth-panel {
+    width: 400px;
+    margin: 50px auto; /* Pozycjonowanie panelu na środku */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
