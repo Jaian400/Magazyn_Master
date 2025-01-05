@@ -11,8 +11,8 @@ from django.db import IntegrityError
 # INDEX -> STRONA GŁOWNA
 
 def index_view(request):
-
-    return render(request, 'index.html')
+    products = WarehouseProduct.objects.filter(product_category__category_name="index") #Trzeba przemyśleć jak chcemy wyświetlać rzeczy na głównej
+    return render(request, 'index.html', {'products': products})
 
 # LOGOWANIE I REJESTRACJA
 
@@ -111,19 +111,25 @@ def koszyk_view(request):
 # PODSTRONY PRODUKTOW - mozna dynamicznie zrobic
 
 def budownictwo_view(request):
-    return render(request, 'budownictwo.html')
+    products = WarehouseProduct.objects.filter(product_category__category_name="budownictwo")  # Pobranie wszystkich produktów
+    return render(request, 'budownictwo.html', {'products': products})
 
 def kuchnia_view(request):
-    return render(request, 'kuchnia.html')
+    products = WarehouseProduct.objects.filter(product_category__category_name="kuchnia")
+    return render(request, 'kuchnia.html', {'products': products})
 
 def lazienka_view(request):
-    return render(request, 'lazienka.html')
+    products = WarehouseProduct.objects.filter(product_category__category_name="lazienka")
+    return render(request, 'lazienka.html', {'products': products})
 
 def mieszkanie_view(request):
-    return render(request, 'mieszkanie.html')
+    products = WarehouseProduct.objects.filter(product_category__category_name="mieszkaniea")
+    return render(request, 'mieszkanie.html', {'products': products})
 
 def ogrod_view(request):
-    return render(request,'ogrod.html')
+    products = WarehouseProduct.objects.filter(product_category__category_name="ogrod")
+    return render(request,'ogrod.html', {'products': products})
 
 def technika_view(request):
-    return render(request, 'technika.html')
+    products = WarehouseProduct.objects.filter(product_category__category_name="technika")
+    return render(request, 'technika.html', {'products': products})
