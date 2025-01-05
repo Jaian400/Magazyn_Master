@@ -170,9 +170,9 @@ class WarehouseProduct(models.Model):
         return round(final_price, 2)
 
 # ------------------------------------------------------------------------------------------------------------
-# KOSZYK - > pomyslec jak chcemy obslugiwac
+# KOSZYK - > pomyslec jak chcemy obslugiwac 
 # ------------------------------------------------------------------------------------------------------------
-
+# jeden koszyk do jednego usera i jak zamowi to czyscic 
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True)
     # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)

@@ -46,7 +46,7 @@ class WarehouseBalanceAdmin(admin.ModelAdmin):
 @admin.register(WarehouseProduct)
 class ProductWarehouseAdmin(admin.ModelAdmin):
     list_display = ('product_name', 'product_price', 'get_category', 'product_quantity', 'get_supplier') 
-    search_fields = ('product_name', 'product_price', 'product_category', 'product_quantity', 'product_market__supplier__supplier_name')  # Wyszukiwanie po dostawcy
+    search_fields = ('product_name', 'product_price', 'product_category__category_name', 'product_quantity', 'product_market__supplier__supplier_name')  # Wyszukiwanie po dostawcy
     list_filter = ('product_category', 'product_market__supplier',)
 
     def get_supplier(self, obj):
@@ -95,6 +95,10 @@ class OrderProductAdmin(admin.ModelAdmin):
         return obj.order_product_quantity * obj.order_product_price
 
     get_price.short_description = "Total value of product/s"
+
+# ------------------------------------------------------------------------------------------------------------
+# KATEGORIE PRODUKTOW
+# ------------------------------------------------------------------------------------------------------------
 
 @admin.register(ProductCategory)
 class ProductCategoryAdmin(admin.ModelAdmin):

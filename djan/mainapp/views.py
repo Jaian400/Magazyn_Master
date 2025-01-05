@@ -108,7 +108,7 @@ def product_detail_view(request,category_slug, product_slug):
 def koszyk_view(request):
     return render(request, 'koszyk.html')
 
-# PODSTRONY PRODUKTOW - nie podoba mi sie, mozna dynamicznie zrobic
+# PODSTRONY PRODUKTOW - mozna dynamicznie zrobic
 
 def budownictwo_view(request):
     return render(request, 'budownictwo.html')
