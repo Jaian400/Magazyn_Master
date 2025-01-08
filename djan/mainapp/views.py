@@ -123,7 +123,7 @@ def lazienka_view(request):
     return render(request, 'lazienka.html', {'products': products})
 
 def mieszkanie_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="mieszkaniea")
+    products = WarehouseProduct.objects.filter(product_category__category_name="mieszkanie")
     return render(request, 'mieszkanie.html', {'products': products})
 
 def ogrod_view(request):
