@@ -6,6 +6,7 @@
     padding: 0.83%;
     margin-left: 16%; /* Margines po lewej stronie ekranu */
     margin-right: 16%;
+    
 }
 
 /* Styl pojedynczego elementu */
@@ -16,6 +17,7 @@
     text-align: left;
     padding: 4%; /* Odstępy wewnętrzne */
     cursor: pointer;
+
 }
 
 .product-item:hover {
@@ -36,4 +38,16 @@
 .product-item h3, .product-image {
     margin-top: 20px; /* Marginesy na górze */
     margin-bottom: 20px; /* Marginesy na dole */
+}
+
+.product-name{
+    position: absolute;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.product-price{
+    position: absolute;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
