@@ -56,7 +56,7 @@
                 <h3>{{ product.product_name }}</h3>
                 <p><strong>{{ product.product_price }} zł</strong></p>
                 {% if product.product_discount != 0 %}
-                <p><strong>{{ product.product_price }} zł</strong></p>
+                {% comment %} <p><strong>{{ product.product_price * (1 + product.product_discount) }} zł</strong></p> {% endcomment %}
                 {% endif %}
             </button>
         {% endfor %}
