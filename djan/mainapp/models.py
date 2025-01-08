@@ -160,6 +160,10 @@ class WarehouseProduct(models.Model):
     def __str__(self):
         return f"{self.product_name} ({self.product_quantity})"
     
+    def refresh_price(self):
+        self.product_price = self.calculate_price()
+        self.save()
+    
     def calculate_price(self):
         market_price = self.product_market.product_price
 
@@ -167,7 +171,16 @@ class WarehouseProduct(models.Model):
         price_with_tax = price_with_margin * (1 + Decimal(self.tax) / 100)
     
         final_price = price_with_tax * (1 - Decimal(self.product_discount) / 100)
-        return round(final_price, 2)
+
+        if final_price > 1000:
+            final_price = round(final_price / 50) * 50 - Decimal(0.01)
+        elif final_price <= 1000 and final_price > 200:
+            final_price = round(final_price, -1) - Decimal(0.01)
+        elif final_price <= 200 and final_price > 20:
+            final_price = round(final_price) - Decimal(0.01)
+        else:
+            pass
+        return final_price
 
 # ------------------------------------------------------------------------------------------------------------
 # KOSZYK - > pomyslec jak chcemy obslugiwac 
