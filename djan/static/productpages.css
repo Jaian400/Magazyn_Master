@@ -1,11 +1,10 @@
 /* Kontener siatki produktów */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 kolumny */
-    grid-auto-rows: 100px; /* Wysokość każdego wiersza */
-    gap: 25px 1px; /* Pierwsza wartość: odstępy w pionie, druga: odstępy w poziomie */
+    grid-template-columns: repeat(5, 1fr); /* 4 kolumny */
+    gap: 25px; /* Odstępy */
     padding: 16px;
-    margin-left: 340px; /* Margines po lewej stronie ekranu */
+    margin-left: 300px; /* Margines po lewej stronie ekranu */
 }
 
 /* Styl pojedynczego elementu */
@@ -13,13 +12,16 @@
     background-color: #ccc; /* Szary kolor */
     border: 1px solid #aaa;
     border-radius: 8px;
-    display: flex;
-    align-items: center; /* Wyśrodkowanie tekstu w pionie */
-    justify-content: center; /* Wyśrodkowanie tekstu w poziomie */
-    font-size: 16px;
-    color: #666;
-    font-weight: bold;
-    height: 100px; /* Krótszy bok jako podstawa */
-    width: 200px; /* Dłuższy bok */
-    margin: 0; /* Brak dodatkowych marginesów */
+    text-align: center; /* Wyśrodkowanie tekstu */
+    padding: 16px; /* Odstępy wewnętrzne */
+    cursor: pointer;
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+}
+
+.product-item h3, .product-item p {
+    margin: 10px 0; /* Marginesy między nazwą a ceną */
 }
