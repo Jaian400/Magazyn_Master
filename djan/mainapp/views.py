@@ -108,7 +108,7 @@ def product_detail_view(request,category_slug, product_slug):
 def koszyk_view(request):
     return render(request, 'koszyk.html')
 
-# PODSTRONY PRODUKTOW
+# PODSTRONY PRODUKTOW - mozna dynamicznie zrobic
 
 def budownictwo_view(request):
     products = WarehouseProduct.objects.filter(product_category__category_name="budownictwo")  # Pobranie wszystkich produktów
