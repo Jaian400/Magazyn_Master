@@ -10,10 +10,10 @@
 
 /* Styl pojedynczego elementu */
 .product-item {
-    background-color: white; /* bialy kolor */
+    background-color: white;
     border: 0.5px solid #aaaaaa;
     border-radius: 8px;
-    text-align: center; /* Wyśrodkowanie tekstu */
+    text-align: left;
     padding: 4%; /* Odstępy wewnętrzne */
     cursor: pointer;
 }
@@ -21,7 +21,7 @@
 .product-item:hover {
     border: 3px solid rgb(121, 121, 121);
     color: #00916E;
-    transform: scale(1.01);
+    transform: scale(1.02);
 }
 
 .product-image {

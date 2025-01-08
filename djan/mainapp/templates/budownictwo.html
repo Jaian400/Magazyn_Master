@@ -55,6 +55,9 @@
                 <img class="product-image" src="{% static 'images/products/' %}{{ product.product_image }}" alt="{{ product.product_name }}">
                 <h3>{{ product.product_name }}</h3>
                 <p><strong>{{ product.product_price }} zł</strong></p>
+                {% if product.product_discount != 0 %}
+                <p><strong>{{ product.product_price }} zł</strong></p>
+                {% endif %}
             </button>
         {% endfor %}
     </div>
