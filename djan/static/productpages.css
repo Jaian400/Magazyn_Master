@@ -1,25 +1,53 @@
 /* Kontener siatki produktów */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 kolumny */
-    grid-auto-rows: 100px; /* Wysokość każdego wiersza */
-    gap: 25px 1px; /* Pierwsza wartość: odstępy w pionie, druga: odstępy w poziomie */
-    padding: 16px;
-    margin-left: 340px; /* Margines po lewej stronie ekranu */
+    grid-template-columns: repeat(5, 1fr); /* 5 kolumn */
+    gap: 25px; /* Odstępy */
+    padding: 0.83%;
+    margin-left: 16%; /* Margines po lewej stronie ekranu */
+    margin-right: 16%;
+    
 }
 
 /* Styl pojedynczego elementu */
 .product-item {
-    background-color: #ccc; /* Szary kolor */
-    border: 1px solid #aaa;
+    background-color: white;
+    border: 0.5px solid #aaaaaa;
     border-radius: 8px;
-    display: flex;
-    align-items: center; /* Wyśrodkowanie tekstu w pionie */
-    justify-content: center; /* Wyśrodkowanie tekstu w poziomie */
-    font-size: 16px;
-    color: #666;
-    font-weight: bold;
-    height: 100px; /* Krótszy bok jako podstawa */
-    width: 200px; /* Dłuższy bok */
-    margin: 0; /* Brak dodatkowych marginesów */
+    text-align: left;
+    padding: 4%; /* Odstępy wewnętrzne */
+    cursor: pointer;
+
+}
+
+.product-item:hover {
+    border: 3px solid rgb(121, 121, 121);
+    color: #00916E;
+    transform: scale(1.02);
+}
+
+.product-image {
+    width: 100%;
+    height: 50%;
+}
+
+.product-item h3, .product-item p {
+    margin: 2%; /* Marginesy między nazwą a ceną */
+}
+
+.product-item h3, .product-image {
+    margin-top: 20px; /* Marginesy na górze */
+    margin-bottom: 20px; /* Marginesy na dole */
+}
+
+.product-name{
+    position: absolute;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.product-price{
+    position: absolute;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

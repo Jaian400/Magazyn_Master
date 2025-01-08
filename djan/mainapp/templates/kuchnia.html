@@ -52,13 +52,11 @@
     
     <div class="product-grid">
         {% for product in products %}
-            <div class="product-item">
-                {% comment %} <img src="{% static product.product_image %}" alt="{{ product.product_name }}" class="product-image"> {% endcomment %}
+            <button class="product-item" onclick="window.location.href='{% url 'product_detail' product.product_category.slug product.slug %}'">
+                <img class="product-image" src="{% static 'images/products/' %}{{ product.product_image }}" alt="{{ product.product_name }}">
                 <h3>{{ product.product_name }}</h3>
-                <p>{{ product.product_description }}</p>
                 <p><strong>{{ product.product_price }} zł</strong></p>
-                <a href="{% url 'product_detail' product.product_category.slug product.slug %}" class="button">Zobacz</a>
-            </div>
+            </button>
         {% endfor %}
     </div>
 
