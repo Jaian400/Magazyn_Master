@@ -140,9 +140,10 @@ span{
 .section-label {
     font-size: 20px;
     color: white;
-    margin-right: 21%; /* Większy odstęp między napisem a pierwszym przyciskiem */
+    margin-right: 10%; /*  odstęp między napisem a pierwszym przyciskiem */
     white-space: nowrap; /* Zapobiega zawijaniu tekstu */
 }
+
 /* Stylizacja kontenera z przyciskami sekcji */
 .buttons {
     display: flex;
@@ -152,7 +153,7 @@ span{
 }
 
 .button {
-    width: 120px; /* Stała szerokość przycisków */
+    width: 220px; /* Stała szerokość przycisków */
     height: 40px; /* Stała wysokość przycisków */
     background-color: white;
     color: black;
@@ -161,12 +162,14 @@ span{
     text-align: center;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.17s ease;
     line-height: 40px;
     text-decoration: none;
+    filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.4));
 }
 
 .button:hover {
     background-color: white;
-    transform: scale(1.05);
+    transform: scale(1.02);
+    filter: drop-shadow(5px 5px 3px rgba(0, 0, 0, 0.5));
 }
