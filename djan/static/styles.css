@@ -44,7 +44,7 @@ span{
     background-color: #e0e0e0;
     border-radius: 5px;
     padding: 5px;
-    max-width: 400px;
+    max-width: 500px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -94,7 +94,7 @@ span{
     border-radius: 5px;
     padding: 5px;
     width: 100%;
-    max-width: 400px; /* Maksymalna szerokość paska wyszukiwania */
+    max-width: 500px; /* Maksymalna szerokość paska wyszukiwania */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -140,7 +140,9 @@ span{
 .section-label {
     font-size: 20px;
     color: white;
-    margin-right: 10%; /*  odstęp między napisem a pierwszym przyciskiem */
+    /*margin-right: 10%;*/
+    margin-right: 5%; /*  odstęp między napisem a pierwszym przyciskiem */
+    margin-left: 5%;
     white-space: nowrap; /* Zapobiega zawijaniu tekstu */
 }
 
@@ -148,12 +150,12 @@ span{
 .buttons {
     display: flex;
     justify-content: center; /* Wyśrodkowanie przycisków w poziomie */
-    gap: 30px; /* Odstęp między przyciskami */
+    gap: 25px; /* Odstęp między przyciskami */
     padding: 10px 0; /* Dodatkowy odstęp od góry i dołu */
 }
 
 .button {
-    width: 220px; /* Stała szerokość przycisków */
+    width: 200px; /* Stała szerokość przycisków */
     height: 40px; /* Stała wysokość przycisków */
     background-color: white;
     color: black;

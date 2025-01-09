@@ -48,6 +48,31 @@
         </div>
         
     </header>
-    
+    <h2>Twój Koszyk</h2>
+    {% if cart %}
+        <ul>
+            {% for product_id, product_data in cart.items %}
+                <li>
+                    <img src="{% static 'images/' %}{{ product_data.image }}" alt="{{ product_data.name }}" style="width: 100px;"> 
+                    {{ product_data.name }} - 
+                    Cena (po rabacie): {{ product_data.price|floatformat:2 }} zł - 
+                    Ilość: {{ product_data.quantity }} - 
+                    Cena po marży: {{ product_data.price|floatformat:2 }} zł - 
+                    Cena po rabacie: {{ product_data.price|floatformat:2 }} zł
+                </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
+        <form action="{% url 'clear_cart' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Opróżnij koszyk</button>
+        </form>
+        <form action="{% url 'order' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Zamów</button>
+        </form>
+    {% else %}
+        <p>Twój koszyk jest pusty.</p>
+    {% endif %}
 </body>
 </html>
