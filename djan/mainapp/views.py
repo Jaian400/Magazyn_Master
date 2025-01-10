@@ -103,8 +103,9 @@ def product_detail_view(request,category_slug, product_slug):
     
     return render(request, 'product_detail.html', {'product': product, 'category': category})
 
+# ------------------------------------------------------------------------------------------------------------
 # KOSZYK
-
+# ------------------------------------------------------------------------------------------------------------
 
 # Widok dodający produkt do koszyka
 def add_to_cart(request, category_slug, product_slug):
@@ -167,7 +168,9 @@ def order(request):
     request.session['cart'] = {}
     return redirect('koszyk')
 
+# ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW - mozna dynamicznie zrobic
+# ------------------------------------------------------------------------------------------------------------
 
 def budownictwo_view(request):
     products = WarehouseProduct.objects.filter(product_category__category_name="budownictwo")  # Pobranie wszystkich produktów
