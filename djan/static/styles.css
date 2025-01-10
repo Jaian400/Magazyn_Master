@@ -133,30 +133,34 @@ span{
     height: 6.5%;
     background-color: #00916e;
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: 7px 15px;
 }
 
-.section-label {
+/* .section-label {
     font-size: 20px;
     color: white;
-    /*margin-right: 10%;*/
-    margin-right: 5%; /*  odstęp między napisem a pierwszym przyciskiem */
+    /*margin-right: 10%;
+    margin-right: 5%;
     margin-left: 5%;
-    white-space: nowrap; /* Zapobiega zawijaniu tekstu */
-}
+    white-space: nowrap;
+} */
 
 /* Stylizacja kontenera z przyciskami sekcji */
 .buttons {
     display: flex;
     justify-content: center; /* Wyśrodkowanie przycisków w poziomie */
-    gap: 25px; /* Odstęp między przyciskami */
-    padding: 10px 0; /* Dodatkowy odstęp od góry i dołu */
+    width: 80%; /* Szerokość kontenera */
+    max-width: 1200px; /* Maksymalna szerokość kontenera */
+    margin: 0 auto; /* Wyśrodkowanie poziome */
+    gap: 2%; /* Odstępy między przyciskami */
+    padding: 0 17%; /* Przestrzeń po lewej i prawej stronie kontenera */
 }
 
 .button {
-    width: 200px; /* Stała szerokość przycisków */
-    height: 40px; /* Stała wysokość przycisków */
+    height: 40px; /*Stała wysokość przycisków  */
+    flex: 0 0 20%;
     background-color: white;
     color: black;
     border: none;
