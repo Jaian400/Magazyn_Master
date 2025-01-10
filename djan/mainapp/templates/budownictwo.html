@@ -54,7 +54,9 @@
             <button class="product-item" onclick="window.location.href='{% url 'product_detail' product.product_category.slug product.slug %}'">
                 <img class="product-image" src="{% static 'images/products/' %}{{ product.product_image }}" alt="{{ product.product_name }}">
 
-                <h3>{{ product.product_name }}</h3>
+                <div class="product-name">
+                    <h3>{{ product.product_name }}</h3>
+                </div>
             
                 <div class="product-price">
                    <p><strong>{{ product.product_price }} zł</strong></p>

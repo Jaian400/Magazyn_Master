@@ -16,10 +16,9 @@
     border: 0.5px solid #aaaaaa;
     border-radius: 8px;
     text-align: left;
-    /* padding: 4%; Odstępy wewnętrzne */
     cursor: pointer;
     position: relative;
-    height: 470px;
+    height: 370px;
 }
 
 .product-item:hover {
@@ -29,8 +28,10 @@
 }
 
 .product-image {
-    width: 100%;
+    width: 95%;
     height: 200px;
+    top:0;
+    position: absolute;
 }
 
 .product-item h3, .product-item p {
@@ -43,9 +44,9 @@
 }
 
 .product-name{
+    padding-top: 30px;
+    /* padding-bottom: 20px; */
     position: absolute;
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 .product-price{
