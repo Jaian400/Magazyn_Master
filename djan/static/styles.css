@@ -155,7 +155,7 @@ span{
     max-width: 1200px; /* Maksymalna szerokość kontenera */
     margin: 0 auto; /* Wyśrodkowanie poziome */
     gap: 2%; /* Odstępy między przyciskami */
-    padding: 0 7%; /* Przestrzeń po lewej i prawej stronie kontenera */
+    padding: 0 17%; /* Przestrzeń po lewej i prawej stronie kontenera */
 }
 
 .button {
