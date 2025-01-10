@@ -56,12 +56,13 @@
 
                 <h3>{{ product.product_name }}</h3>
             
+                <div class="product-price">
+                   <p><strong>{{ product.product_price }} zł</strong></p>
+                    {% if product.product_discount != 0 %}
+                    {% comment %} wyswietlenie ceny po rabacie {% endcomment %}
 
-                <p><strong>{{ product.product_price }} zł</strong></p>
-                {% if product.product_discount != 0 %}
-                {% comment %} <p><strong>{{ product.product_price * (1 + product.product_discount) }} zł</strong></p> {% endcomment %}
-                {% endif %}
-
+                    {% endif %}
+                </div>
             </button>
         {% endfor %}
     </div>
