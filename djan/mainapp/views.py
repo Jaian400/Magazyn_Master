@@ -105,8 +105,67 @@ def product_detail_view(request,category_slug, product_slug):
 
 # KOSZYK
 
+
+# Widok dodający produkt do koszyka
+def add_to_cart(request, category_slug, product_slug):
+    # Znajdź produkt po slug
+    product = get_object_or_404(WarehouseProduct, slug=product_slug)
+    
+    # Pobierz ilość z formularza (domyślnie 1)
+    quantity = int(request.POST.get('quantity', 1))
+
+    # Sprawdź, czy koszyk już istnieje w sesji
+    cart = request.session.get('cart', {})
+
+    # Jeśli produkt jest już w koszyku, zwiększ ilość, w przeciwnym razie dodaj produkt
+    if str(product.id) in cart:
+        cart[str(product.id)]['quantity'] += quantity
+    else:
+        cart[str(product.id)] = {
+            'name': product.product_name,
+            'price': str(product.product_price),
+            'quantity': quantity,
+            'image': product.product_image,
+            'discount': product.product_discount,
+            'margin': product.margin,
+            'tax': product.tax
+        }
+
+    # Zapisz zmiany w koszyku w sesji
+    request.session['cart'] = cart
+
+    # Przekierowanie do strony koszyka
+    return redirect('koszyk')
+
+# Widok do wyświetlania koszyka
 def koszyk_view(request):
-    return render(request, 'koszyk.html')
+    cart = request.session.get('cart', {})
+    total_price = 0
+    for item in cart.values():
+        price = float(item['price'])
+        discount = item['discount']
+        margin = item['margin']
+        tax = item['tax']
+        
+        # Oblicz cenę po rabacie i marży
+        price_after_discount = price * (1 - discount / 100)
+        price_after_margin = price_after_discount * (1 + margin / 100)
+        final_price = price_after_margin * (1 + tax / 100)  # Cena po podatku
+        
+        # Całkowita cena
+        total_price += final_price * item['quantity']
+
+    return render(request, 'koszyk.html', {'cart': cart, 'total_price': total_price})
+
+# Widok do opróżniania koszyka
+def clear_cart(request):
+    request.session['cart'] = {}
+    return redirect('koszyk')
+
+# Widok do składania zamówienia (na razie opróżnia koszyk)
+def order(request):
+    request.session['cart'] = {}
+    return redirect('koszyk')
 
 # PODSTRONY PRODUKTOW - mozna dynamicznie zrobic
 

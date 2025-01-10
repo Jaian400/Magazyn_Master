@@ -1,0 +1,58 @@
+.product-image.left-aligned {
+    width: 25%;   /* Skaluje obrazek do 1/4 jego pierwotnej szerokości */
+    height: auto; /* Utrzymuje proporcje obrazu */
+    float: left;  /* Ustawia obrazek po lewej stronie */
+    margin-right: 20px; /* Dodaje odstęp między obrazkiem a tekstem */
+    margin-left: 5%;    /* Zwiększa odległość zdjęcia od lewej krawędzi ekranu o 15% */
+}
+
+.product-info-box {
+    padding: 10px;            /* Przestrzeń wewnętrzna ramki */
+    background-color: rgba(255, 255, 255, 0.8); /* Tło ramki z przezroczystością */
+    border: 2px solid #ccc;   /* Kolor ramki */
+    border-radius: 8px;       /* Zaokrągla rogi ramki */
+    width: 50%;              /* Szerokość ramki 2 razy większa niż jej zawartość */
+    margin-top: 0px;          /* Brak marginesu od góry */
+    margin-left: 10px;        /* Odstęp od zdjęcia */
+    float: left;              /* Umieszcza ramkę po prawej stronie zdjęcia */
+}
+
+.quantity-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;  /* Ustawia elementy po prawej stronie */
+}
+
+.quantity-input {
+    width: 60px;      /* Szerokość pola do wprowadzania ilości */
+    margin-right: 10px;  /* Odstęp między polem a przyciskiem */
+    padding: 5px;
+}
+
+.add-to-cart {
+    margin-top: 10px;  /* Odstęp między polem a przyciskiem */
+    display: flex;
+    justify-content: flex-end;  /* Ustawia przycisk po prawej stronie */
+}
+
+.add-to-cart-button {
+    padding: 5px 15px;
+    background-color: #4CAF50; /* Zielony przycisk */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.add-to-cart-button:hover {
+    background-color: #45a049; /* Ciemniejszy zielony przycisk po najechaniu */
+}
+
+/* Wyśrodkowanie elementów w dolnej części ekranu */
+.fixed-bottom-container {
+    position: fixed;
+    bottom: 20px;         /* Odstęp od dolnej krawędzi ekranu */
+    left: 50%;            /* Ustawienie na środku poziomym */
+    transform: translateX(-50%); /* Wyrównanie elementu do środka ekranu */
+    width: 100%;          /* Pełna szerokość */
+    text-align: center;   /* Wyśrodkowanie tekstu */
+}
