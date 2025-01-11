@@ -24,16 +24,19 @@
             </div>
             
             <div class="header-buttons">
+                <button class="icon-button" onclick="window.location.href='{% url 'user_site' %}'">
+                    <img src="{% static 'images/user_site_icon.png'%}" alt="Strona uzytkownika" class="icon-image">
+                </button>           
+
                 <button class="icon-button" onclick="window.location.href='{% url 'koszyk' %}'">
                     <img src="{% static 'images/sklep.png'%}" alt="Sklep" class="icon-image">
                 </button>
 
-                <button class="icon-button" onclick="window.location.href='{% url 'logowanie' %}'">
+                <button class="icon-button" onclick="window.location.href='{% url 'logout' %}'">
                     <img src="{% static 'images/wyloguj.png' %}" alt="Wyloguj" class="icon-image">
                 </button>
             </div>
         </div>
-
 
         <div tabindex="-1"></div>
             
