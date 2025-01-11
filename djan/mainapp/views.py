@@ -9,7 +9,6 @@ from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_protect
-import uuid
 
 # INDEX -> STRONA GŁOWNA
 
