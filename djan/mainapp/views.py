@@ -147,7 +147,7 @@ def add_to_cart(request, product_id):
     return redirect('koszyk')
 
 # Czyszczenie koszyka
-def clear_cart(request):
+def clear_cart(request, cart_id):
     if request.user.is_authenticated:
         cart = Cart.objects.get(user=request.user)
     else:
@@ -155,6 +155,22 @@ def clear_cart(request):
     
     cart.clear_cart()
     return redirect('koszyk')
+
+# obsluga koszyka -> produktow pojedynczych
+def quantity_minus(request, cart_product_id):
+    cart_product = CartProduct.objects.get(id=cart_product_id)
+    cart_product.quantity_minus()
+    return redirect('cart')
+
+def quantity_plus(request, cart_product_id):
+    cart_product = CartProduct.objects.get(id=cart_product_id)
+    cart_product.quantity_plus()
+    return redirect('cart')
+
+def clear_product(request, cart_product_id):
+    cart_product = CartProduct.objects.get(id=cart_product_id)
+    cart_product.clear_product()
+    return redirect('cart')
 
 # Widok do składania zamówienia (na razie opróżnia koszyk)
 def order(request):
