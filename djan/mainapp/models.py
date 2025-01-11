@@ -135,6 +135,7 @@ class WarehouseProduct(models.Model):
     product_image = models.CharField(max_length=255, null=True, blank=True) # nazwa zdjecia jako podadres w staticu
     product_description = models.TextField(blank=True)
     product_discount = models.IntegerField(default=0)  # Rabat w procentach
+    product_price_discounted = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     margin = models.IntegerField(default=10) # marża w procentach
     tax = models.IntegerField(default=23) # podatek tez w procentach
 
@@ -153,7 +154,7 @@ class WarehouseProduct(models.Model):
             self.slug = slugify(self.product_name)
 
         if self.product_price:
-            self.product_price = self.calculate_price()
+            self.product_price, self.product_price_discounted = self.calculate_price()
         
         super().save(*args, **kwargs)
 
@@ -161,7 +162,7 @@ class WarehouseProduct(models.Model):
         return f"{self.product_name} ({self.product_quantity})"
     
     def refresh_price(self):
-        self.product_price = self.calculate_price()
+        self.product_price, self.product_price_discounted = self.calculate_price()
         self.save()
     
     def calculate_price(self):
@@ -169,8 +170,10 @@ class WarehouseProduct(models.Model):
 
         price_with_margin = market_price * (1 + Decimal(self.margin) / 100)
         price_with_tax = price_with_margin * (1 + Decimal(self.tax) / 100)
-    
-        final_price = price_with_tax * (1 - Decimal(self.product_discount) / 100)
+
+        final_price = price_with_tax
+        final_price_discounted = price_with_tax * (1 - Decimal(self.product_discount) / 100)
+        final_price_discounted = round(final_price_discounted, 1)
 
         if final_price > 1000:
             final_price = round(final_price / 50) * 50 - Decimal(0.01)
@@ -179,8 +182,9 @@ class WarehouseProduct(models.Model):
         elif final_price <= 200 and final_price > 20:
             final_price = round(final_price) - Decimal(0.01)
         else:
-            pass
-        return final_price
+            final_price = round(final_price, 1)
+        
+        return final_price, final_price_discounted
 
 # ------------------------------------------------------------------------------------------------------------
 # KOSZYK - > pomyslec jak chcemy obslugiwac 
@@ -196,6 +200,8 @@ class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
 
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
     # STATUS_CHOICES = [ 
     # ('active', 'Active'),
     # ('closed', 'Closed'),
@@ -206,8 +212,17 @@ class Cart(models.Model):
     def total_value(self):
         return sum(item.total_price() for item in self.cartproduct_set.all())
     
+    def save(self, *args, **kwargs):
+        if self.user and self.session:
+            self.session = None
+
+        self.total_price = self.total_value()
+        
+        super().save(*args, **kwargs)
+    
     def clear_cart(self):
         self.cartproduct_set.all().delete()
+        self.save()
     
     def __str__(self):
         if self.user:
@@ -224,6 +239,10 @@ class CartProduct(models.Model):
 
     def total_price(self):
         return self.product_price * self.product_quantity
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.cart.save()
 
 # ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE -> user zamawia od nas

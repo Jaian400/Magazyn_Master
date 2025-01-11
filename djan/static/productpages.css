@@ -6,7 +6,8 @@
     padding: 0.83%;
     margin-left: 16%; /* Margines po lewej stronie ekranu */
     margin-right: 16%;
-    
+    align-items: stretch; /* Ensures items stretch to match their own height */
+
 }
 
 /* Styl pojedynczego elementu */
@@ -15,9 +16,9 @@
     border: 0.5px solid #aaaaaa;
     border-radius: 8px;
     text-align: left;
-    padding: 4%; /* Odstępy wewnętrzne */
     cursor: pointer;
-
+    position: relative;
+    height: 370px;
 }
 
 .product-item:hover {
@@ -27,8 +28,10 @@
 }
 
 .product-image {
-    width: 100%;
-    height: 50%;
+    width: 95%;
+    height: 200px;
+    top:0;
+    position: absolute;
 }
 
 .product-item h3, .product-item p {
@@ -41,13 +44,12 @@
 }
 
 .product-name{
+    padding-top: 30px;
+    /* padding-bottom: 20px; */
     position: absolute;
-    padding-top: 20px;
-    padding-bottom: 20px;
 }
 
 .product-price{
     position: absolute;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    bottom: 0;
 }
