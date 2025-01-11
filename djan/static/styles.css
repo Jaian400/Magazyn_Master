@@ -141,17 +141,9 @@ span{
 /* .section-label {
     font-size: 20px;
     color: white;
-<<<<<<< HEAD
     margin-right: 10%;
-    white-space: nowrap; /* Zapobiega zawijaniu tekstu */
-}
-=======
-    /*margin-right: 10%;
-    margin-right: 5%;
-    margin-left: 5%;
-    white-space: nowrap;
-} */
->>>>>>> main
+    white-space: nowrap;} /* Zapobiega zawijaniu tekstu */
+
 
 /* Stylizacja kontenera z przyciskami sekcji */
 .buttons {
