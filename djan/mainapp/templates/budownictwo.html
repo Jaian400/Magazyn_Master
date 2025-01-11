@@ -49,13 +49,59 @@
         
     </header>
     
-    <div class="filters-box">
+    
 
-        kutas
+    
 
-    </div>
+    <div class="wrapper-flap-two-columns">
+        
+        <div class="filters-box">
+            <form method="get">
+                <label for="min_price">Cena minimalna:</label>
+                <input 
+                    class="slider"
+                    type="range" 
+                    name="min_price" 
+                    id="min_price" 
+                    min="0" 
+                    max="10000" 
+                    step="1" 
+                    value="{{ request.GET.min_price|default:0 }}" 
+                    oninput="updateMinPrice(this.value)"
+                >
+                <span id="min_price_value">{{ request.GET.min_price|default:"0" }} zł</span>
+        
+                <label for="max_price">Cena maksymalna:</label>
+                <input 
+                    class="slider"
+                    type="range" 
+                    name="max_price" 
+                    id="max_price" 
+                    min="0" 
+                    max="10000" 
+                    step="1" 
+                    value="{{ request.GET.max_price|default:10000 }}" 
+                    oninput="updateMaxPrice(this.value)"
+                >
+                <span id="max_price_value">{{ request.GET.max_price|default:"10000" }} zł</span>
+        
+                <button type="submit">Filtruj</button>
+            </form>
+        </div>
+        
+        <script>
+            function updateMinPrice(value) {
+                document.getElementById('min_price_value').textContent = value + ' zł';
+            }
+        
+            function updateMaxPrice(value) {
+                document.getElementById('max_price_value').textContent = value + ' zł';
+            }
+        </script>
+        
 
     <div class="product-grid">
+        
         {% for product in products %}
             <button class="product-item" onclick="window.location.href='{% url 'product_detail' product.product_category.slug product.slug %}'">
                 <img class="product-image" src="{% static 'images/products/' %}{{ product.product_image }}" alt="{{ product.product_name }}">
@@ -65,18 +111,19 @@
                 </div>
                 
                 {% if product.product_discount == 0 %}
-                <div class="product-price">
-                    <strong> {{ product.product_price }} zł </strong>
-                </div>
+                    <div class="product-price">
+                        <strong> {{ product.product_price }} zł </strong>
+                    </div>
                 {% endif %}
 
                 {% if product.product_discount != 0 %}
-                <div class="product-price">
-                   <strong style="color: #ff1d1d">{{ product.product_price_discounted }} zł </strong><strong><s>{{ product.product_price }} zł</s></strong>
-                </div>
+                    <div class="product-price">
+                        <strong style="color: #ff1d1d">{{ product.product_price_discounted }} zł </strong><strong><s>{{ product.product_price }} zł</s></strong>
+                    </div>
                 {% endif %}
             </button>
         {% endfor %}
+    </div>
     </div>
     
 </body>
