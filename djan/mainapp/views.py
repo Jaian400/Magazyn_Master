@@ -165,8 +165,14 @@ def category_view(request, category_slug):
     category = get_object_or_404(ProductCategory, slug=category_slug)
     products = WarehouseProduct.objects.filter(product_category=category)
     max_price = int(max(product.product_price for product in products) + 1)
-    products = filter_products(products, request)
     suppliers = products.values_list('product_market__supplier__supplier_name', flat=True).distinct()
+
+    # Filter by suppliers
+    supplier_filter = request.GET.getlist('supplier')
+    if supplier_filter:
+        products = products.filter(product_market__supplier__supplier_name__in=supplier_filter)
+
+    products = filter_products(products, request)
 
     return render(request, 'category.html', {'products': products, 'category': category, 'max_price': max_price, 'suppliers': suppliers})
 
@@ -177,8 +183,8 @@ def category_view(request, category_slug):
 def filter_products(queryset, request):
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
-    categories = request.GET.getlist('category')
-    suppliers = request.GET.getlist('supplier')
+    # categories = request.GET.getlist('category')
+    # suppliers = request.GET.getlist('supplier')
 
     if min_price:
         queryset = queryset.filter(product_price__gte=min_price)
@@ -187,10 +193,10 @@ def filter_products(queryset, request):
         regular_products = queryset.filter(product_discount=0, product_price__lte=max_price)
         queryset = discounted_products | regular_products
 
-    if categories:
-        queryset = queryset.filter(product_category__id__in=categories)
+    # if categories:
+    #     queryset = queryset.filter(product_category__id__in=categories)
 
-    if suppliers:
-        queryset = queryset.filter(product_market__supplier__supplier_id__in=suppliers)
+    # if suppliers:
+    #     queryset = queryset.filter(product_market__supplier__supplier_id__in=suppliers)
 
     return queryset
