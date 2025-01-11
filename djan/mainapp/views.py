@@ -180,10 +180,6 @@ def clear_product(request, cart_product_id):
 # ------------------------------------------------------------------------------------------------------------
 
 def order(request, cart_id):
-    cart = Cart.objects.get(id=cart_id)
-    order = Order.objects.create(user=request.user, tota_price=0.)
-
-    order.calculate_total_price()
 
     return render(request, 'order.html')
 
