@@ -172,8 +172,6 @@ class WarehouseProduct(models.Model):
         price_with_tax = price_with_margin * (1 + Decimal(self.tax) / 100)
 
         final_price = price_with_tax
-        final_price_discounted = price_with_tax * (1 - Decimal(self.product_discount) / 100)
-        final_price_discounted = round(final_price_discounted, 1)
 
         if final_price > 1000:
             final_price = round(final_price / 50) * 50 - Decimal(0.01)
@@ -183,8 +181,13 @@ class WarehouseProduct(models.Model):
             final_price = round(final_price) - Decimal(0.01)
         else:
             final_price = round(final_price, 1)
-        
-        return final_price, final_price_discounted
+
+        if self.product_discount > 0:
+            final_price_discounted = price_with_tax * (1 - Decimal(self.product_discount) / 100)
+            final_price_discounted = round(final_price_discounted, 1)
+            return final_price, final_price_discounted
+        else:
+            return final_price, None
 
 # ------------------------------------------------------------------------------------------------------------
 # KOSZYK - > pomyslec jak chcemy obslugiwac 
