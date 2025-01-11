@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="wms_test" content="width=device-width, initial-scale=1.0">
-    <title>WMS</title>
+    <title>MagazynMaster</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'user_site.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'productpages.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logofav.png' %}">
 </head>
 <body>
@@ -13,11 +15,12 @@
         <div class="highest_div">
             <a href={%url 'index'%} class="logo-button">
                 <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
-            </a>
+            </a>    
+
             <div class="search-bar">
                 <input type="text" placeholder="Wyszukaj..." class="search-input">
                 <button class="search-button">
-                    <img src="{%static 'images/lupa.png'%}" alt="Szukaj" class="search-icon">
+                    <img src="{% static 'images/lupa.png'%}" alt="Szukaj" class="search-icon">
                 </button>
             </div>
             
@@ -36,7 +39,6 @@
             </div>
         </div>
 
-
         <div tabindex="-1"></div>
             
         <div class="second_div">
@@ -47,35 +49,22 @@
                 <button onclick="location.href='{% url 'category' 'ogrod' %}'" class="button">Ogród</button>
                 <button onclick="location.href='{% url 'category' 'lazienka' %}'" class="button">Łazienka</button>
                 <button onclick="location.href='{% url 'category' 'kuchnia' %}'" class="button">Kuchnia</button>
-            </div>      
+            </div>    
         </div>
         
     </header>
-    <h2>Twój Koszyk</h2>
-    {% if cart %}
-        <ul>
-            {% for product_id, product_data in cart.items %}
-                <li>
-                    <img src="{% static 'images/' %}{{ product_data.image }}" alt="{{ product_data.name }}" style="width: 100px;"> 
-                    {{ product_data.name }} - 
-                    Cena (po rabacie): {{ product_data.price|floatformat:2 }} zł - 
-                    Ilość: {{ product_data.quantity }} - 
-                    Cena po marży: {{ product_data.price|floatformat:2 }} zł - 
-                    Cena po rabacie: {{ product_data.price|floatformat:2 }} zł
-                </li>
-            {% endfor %}
-        </ul>
-        <p><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
-        <form action="{% url 'clear_cart' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Opróżnij koszyk</button>
-        </form>
-        <form action="{% url 'order' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Zamów</button>
-        </form>
-    {% else %}
-        <p>Twój koszyk jest pusty.</p>
-    {% endif %}
-</body>
-</html>
+
+    <div class="welcome-message"> 
+        Witaj, {{ user.first_name }}
+    </div>
+
+    <table>
+        <tr>
+          <td>E-mail</td>
+          <td>{{user.email}}</td>
+        </tr>
+        <tr>
+          <td>Imię i Nazwisko</td>
+          <td>{{user.first_name}} {{user.last_name}}</td>
+        </tr>
+      </table>

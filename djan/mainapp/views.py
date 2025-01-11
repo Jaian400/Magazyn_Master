@@ -3,11 +3,13 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import WarehouseProduct, ProductCategory, Cart, CartProduct
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import admin
 from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_protect
+import uuid
 
 # INDEX -> STRONA GŁOWNA
 
@@ -28,7 +30,7 @@ def logowanie_view(request):
                 login(request, user)
                 return redirect(reverse('admin:index')) 
             login(request, user)
-            return render(request, 'index.html')
+            return redirect(reverse('index')) 
         else:
             return render(request, 'logowanie.html', {"error": "Niepoprawny e-mail lub hasło."})
     return render(request, 'logowanie.html')
@@ -99,6 +101,11 @@ def rejestracja_view(request):
         )
     return render(request, 'rejestracja.html')
 
+def logout_view(request):
+
+    logout(request)
+    return redirect(reverse('index')) 
+
 # PRODUKT
 
 def product_detail_view(request,category_slug, product_slug): 
@@ -115,7 +122,8 @@ def koszyk_view(request):
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
     else:
-        cart, created = Cart.objects.get_or_create(session=request.session.session_key)
+        cart_uuid = uuid.uuid4()
+        cart, created = Cart.objects.get_or_create(session_uuid=cart_uuid)
 
     cart_products = CartProduct.objects.filter(cart=cart)
     total_price = cart.total_price
@@ -132,7 +140,8 @@ def add_to_cart(request, product_id):
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
     else:
-        cart, created = Cart.objects.get_or_create(session=request.session.session_key)
+        cart_uuid = uuid.uuid4()
+        cart, created = Cart.objects.get_or_create(session_uuid=cart_uuid)
     
     if product.product_discount > 0:
         cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price_discounted)
@@ -220,3 +229,17 @@ def filter_products(queryset, request):
     #     queryset = queryset.filter(product_market__supplier__supplier_id__in=suppliers)
 
     return queryset
+
+# ------------------------------------------------------------------------------------------------------------
+# strona konta uzytkownika
+# ------------------------------------------------------------------------------------------------------------
+
+@csrf_protect
+def user_site_view(request):
+
+    if not request.user.is_authenticated:
+        return redirect('logowanie')
+
+
+
+    return render(request, 'user_site.html')
