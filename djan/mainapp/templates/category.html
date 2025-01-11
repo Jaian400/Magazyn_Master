@@ -53,6 +53,7 @@
         
         <div class="filters-box">
             <form method="get">
+                <!-- Filtr cenowy -->
                 <label for="min_price">Cena minimalna:</label>
                 <input 
                     class="slider"
@@ -60,7 +61,7 @@
                     name="min_price" 
                     id="min_price" 
                     min="0" 
-                    max={{ max_price }}
+                    max="{{ max_price }}"
                     step="1" 
                     value="{{ request.GET.min_price|default:0 }}" 
                     oninput="updateMinPrice(this.value)"
@@ -74,12 +75,27 @@
                     name="max_price" 
                     id="max_price" 
                     min="0" 
-                    max = {{ max_price }}
+                    max="{{ max_price }}"
                     step="1" 
                     value="{{ request.GET.max_price|default:max_price }}" 
                     oninput="updateMaxPrice(this.value)"
                 >
                 <span id="max_price_value">{{ request.GET.max_price|default:max_price }} zł</span>
+                
+                <br>
+
+                <!-- Filtr dostawców -->
+                {% for supplier in suppliers %}
+                    <input
+                        type="checkbox"
+                        id="supplier_{{ supplier }}"
+                        name="supplier"
+                        value="{{ supplier }}"
+                        {% if supplier in request.GET.supplier %}checked{% endif %}
+                    >
+                    <label for="supplier_{{ supplier }}">{{ supplier }}</label>
+                    <br>
+                {% endfor %}
         
                 <button type="submit">Filtruj</button>
             </form>
