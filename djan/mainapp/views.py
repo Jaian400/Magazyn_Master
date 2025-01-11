@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import admin
 from django.urls import reverse
 from django.db import IntegrityError
+from django.db.models import Q
 
 # INDEX -> STRONA GŁOWNA
 
@@ -161,8 +162,11 @@ def order(request):
 # ------------------------------------------------------------------------------------------------------------
 
 def budownictwo_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="budownictwo")  # Pobranie wszystkich produktów
-    return render(request, 'budownictwo.html', {'products': products})
+    products = WarehouseProduct.objects.filter(product_category__category_name="budownictwo")
+    max_price = max(product.product_price for product in products)
+    products = filter_products(products, request)
+
+    return render(request, 'budownictwo.html', {'products': products, 'max_price': max_price})
 
 def kuchnia_view(request):
     products = WarehouseProduct.objects.filter(product_category__category_name="kuchnia")
@@ -183,3 +187,28 @@ def ogrod_view(request):
 def technika_view(request):
     products = WarehouseProduct.objects.filter(product_category__category_name="technika")
     return render(request, 'technika.html', {'products': products})
+
+# ------------------------------------------------------------------------------------------------------------
+# FILTROWANIE
+# ------------------------------------------------------------------------------------------------------------
+
+def filter_products(queryset, request):
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    categories = request.GET.getlist('category')
+    suppliers = request.GET.getlist('supplier')
+
+    if min_price:
+        queryset = queryset.filter(product_price__gte=min_price)
+    if max_price:
+        discounted_products = queryset.filter(product_discount__gt=0, product_price_discounted__lte=max_price)
+        regular_products = queryset.filter(product_discount=0, product_price__lte=max_price)
+        queryset = discounted_products | regular_products
+
+    if categories:
+        queryset = queryset.filter(product_category__id__in=categories)
+
+    if suppliers:
+        queryset = queryset.filter(product_market__supplier__supplier_id__in=suppliers)
+
+    return queryset
