@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
-from .models import WarehouseProduct, ProductCategory, Cart, CartProduct
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import admin
@@ -175,10 +175,30 @@ def clear_product(request, cart_product_id):
     cart_product.clear_product()
     return redirect('cart')
 
-# Widok do składania zamówienia (na razie opróżnia koszyk)
-def order(request):
-    request.session['cart'] = {}
-    return redirect('koszyk')
+# ------------------------------------------------------------------------------------------------------------
+# ZAMOWIENIE
+# ------------------------------------------------------------------------------------------------------------
+
+def order(request, cart_id):
+    cart = Cart.objects.get(id=cart_id)
+    order = Order.objects.create(user=request.user, tota_price=0.)
+
+    order.calculate_total_price()
+
+    return render(request, 'order.html')
+
+def make_order(request, cart_id):
+    cart = Cart.objects.get(id=cart_id)
+    order = Order.objects.create(user=request.user, tota_price=0.)
+
+    for cart_product in cart.items.all():
+        Order.objects.create(order=order, order_product=cart_product.product, order_product_price=cart_product.product_price,
+                             order_product_quantity=cart_product.product_quantity)
+
+    order.calculate_total_price()
+
+    return redirect('usersite')
+
 
 # ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW - trzeba dynamicznie zrobic
