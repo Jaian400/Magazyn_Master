@@ -215,13 +215,13 @@ class Cart(models.Model):
     def total_value(self):
         return sum(item.total_price() for item in self.cartproduct_set.all())
     
-    def save(self, *args, **kwargs):
-        if self.user and self.session:
-            self.session = None
+    # def save(self, *args, **kwargs):
+    #     if self.user and self.session:
+    #         self.session = None
 
-        self.total_price = self.total_value()
+    #     self.total_price = self.total_value()
         
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
     
     def clear_cart(self):
         self.cartproduct_set.all().delete()
