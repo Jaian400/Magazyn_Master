@@ -203,23 +203,14 @@ class Cart(models.Model):
 
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
-    # STATUS_CHOICES = [ 
-    # ('active', 'Active'),
-    # ('closed', 'Closed'),
-    # ('abandoned', 'Abandoned'),
-    # ]
-    # status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
-
     def total_value(self):
         return sum(item.total_price() for item in self.cartproduct_set.all())
     
-    # def save(self, *args, **kwargs):
-    #     if self.user and self.session:
-    #         self.session = None
-
-    #     self.total_price = self.total_value()
-        
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.product_price = self.product.product_price_discounted if self.product.product_discount > 0 else self.product.product_price
+        super().save(*args, **kwargs)
+        self.cart.total_price = self.cart.total_value()
+        self.cart.save()
     
     def delete_old_carts():
         old_date = now() - timedelta(days=30)
