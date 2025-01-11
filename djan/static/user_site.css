@@ -1,0 +1,11 @@
+
+.welcome-message{
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid #ccc;
+    padding: 8px;
+    border-radius: 5px;
+    margin: 10px;
+    justify-content: center;
+}
+
