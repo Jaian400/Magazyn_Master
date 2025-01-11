@@ -3,11 +3,12 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import WarehouseProduct, ProductCategory, Cart, CartProduct
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import admin
 from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_protect
 
 # INDEX -> STRONA GŁOWNA
 
@@ -28,7 +29,7 @@ def logowanie_view(request):
                 login(request, user)
                 return redirect(reverse('admin:index')) 
             login(request, user)
-            return render(request, 'index.html')
+            return redirect(reverse('index')) 
         else:
             return render(request, 'logowanie.html', {"error": "Niepoprawny e-mail lub hasło."})
     return render(request, 'logowanie.html')
@@ -98,6 +99,11 @@ def rejestracja_view(request):
                 }
         )
     return render(request, 'rejestracja.html')
+
+def logout_view(request):
+
+    logout(request)
+    return redirect(reverse('index')) 
 
 # PRODUKT
 
@@ -220,3 +226,17 @@ def filter_products(queryset, request):
     #     queryset = queryset.filter(product_market__supplier__supplier_id__in=suppliers)
 
     return queryset
+
+# ------------------------------------------------------------------------------------------------------------
+# strona konta uzytkownika
+# ------------------------------------------------------------------------------------------------------------
+
+@csrf_protect
+def user_site_view(request):
+
+    if not request.user.is_authenticated:
+        return redirect('logowanie')
+
+
+
+    return render(request, 'user_site.html')

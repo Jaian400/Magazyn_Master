@@ -23,6 +23,8 @@ urlpatterns = [
     path('', index_view, name='index'),
     path('rejestracja/', rejestracja_view, name='rejestracja'),
     path('logowanie/', logowanie_view, name='logowanie'),
+    path('logout/', logout_view, name='logout'),
+
     path('add/<int:product_id>/', add_to_cart, name='add_to_cart'), 
     
     path('<slug:category_slug>', category_view, name='category'),
@@ -30,6 +32,9 @@ urlpatterns = [
     path('order/', order, name='order'),
     
     path('koszyk/', koszyk_view, name='koszyk'),
+    path('user_site/', user_site_view, name='user_site'),
+
+
     path('<slug:category_slug>/<slug:product_slug>/', product_detail_view, name='product_detail'),
 
     path('cart/<int:cart_id>/clear', clear_cart, name='clear_cart'),
