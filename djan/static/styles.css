@@ -140,9 +140,7 @@ span{
 .section-label {
     font-size: 20px;
     color: white;
-    /*margin-right: 10%;*/
-    margin-right: 5%; /*  odstęp między napisem a pierwszym przyciskiem */
-    margin-left: 5%;
+    margin-right: 10%;
     white-space: nowrap; /* Zapobiega zawijaniu tekstu */
 }
 
