@@ -158,13 +158,13 @@ def order(request):
     return redirect('koszyk')
 
 # ------------------------------------------------------------------------------------------------------------
-# PODSTRONY PRODUKTOW - mozna dynamicznie zrobic
+# PODSTRONY PRODUKTOW - trzeba dynamicznie zrobic
 # ------------------------------------------------------------------------------------------------------------
 
 def category_view(request, category_slug):
     category = get_object_or_404(ProductCategory, slug=category_slug)
     products = WarehouseProduct.objects.filter(product_category=category)
-    max_price = max(product.product_price for product in products)
+    max_price = int(max(product.product_price for product in products) + 1)
     products = filter_products(products, request)
 
     return render(request, 'category.html', {'products': products, 'category': category, 'max_price': max_price})

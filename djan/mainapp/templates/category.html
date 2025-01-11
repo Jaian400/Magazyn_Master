@@ -83,6 +83,17 @@
         
                 <button type="submit">Filtruj</button>
             </form>
+
+            {% for supplier in suppliers %}
+
+                <input
+                    type="checkbox"
+                    id={{ supplier.id }}
+                    name="supplier"
+                >
+
+            {% endfor %}
+
         </div>
         
         <script>
