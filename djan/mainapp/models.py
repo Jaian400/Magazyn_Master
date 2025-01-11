@@ -206,12 +206,6 @@ class Cart(models.Model):
     def total_value(self):
         return sum(item.total_price() for item in self.cartproduct_set.all())
     
-    def save(self, *args, **kwargs):
-        self.product_price = self.product.product_price_discounted if self.product.product_discount > 0 else self.product.product_price
-        super().save(*args, **kwargs)
-        self.cart.total_price = self.cart.total_value()
-        self.cart.save()
-    
     def delete_old_carts():
         old_date = now() - timedelta(days=30)
         Cart.objects.filter(user__isnull=True, session_key__isnull=True, created_at__lt=old_date).delete()
