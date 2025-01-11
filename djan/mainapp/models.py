@@ -245,6 +245,7 @@ class CartProduct(models.Model):
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        self.cart.total_price = self.cart.total_value()
         self.cart.save()
 
 # ------------------------------------------------------------------------------------------------------------
