@@ -169,33 +169,6 @@ def category_view(request, category_slug):
 
     return render(request, 'category.html', {'products': products, 'category': category, 'max_price': max_price})
 
-def budownictwo_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="budownictwo")
-    max_price = max(product.product_price for product in products)
-    products = filter_products(products, request)
-
-    return render(request, 'budownictwo.html', {'products': products, 'max_price': max_price})
-
-def kuchnia_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="kuchnia")
-    return render(request, 'kuchnia.html', {'products': products})
-
-def lazienka_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="lazienka")
-    return render(request, 'lazienka.html', {'products': products})
-
-def mieszkanie_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="mieszkanie")
-    return render(request, 'mieszkanie.html', {'products': products})
-
-def ogrod_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="ogrod")
-    return render(request,'ogrod.html', {'products': products})
-
-def technika_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="technika")
-    return render(request, 'technika.html', {'products': products})
-
 # ------------------------------------------------------------------------------------------------------------
 # FILTROWANIE
 # ------------------------------------------------------------------------------------------------------------

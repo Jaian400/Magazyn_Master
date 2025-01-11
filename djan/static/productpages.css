@@ -7,7 +7,6 @@
     margin-left: 16%; /* Margines po lewej stronie ekranu */
     margin-right: 16%;
     align-items: stretch; /* Ensures items stretch to match their own height */
-
 }
 
 /* Styl pojedynczego elementu */
@@ -18,7 +17,7 @@
     text-align: left;
     cursor: pointer;
     position: relative;
-    height: 370px;
+    height: 350px;
 }
 
 .product-item:hover {
@@ -51,5 +50,98 @@
 
 .product-price{
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
+    font-size: 20px;
+    color: #2d2d2d;
 }
+
+.filters-box{
+    /* display: flex; */
+    position: absolute;
+    border: 0.5px solid #aaaaaa;
+    border-radius: 8px;
+    width: 10%;
+    background-color: rgb(252, 252, 252);
+    margin-left: 2%;
+    margin-top:2%;
+    padding: 0.83%;
+
+}
+
+.wrapper-flap-two-columns {
+    position: relative;
+}
+
+
+.slider {
+    width: 100%;
+    height: 10px;
+    background: #ddd;
+    outline: none;
+    opacity: 0.7;
+    box-sizing: border-box;
+    transition: opacity 0.2s; /* Standardized shorthand */
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+/* Track styles for WebKit browsers */
+.slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 10px;
+    background: #bdbdbd;
+    border-radius: 3px;
+}
+
+/* Track styles for Mozilla browsers */
+.slider::-moz-range-track {
+    width: 100%;
+    height: 10px;
+    background: #bdbdbd;
+    border-radius: 3px;
+}
+
+/* Track styles for Internet Explorer */
+.slider::-ms-track {
+    width: 100%;
+    height: 10px;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+/* Thumb styles for WebKit browsers */
+.slider::-webkit-slider-thumb {
+    width: 25px;
+    height: 25px;
+    background-color: #00916E;
+    cursor: pointer;
+    border-radius: 50%; /* Rounded thumb */
+    border: 2px solid #000000; /* Optional for cleaner look */
+    -webkit-appearance: none;
+    margin-top: -3px; /* Center thumb vertically */
+}
+
+/* Thumb styles for Mozilla browsers */
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #00916E;
+    cursor: pointer;
+    border-radius: 50%; /* Rounded thumb */
+    border: none;
+}
+
+/* Thumb styles for Internet Explorer */
+.slider::-ms-thumb {
+    width: 25px;
+    height: 25px;
+    background: #00916E;
+    cursor: pointer;
+    border-radius: 50%; /* Rounded thumb */
+    border: none;
+}
+
+
