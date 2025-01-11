@@ -50,6 +50,12 @@
         
     </header>
     
+    <div class="filters-box">
+
+        kutas
+
+    </div>
+
     <div class="product-grid">
         {% for product in products %}
             <button class="product-item" onclick="window.location.href='{% url 'product_detail' product.product_category.slug product.slug %}'">
@@ -58,14 +64,18 @@
                 <div class="product-name">
                     <h3>{{ product.product_name }}</h3>
                 </div>
-            
+                
+                {% if product.product_discount == 0 %}
                 <div class="product-price">
-                   <p><strong>{{ product.product_price }} zł</strong></p>
-                    {% if product.product_discount != 0 %}
-                    {% comment %} wyswietlenie ceny po rabacie {% endcomment %}
-
-                    {% endif %}
+                    <strong> {{ product.product_price }} zł </strong>
                 </div>
+                {% endif %}
+
+                {% if product.product_discount != 0 %}
+                <div class="product-price">
+                   <strong style="color: #ff1d1d">{{ product.product_price_discounted }} zł </strong><strong><s>{{ product.product_price }} zł</s></strong>
+                </div>
+                {% endif %}
             </button>
         {% endfor %}
     </div>
