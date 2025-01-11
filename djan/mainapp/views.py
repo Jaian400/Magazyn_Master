@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_protect
+import uuid
 
 # INDEX -> STRONA GŁOWNA
 
@@ -121,7 +122,8 @@ def koszyk_view(request):
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
     else:
-        cart, created = Cart.objects.get_or_create(session=request.session.session_key)
+        cart_uuid = uuid.uuid4()
+        cart, created = Cart.objects.get_or_create(session_uuid=cart_uuid)
 
     cart_products = CartProduct.objects.filter(cart=cart)
     total_price = cart.total_price
@@ -138,7 +140,8 @@ def add_to_cart(request, product_id):
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
     else:
-        cart, created = Cart.objects.get_or_create(session=request.session.session_key)
+        cart_uuid = uuid.uuid4()
+        cart, created = Cart.objects.get_or_create(session_uuid=cart_uuid)
     
     if product.product_discount > 0:
         cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price_discounted)
