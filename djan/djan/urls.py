@@ -38,8 +38,6 @@ urlpatterns = [
     
     path('<slug:category_slug>', category_view, name='category'),
     
-    
-
     path('order/', order, name='order'),
     
     path('koszyk/', koszyk_view, name='koszyk'),
