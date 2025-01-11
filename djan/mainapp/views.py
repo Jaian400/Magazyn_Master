@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
-from .models import WarehouseProduct, ProductCategory, Cart, CartProduct
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import admin
@@ -9,7 +9,6 @@ from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_protect
-import uuid
 
 # INDEX -> STRONA GŁOWNA
 
@@ -102,6 +101,7 @@ def rejestracja_view(request):
     return render(request, 'rejestracja.html')
 
 def logout_view(request):
+    request.session.delete()
 
     logout(request)
     return redirect(reverse('index')) 
@@ -119,11 +119,14 @@ def product_detail_view(request,category_slug, product_slug):
 # ------------------------------------------------------------------------------------------------------------
 
 def koszyk_view(request):
+    Cart.delete_old_carts()
+
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
     else:
-        cart_uuid = uuid.uuid4()
-        cart, created = Cart.objects.get_or_create(session_uuid=cart_uuid)
+        if not request.session.session_key:
+            request.session.create()
+        cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
 
     cart_products = CartProduct.objects.filter(cart=cart)
     total_price = cart.total_price
@@ -135,13 +138,16 @@ def koszyk_view(request):
 
 # Dodwanie do koszxyka
 def add_to_cart(request, product_id):
+    Cart.delete_old_carts()
+
     product = get_object_or_404(WarehouseProduct, id=product_id)
 
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
     else:
-        cart_uuid = uuid.uuid4()
-        cart, created = Cart.objects.get_or_create(session_uuid=cart_uuid)
+        if not request.session.session_key:
+            request.session.create()
+        cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
     
     if product.product_discount > 0:
         cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price_discounted)
@@ -160,7 +166,9 @@ def clear_cart(request, cart_id):
     if request.user.is_authenticated:
         cart = Cart.objects.get(user=request.user)
     else:
-        cart = Cart.objects.get(session=request.session.session_key)
+        if not request.session.session_key:
+            request.session.create()
+        cart = Cart.objects.get_or_create(session=request.session.session_key)
     
     cart.clear_cart()
     return redirect('koszyk')
@@ -181,10 +189,27 @@ def clear_product(request, cart_product_id):
     cart_product.clear_product()
     return redirect('cart')
 
-# Widok do składania zamówienia (na razie opróżnia koszyk)
-def order(request):
-    request.session['cart'] = {}
-    return redirect('koszyk')
+# ------------------------------------------------------------------------------------------------------------
+# ZAMOWIENIE
+# ------------------------------------------------------------------------------------------------------------
+
+def order(request, cart_id):
+
+    return render(request, 'order.html', )
+
+def make_order(request, cart_id):
+    cart = Cart.objects.get(id=cart_id)
+    order = Order.objects.create(user=request.user, tota_price=0.)
+
+    for cart_product in cart.items.all():
+        Order.objects.create(order=order, order_product=cart_product.product, order_product_price=cart_product.product_price,
+                             order_product_quantity=cart_product.product_quantity)
+
+    order.calculate_total_price()
+    cart.clear_cart()
+
+    return redirect('user_site')
+
 
 # ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW - trzeba dynamicznie zrobic

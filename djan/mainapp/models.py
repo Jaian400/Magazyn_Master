@@ -6,6 +6,7 @@ from django.utils.timezone import now
 from django.utils.text import slugify
 from decimal import Decimal
 from django.contrib.sessions.models import Session
+from datetime import datetime, timedelta
 
 # MODELE ALE NIE MODELKI
 
@@ -195,35 +196,20 @@ class WarehouseProduct(models.Model):
 # jeden koszyk do jednego usera i jak zamowi to czyscic 
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    # session = models.ForeignKey(Session, on_delete=models.CASCADE, null=True, blank=True)
-    session_uuid = models.UUIDField(unique=True, null=True, blank=True)
-    # session = models.OneToOneField(Session, on_delete=models.CASCADE, null=True, blank=True)
-    # session_key = models.CharField(max_length=40, null=True, blank=True)
+    session_key = models.CharField(max_length=40, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
 
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
-    # STATUS_CHOICES = [ 
-    # ('active', 'Active'),
-    # ('closed', 'Closed'),
-    # ('abandoned', 'Abandoned'),
-    # ]
-    # status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
-
     def total_value(self):
         return sum(item.total_price() for item in self.cartproduct_set.all())
     
-    # def save(self, *args, **kwargs):
-    #     if self.user and self.session:
-    #         self.session = None
-
-    #     self.total_price = self.total_value()
+    def delete_old_carts():
+        old_date = now() - timedelta(days=30)
+        Cart.objects.filter(user__isnull=True, session_key__isnull=True, created_at__lt=old_date).delete()
         
-    #     super().save(*args, **kwargs)
-    
     def clear_cart(self):
         self.cartproduct_set.all().delete()
         self.save()
