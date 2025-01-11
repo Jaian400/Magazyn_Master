@@ -37,13 +37,13 @@
 
         <div class="second_div">
             <div class="buttons">
-                <button onclick="location.href='{% url 'technika' %}'" class="button">Technika</button>
-                <button onclick="location.href='{% url 'mieszkanie' %}'" class="button">Mieszkanie</button>
-                <button onclick="location.href='{% url 'budownictwo' %}'" class="button">Budownictwo</button>
-                <button onclick="location.href='{% url 'ogrod' %}'" class="button">Ogród</button>
-                <button onclick="location.href='{% url 'lazienka' %}'" class="button">Łazienka</button>
-                <button onclick="location.href='{% url 'kuchnia' %}'" class="button">Kuchnia</button>
-            </div>    
+                <button onclick="location.href='{% url 'category' 'technika' %}'" class="button">Technika</button>
+                <button onclick="location.href='{% url 'category' 'mieszkanie' %}'" class="button">Mieszkanie</button>
+                <button onclick="location.href='{% url 'category' 'budownictwo' %} '" class="button">Budownictwo</button>
+                <button onclick="location.href='{% url 'category' 'ogrod' %}'" class="button">Ogród</button>
+                <button onclick="location.href='{% url 'category' 'lazienka' %}'" class="button">Łazienka</button>
+                <button onclick="location.href='{% url 'category' 'kuchnia' %}'" class="button">Kuchnia</button>
+            </div>      
         </div>
         
     </header>

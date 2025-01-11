@@ -21,7 +21,6 @@ from mainapp.views import (
     rejestracja_view, logowanie_view,
     koszyk_view,
     
-    clear_cart,
     order,
     add_to_cart,
     
@@ -37,6 +36,8 @@ urlpatterns = [
     path('logowanie/', logowanie_view, name='logowanie'),
     
     path('<slug:category_slug>', category_view, name='category'),
+    
+    path('<slug:category_slug>', add_to_cart, name='add_to_cart'), 
 
     path('order/', order, name='order'),
     
