@@ -166,8 +166,9 @@ def category_view(request, category_slug):
     products = WarehouseProduct.objects.filter(product_category=category)
     max_price = max(product.product_price for product in products)
     products = filter_products(products, request)
+    suppliers = products.values_list('product_market__supplier__supplier_name', flat=True).distinct()
 
-    return render(request, 'category.html', {'products': products, 'category': category, 'max_price': max_price})
+    return render(request, 'category.html', {'products': products, 'category': category, 'max_price': max_price, 'suppliers': suppliers})
 
 # ------------------------------------------------------------------------------------------------------------
 # FILTROWANIE
