@@ -55,7 +55,7 @@
         <p><strong>Kategoria:</strong> {{ product.product_category.category_name }}</p>
     
         <!-- Przycisk dodaj do koszyka -->
-        <form action="{% url 'add_to_cart' category_slug=category.slug product_slug=product.slug %}" method="post">
+        <form action="{% url 'add_to_cart' product.id %}" method="post">
             {% csrf_token %}
             
             <div class="quantity-container">

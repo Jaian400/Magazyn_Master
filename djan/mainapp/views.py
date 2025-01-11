@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
-from .models import WarehouseProduct, ProductCategory
+from .models import WarehouseProduct, ProductCategory, Cart, CartProduct
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import admin
@@ -67,6 +67,9 @@ def rejestracja_view(request):
                     last_name=last_name,
                 )
 
+            # kreacja koszyka dla usera
+            Cart.objects.create(user=user)
+
             if error_length or error_number or error_capital_letter or error_repeat:
                 return render(
                 request,
@@ -107,60 +110,45 @@ def product_detail_view(request,category_slug, product_slug):
 # KOSZYK
 # ------------------------------------------------------------------------------------------------------------
 
-# Widok dodający produkt do koszyka
-def add_to_cart(request, category_slug, product_slug):
-    # Znajdź produkt po slug
-    product = get_object_or_404(WarehouseProduct, slug=product_slug)
-    
-    # Pobierz ilość z formularza (domyślnie 1)
-    quantity = int(request.POST.get('quantity', 1))
-
-    # Sprawdź, czy koszyk już istnieje w sesji
-    cart = request.session.get('cart', {})
-
-    # Jeśli produkt jest już w koszyku, zwiększ ilość, w przeciwnym razie dodaj produkt
-    if str(product.id) in cart:
-        cart[str(product.id)]['quantity'] += quantity
+def koszyk_view(request):
+    if request.user.is_authenticated:
+        cart = Cart.objects.get(user=request.user)
     else:
-        cart[str(product.id)] = {
-            'name': product.product_name,
-            'price': str(product.product_price),
-            'quantity': quantity,
-            'image': product.product_image,
-            'discount': product.product_discount,
-            'margin': product.margin,
-            'tax': product.tax
-        }
+        cart, created = Cart.objects.get_or_create(session=request.session.session_key)
 
-    # Zapisz zmiany w koszyku w sesji
-    request.session['cart'] = cart
+    cart_products = CartProduct.objects.filter(cart=cart)
+    total_price = cart.total_price
+    
+    # cart_products -> wyswietl w petli, one maja ilosc swoja, jesli chcesz manipulacje nia,
+    # to zglos sie do @Jaian400 i to trzeba bedzie zobaczyc, obsluzyc
+    # total_price -> po prostu wyswietl cene calkowita koszyka
+    return render(request, 'koszyk.html', {'cart_products': cart_products, 'total_price': total_price})
 
-    # Przekierowanie do strony koszyka
+# Dodwanie do koszxyka
+def add_to_cart(request, id):
+    product = get_object_or_404(WarehouseProduct, id=id)
+    if request.user.is_authenticated:
+        cart = Cart.objects.get(user=request.user)
+    else:
+        cart, created = Cart.objects.get_or_create(session=request.session.session_key)
+    
+    cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product)
+
+    if not created:
+        cart_product.product_quantity += 1
+
+    cart_product.save()
+
     return redirect('koszyk')
 
-# Widok do wyświetlania koszyka
-def koszyk_view(request):
-    cart = request.session.get('cart', {})
-    total_price = 0
-    for item in cart.values():
-        price = float(item['price'])
-        discount = item['discount']
-        margin = item['margin']
-        tax = item['tax']
-        
-        # Oblicz cenę po rabacie i marży
-        price_after_discount = price * (1 - discount / 100)
-        price_after_margin = price_after_discount * (1 + margin / 100)
-        final_price = price_after_margin * (1 + tax / 100)  # Cena po podatku
-        
-        # Całkowita cena
-        total_price += final_price * item['quantity']
-
-    return render(request, 'koszyk.html', {'cart': cart, 'total_price': total_price})
-
-# Widok do opróżniania koszyka
+# Czyszczenie koszyka
 def clear_cart(request):
-    request.session['cart'] = {}
+    if request.user.is_authenticated:
+        cart = Cart.objects.get(user=request.user)
+    else:
+        cart = Cart.objects.get(session=request.session.session_key)
+    
+    cart.clear_cart()
     return redirect('koszyk')
 
 # Widok do składania zamówienia (na razie opróżnia koszyk)
