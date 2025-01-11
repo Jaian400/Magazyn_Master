@@ -7,7 +7,6 @@
     margin-left: 16%; /* Margines po lewej stronie ekranu */
     margin-right: 16%;
     align-items: stretch; /* Ensures items stretch to match their own height */
-
 }
 
 /* Styl pojedynczego elementu */
@@ -18,7 +17,7 @@
     text-align: left;
     cursor: pointer;
     position: relative;
-    height: 420px;
+    height: 350px;
 }
 
 .product-item:hover {
@@ -51,5 +50,14 @@
 
 .product-price{
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
+    font-size: 20px;
+    color: rgb(46, 46, 46);
+}
+
+.filters-box{
+    display: flex;
+    position: relative;
+    border: black;
+    width: 20%;
 }
