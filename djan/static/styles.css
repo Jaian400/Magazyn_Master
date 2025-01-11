@@ -137,11 +137,9 @@ p{
 /* .section-label {
     font-size: 20px;
     color: white;
-    /*margin-right: 10%;
-    margin-right: 5%;
-    margin-left: 5%;
-    white-space: nowrap;
-} */
+    margin-right: 10%;
+    white-space: nowrap;} /* Zapobiega zawijaniu tekstu */
+
 
 /* Stylizacja kontenera z przyciskami sekcji */
 .buttons {

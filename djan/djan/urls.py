@@ -16,30 +16,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mainapp.views import (
-    index_view, 
-    rejestracja_view, logowanie_view,
-    koszyk_view,
-    
-    clear_cart,
-    order,
-    add_to_cart,
-    
-    product_detail_view,
-
-    category_view
-)
+from mainapp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_view, name='index'),
     path('rejestracja/', rejestracja_view, name='rejestracja'),
     path('logowanie/', logowanie_view, name='logowanie'),
+    path('add/<int:product_id>/', add_to_cart, name='add_to_cart'), 
     
     path('<slug:category_slug>', category_view, name='category'),
-
+    
     path('order/', order, name='order'),
     
     path('koszyk/', koszyk_view, name='koszyk'),
     path('<slug:category_slug>/<slug:product_slug>/', product_detail_view, name='product_detail'),
+
+    path('cart/<int:cart_id>/clear', clear_cart, name='clear_cart'),
+    
+    path('cart/<int:cart_product_id>/minus/', quantity_minus, name='quantity_minus'),
+    path('cart/<int:cart_product_id>/plus/', quantity_plus, name='quantity_plus'),
+    path('cart/<int:cart_product_id>/clear_product/', clear_product, name='clear_product'),
 ]

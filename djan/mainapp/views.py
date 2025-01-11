@@ -113,7 +113,7 @@ def product_detail_view(request,category_slug, product_slug):
 
 def koszyk_view(request):
     if request.user.is_authenticated:
-        cart = Cart.objects.get(user=request.user)
+        cart, created = Cart.objects.get_or_create(user=request.user)
     else:
         cart, created = Cart.objects.get_or_create(session=request.session.session_key)
 
@@ -126,14 +126,18 @@ def koszyk_view(request):
     return render(request, 'koszyk.html', {'cart_products': cart_products, 'total_price': total_price})
 
 # Dodwanie do koszxyka
-def add_to_cart(request, id):
-    product = get_object_or_404(WarehouseProduct, id=id)
+def add_to_cart(request, product_id):
+    product = get_object_or_404(WarehouseProduct, id=product_id)
+
     if request.user.is_authenticated:
-        cart = Cart.objects.get(user=request.user)
+        cart, created = Cart.objects.get_or_create(user=request.user)
     else:
         cart, created = Cart.objects.get_or_create(session=request.session.session_key)
     
-    cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product)
+    if product.product_discount > 0:
+        cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price_discounted)
+    else:
+        cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price)
 
     if not created:
         cart_product.product_quantity += 1
@@ -143,7 +147,7 @@ def add_to_cart(request, id):
     return redirect('koszyk')
 
 # Czyszczenie koszyka
-def clear_cart(request):
+def clear_cart(request, cart_id):
     if request.user.is_authenticated:
         cart = Cart.objects.get(user=request.user)
     else:
@@ -152,21 +156,43 @@ def clear_cart(request):
     cart.clear_cart()
     return redirect('koszyk')
 
+# obsluga koszyka -> produktow pojedynczych
+def quantity_minus(request, cart_product_id):
+    cart_product = CartProduct.objects.get(id=cart_product_id)
+    cart_product.quantity_minus()
+    return redirect('cart')
+
+def quantity_plus(request, cart_product_id):
+    cart_product = CartProduct.objects.get(id=cart_product_id)
+    cart_product.quantity_plus()
+    return redirect('cart')
+
+def clear_product(request, cart_product_id):
+    cart_product = CartProduct.objects.get(id=cart_product_id)
+    cart_product.clear_product()
+    return redirect('cart')
+
 # Widok do składania zamówienia (na razie opróżnia koszyk)
 def order(request):
     request.session['cart'] = {}
     return redirect('koszyk')
 
 # ------------------------------------------------------------------------------------------------------------
-# PODSTRONY PRODUKTOW - mozna dynamicznie zrobic
+# PODSTRONY PRODUKTOW - trzeba dynamicznie zrobic
 # ------------------------------------------------------------------------------------------------------------
 
 def category_view(request, category_slug):
     category = get_object_or_404(ProductCategory, slug=category_slug)
     products = WarehouseProduct.objects.filter(product_category=category)
-    max_price = max(product.product_price for product in products)
-    products = filter_products(products, request)
+    max_price = int(max(product.product_price for product in products) + 1)
     suppliers = products.values_list('product_market__supplier__supplier_name', flat=True).distinct()
+
+    # Filter by suppliers
+    supplier_filter = request.GET.getlist('supplier')
+    if supplier_filter:
+        products = products.filter(product_market__supplier__supplier_name__in=supplier_filter)
+
+    products = filter_products(products, request)
 
     return render(request, 'category.html', {'products': products, 'category': category, 'max_price': max_price, 'suppliers': suppliers})
 
@@ -177,8 +203,8 @@ def category_view(request, category_slug):
 def filter_products(queryset, request):
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
-    categories = request.GET.getlist('category')
-    suppliers = request.GET.getlist('supplier')
+    # categories = request.GET.getlist('category')
+    # suppliers = request.GET.getlist('supplier')
 
     if min_price:
         queryset = queryset.filter(product_price__gte=min_price)
@@ -187,10 +213,10 @@ def filter_products(queryset, request):
         regular_products = queryset.filter(product_discount=0, product_price__lte=max_price)
         queryset = discounted_products | regular_products
 
-    if categories:
-        queryset = queryset.filter(product_category__id__in=categories)
+    # if categories:
+    #     queryset = queryset.filter(product_category__id__in=categories)
 
-    if suppliers:
-        queryset = queryset.filter(product_market__supplier__supplier_id__in=suppliers)
+    # if suppliers:
+    #     queryset = queryset.filter(product_market__supplier__supplier_id__in=suppliers)
 
     return queryset
