@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path
 from mainapp.views import (
     index_view, 
-    budownictwo_view, kuchnia_view, lazienka_view, mieszkanie_view, ogrod_view, technika_view,
     rejestracja_view, logowanie_view,
     koszyk_view,
     
@@ -26,24 +25,20 @@ from mainapp.views import (
     order,
     add_to_cart,
     
-    product_detail_view
+    product_detail_view,
+
+    category_view
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_view, name='index'),
-    path('budownictwo/', budownictwo_view, name='budownictwo'),
-    path('kuchnia/', kuchnia_view, name='kuchnia'),
-    path('lazienka/', lazienka_view, name='lazienka'),
-    path('mieszkanie/', mieszkanie_view, name='mieszkanie'),
-    path('ogrod/', ogrod_view, name='ogrod'),
-    path('technika/', technika_view, name='technika'),
     path('rejestracja/', rejestracja_view, name='rejestracja'),
     path('logowanie/', logowanie_view, name='logowanie'),
     
-    path('clear_cart/', clear_cart, name='clear_cart'),
+    path('<slug:category_slug>', category_view, name='category'),
+
     path('order/', order, name='order'),
-    path('<slug:category_slug>/<slug:product_slug>/add_to_cart/', add_to_cart, name='add_to_cart'),
     
     path('koszyk/', koszyk_view, name='koszyk'),
     path('<slug:category_slug>/<slug:product_slug>/', product_detail_view, name='product_detail'),

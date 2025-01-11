@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import admin
 from django.urls import reverse
 from django.db import IntegrityError
+from django.db.models import Q
 
 # INDEX -> STRONA GŁOWNA
 
@@ -157,29 +158,45 @@ def order(request):
     return redirect('koszyk')
 
 # ------------------------------------------------------------------------------------------------------------
-# PODSTRONY PRODUKTOW - mozna dynamicznie zrobic
+# PODSTRONY PRODUKTOW - trzeba dynamicznie zrobic
 # ------------------------------------------------------------------------------------------------------------
 
-def budownictwo_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="budownictwo")  # Pobranie wszystkich produktów
-    return render(request, 'budownictwo.html', {'products': products})
+def category_view(request, category_slug):
+    category = get_object_or_404(ProductCategory, slug=category_slug)
+    products = WarehouseProduct.objects.filter(product_category=category)
+    max_price = int(max(product.product_price for product in products) + 1)
+    suppliers = products.values_list('product_market__supplier__supplier_name', flat=True).distinct()
 
-def kuchnia_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="kuchnia")
-    return render(request, 'kuchnia.html', {'products': products})
+    # Filter by suppliers
+    supplier_filter = request.GET.getlist('supplier')
+    if supplier_filter:
+        products = products.filter(product_market__supplier__supplier_name__in=supplier_filter)
 
-def lazienka_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="lazienka")
-    return render(request, 'lazienka.html', {'products': products})
+    products = filter_products(products, request)
 
-def mieszkanie_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="mieszkanie")
-    return render(request, 'mieszkanie.html', {'products': products})
+    return render(request, 'category.html', {'products': products, 'category': category, 'max_price': max_price, 'suppliers': suppliers})
 
-def ogrod_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="ogrod")
-    return render(request,'ogrod.html', {'products': products})
+# ------------------------------------------------------------------------------------------------------------
+# FILTROWANIE
+# ------------------------------------------------------------------------------------------------------------
 
-def technika_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="technika")
-    return render(request, 'technika.html', {'products': products})
+def filter_products(queryset, request):
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    # categories = request.GET.getlist('category')
+    # suppliers = request.GET.getlist('supplier')
+
+    if min_price:
+        queryset = queryset.filter(product_price__gte=min_price)
+    if max_price:
+        discounted_products = queryset.filter(product_discount__gt=0, product_price_discounted__lte=max_price)
+        regular_products = queryset.filter(product_discount=0, product_price__lte=max_price)
+        queryset = discounted_products | regular_products
+
+    # if categories:
+    #     queryset = queryset.filter(product_category__id__in=categories)
+
+    # if suppliers:
+    #     queryset = queryset.filter(product_market__supplier__supplier_id__in=suppliers)
+
+    return queryset
