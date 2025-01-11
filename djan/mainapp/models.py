@@ -196,6 +196,8 @@ class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) 
     updated_at = models.DateTimeField(auto_now=True)
 
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
     # STATUS_CHOICES = [ 
     # ('active', 'Active'),
     # ('closed', 'Closed'),
@@ -206,8 +208,17 @@ class Cart(models.Model):
     def total_value(self):
         return sum(item.total_price() for item in self.cartproduct_set.all())
     
+    def save(self, *args, **kwargs):
+        if self.user and self.session:
+            self.session = None
+
+        self.total_price = self.total_value()
+        
+        super().save(*args, **kwargs)
+    
     def clear_cart(self):
         self.cartproduct_set.all().delete()
+        self.save()
     
     def __str__(self):
         if self.user:
@@ -224,6 +235,10 @@ class CartProduct(models.Model):
 
     def total_price(self):
         return self.product_price * self.product_quantity
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.cart.save()
 
 # ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE -> user zamawia od nas
