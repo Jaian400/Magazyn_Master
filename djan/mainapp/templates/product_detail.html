@@ -53,6 +53,7 @@
     <div class="product-info-box">
         <p><strong>Cena:</strong> {{ product.product_price }} zł</p>
         <p><strong>Kategoria:</strong> {{ product.product_category.category_name }}</p>
+        <p><strong>Opis:</strong> {{product.product_description}}</p>
     
         <!-- Przycisk dodaj do koszyka -->
         <form action="{% url 'add_to_cart' product.id %}" method="post">
