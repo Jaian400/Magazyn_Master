@@ -113,7 +113,7 @@ def product_detail_view(request,category_slug, product_slug):
 
 def koszyk_view(request):
     if request.user.is_authenticated:
-        cart = Cart.objects.get(user=request.user)
+        cart, created = Cart.objects.get_or_create(user=request.user)
     else:
         cart, created = Cart.objects.get_or_create(session=request.session.session_key)
 
@@ -126,14 +126,18 @@ def koszyk_view(request):
     return render(request, 'koszyk.html', {'cart_products': cart_products, 'total_price': total_price})
 
 # Dodwanie do koszxyka
-def add_to_cart(request, id):
-    product = get_object_or_404(WarehouseProduct, id=id)
+def add_to_cart(request, product_id):
+    product = get_object_or_404(WarehouseProduct, id=product_id)
+
     if request.user.is_authenticated:
-        cart = Cart.objects.get(user=request.user)
+        cart, created = Cart.objects.get_or_create(user=request.user)
     else:
         cart, created = Cart.objects.get_or_create(session=request.session.session_key)
     
-    cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product)
+    if product.product_discount > 0:
+        cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price_discounted)
+    else:
+        cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price)
 
     if not created:
         cart_product.product_quantity += 1

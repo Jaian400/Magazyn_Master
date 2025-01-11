@@ -34,10 +34,11 @@ urlpatterns = [
     path('', index_view, name='index'),
     path('rejestracja/', rejestracja_view, name='rejestracja'),
     path('logowanie/', logowanie_view, name='logowanie'),
+    path('add/<int:product_id>/', add_to_cart, name='add_to_cart'), 
     
     path('<slug:category_slug>', category_view, name='category'),
     
-    path('<slug:category_slug>', add_to_cart, name='add_to_cart'), 
+    
 
     path('order/', order, name='order'),
     
