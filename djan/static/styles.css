@@ -173,3 +173,21 @@ p{
     transform: scale(1.02);
     filter: drop-shadow(5px 5px 3px rgba(0, 0, 0, 0.5));
 }
+
+.bottom-bar {
+    position: absolute;       /* Pasek znajduje się na końcu zawartości strony */
+    bottom: 0;                /* Przylega do dolnej krawędzi kontenera */
+    left: 0;                  /* Rozpoczyna się od lewej krawędzi ekranu */
+    width: 100%;              /* Rozciąga się na całą szerokość */
+    background-color: #00916e; /* Zielony kolor */
+    color: white;             /* Biały kolor tekstu */
+    text-align: center;       /* Wyśrodkowanie tekstu */
+    padding: 30px 0;          /* Wysokość paska */
+    font-size: 9px;          /* Rozmiar tekstu */
+    z-index: 1000;            /* Nad innymi elementami */
+    border-radius: 0;         /* Brak zaokrągleń */
+}
+
+.bottom-bar-text {
+    font-weight: bold;         /* Tekst pogrubiony */
+}
