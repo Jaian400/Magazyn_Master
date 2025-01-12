@@ -8,7 +8,8 @@
 .product-image.left-aligned {
     width: 25%;               /* Szerokość obrazka */
     height: auto;             /* Zachowanie proporcji */
-    margin-right: 2%;         /* Odstęp od sekcji obok */
+    /* margin-right: 2%;         Odstęp od sekcji obok */
+    margin-right: 1%;
     margin-left: 2%;          /* Odstęp od lewej krawędzi ekranu */
 }
 
@@ -17,7 +18,8 @@
     border: 2px solid #ccc;
     border-radius: 8px;
     padding: 10px;
-    width: 45%;               /* Szerokość ramki */
+    /* width: 45%;               Szerokość ramki */
+    width: 40%;
     box-sizing: border-box;
 }
 
@@ -29,7 +31,7 @@
     width: 20%;               /* Szerokość ramki */
     box-sizing: border-box;
     text-align: center;       /* Wyśrodkowanie elementów wewnątrz */
-    margin-top: 5%;          /* Obniżenie ramki o 10% */
+    margin-top: 5%;          /* Obniżenie ramki o 5% */
 }
 
 .quantity-container {
