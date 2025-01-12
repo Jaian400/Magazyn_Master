@@ -63,7 +63,9 @@
         <div class="product-info-box">
             
             <p><strong>Kategoria:</strong> {{ product.product_category.category_name }}</p>
-            <p> {{ product.product_description }}</p>
+            <p><strong>Producent:</strong> {{ product.product_market.supplier }}</p>
+            <p style="text-align: justify;
+  text-justify: inter-word;"> {{ product.product_description }}</p>
         </div>
     
         <!-- Sekcja ilość i przycisk -->
@@ -79,7 +81,7 @@
                     <p><strong></strong><strong style="color: #ff1d1d">{{ product.product_price_discounted }} zł </strong><strong><s>{{ product.product_price }} zł</s></strong></p>
                 </div>
             {% endif %}
-            cena zawiera VAT 23%
+            cena zawiera VAT {{product.tax}}%
             <form action="{% url 'add_to_cart' product.id %}" method="post">
                 {% csrf_token %}
                 <div class="quantity-container">
