@@ -140,7 +140,7 @@ def koszyk_view(request):
     # cart_products -> wyswietl w petli, one maja ilosc swoja, jesli chcesz manipulacje nia,
     # to zglos sie do @Jaian400 i to trzeba bedzie zobaczyc, obsluzyc
     # total_price -> po prostu wyswietl cene calkowita koszyka
-    return render(request, 'koszyk.html', {'cart_products': cart_products, 'total_price': total_price})
+    return render(request, 'koszyk.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
 
 # Dodwanie do koszxyka
 def add_to_cart(request, product_id):
@@ -174,7 +174,7 @@ def clear_cart(request, cart_id):
     else:
         if not request.session.session_key:
             request.session.create()
-        cart = Cart.objects.get_or_create(session=request.session.session_key)
+        cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
     
     cart.clear_cart()
     return redirect('koszyk')

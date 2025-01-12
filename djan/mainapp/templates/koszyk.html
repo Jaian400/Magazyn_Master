@@ -88,11 +88,11 @@
     <!-- Wyświetlenie całkowitej ceny -->
     <p><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
     
-    {% comment %} <!-- Formularz do opróżnienia koszyka -->
-    <form action="{% url 'clear_cart' cart_products.0.cart.id %}" method="post">
+    <!-- Formularz do opróżnienia koszyka -->
+    <form action="{% url 'clear_cart' cart.cart_id %}" method="post">
         {% csrf_token %}
         <button type="submit">Opróżnij koszyk</button>
-    </form> {% endcomment %}
+    </form> 
 
     <!-- Formularz do złożenia zamówienia -->
     <form action="{% url 'order' %}" method="post">
