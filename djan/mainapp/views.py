@@ -177,17 +177,17 @@ def clear_cart(request, cart_id):
 def quantity_minus(request, cart_product_id):
     cart_product = CartProduct.objects.get(id=cart_product_id)
     cart_product.quantity_minus()
-    return redirect('cart')
+    return redirect('koszyk')
 
 def quantity_plus(request, cart_product_id):
     cart_product = CartProduct.objects.get(id=cart_product_id)
     cart_product.quantity_plus()
-    return redirect('cart')
+    return redirect('koszyk')
 
 def clear_product(request, cart_product_id):
     cart_product = CartProduct.objects.get(id=cart_product_id)
     cart_product.clear_product()
-    return redirect('cart')
+    return redirect('koszyk')
 
 # ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE

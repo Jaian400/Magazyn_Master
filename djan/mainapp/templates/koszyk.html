@@ -52,30 +52,55 @@
         
     </header>
     <h2>Twój Koszyk</h2>
-    {% if cart %}
-        <ul>
-            {% for product_id, product_data in cart.items %}
-                <li>
-                    <img src="{% static 'images/' %}{{ product_data.image }}" alt="{{ product_data.name }}" style="width: 100px;"> 
-                    {{ product_data.name }} - 
-                    Cena (po rabacie): {{ product_data.price|floatformat:2 }} zł - 
-                    Ilość: {{ product_data.quantity }} - 
-                    Cena po marży: {{ product_data.price|floatformat:2 }} zł - 
-                    Cena po rabacie: {{ product_data.price|floatformat:2 }} zł
-                </li>
-            {% endfor %}
-        </ul>
-        <p><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
-        <form action="{% url 'clear_cart' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Opróżnij koszyk</button>
-        </form>
-        <form action="{% url 'order' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Zamów</button>
-        </form>
-    {% else %}
-        <p>Twój koszyk jest pusty.</p>
-    {% endif %}
+
+{% if cart_products %}
+    <ul>
+        {% for cart_product in cart_products %}
+            <li>
+                <!-- Wyświetlenie obrazu produktu -->
+                <img src="{% static 'images/products/' %}{{ cart_product.product.product_image }}" 
+                     alt="{{ cart_product.product.product_name }}" 
+                     style="width: 100px;">
+
+                <!-- Szczegóły produktu -->
+                <strong>{{ cart_product.product.product_name }}</strong><br>
+                Cena jednostkowa: {{ cart_product.product_price|floatformat:2 }} zł<br>
+                Ilość: {{ cart_product.product_quantity }}<br>
+                Cena łącznie: {{ cart_product.total_price|floatformat:2 }} zł
+
+                <!-- Przyciski manipulacji ilością -->
+                <form action="{% url 'quantity_minus' cart_product.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">-</button>
+                </form>
+                <form action="{% url 'quantity_plus' cart_product.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">+</button>
+                </form>
+                <form action="{% url 'clear_product' cart_product.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">Usuń</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Wyświetlenie całkowitej ceny -->
+    <p><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
+    
+    {% comment %} <!-- Formularz do opróżnienia koszyka -->
+    <form action="{% url 'clear_cart' cart_products.0.cart.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Opróżnij koszyk</button>
+    </form> {% endcomment %}
+
+    <!-- Formularz do złożenia zamówienia -->
+    <form action="{% url 'order' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Zamów</button>
+    </form>
+{% else %}
+    <p>Twój koszyk jest pusty.</p>
+{% endif %}
 </body>
 </html>
