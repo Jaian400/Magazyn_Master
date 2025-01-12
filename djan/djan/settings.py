@@ -83,27 +83,38 @@ WSGI_APPLICATION = 'djan.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'magazyn_master_database',
-#         'USER': '',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'janpawel',
-        'USER': 'janpawel',
-        'PASSWORD': 'mv9Sbz5MKVACy36V',
-        'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
-        'PORT': '3306',             # Domyślny port MySQL
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'magazyn_master_database',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'janpawel',
+    #     'USER': 'janpawel',
+    #     'PASSWORD': 'mv9Sbz5MKVACy36V',
+    #     'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
+    #     'PORT': '3306', 
+    # },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'janpawe1',
+    #     'USER': 'janpawe1',
+    #     'PASSWORD': 'Ad2WH3Kj2i89Pneq',
+    #     'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
+    #     'PORT': '3306', 
+    #     'TEST': {
+    #         'NAME': 'janpawe1',
+    #         'MIRROR': 'default',
+    #     },
+    # }
 }
+
+# DATABASES['default']['MIRROR'] = 'janpawe1'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
