@@ -14,11 +14,11 @@ from django.views.decorators.csrf import csrf_protect
 
 def index_view(request):
 
-    if request.method == 'POST':
+    # if request.method == 'POST':
 
-        search_query = request.POST.get('query')
+    #     search_query = request.POST.get('query')
 
-        return redirect(reverse('category', args=['all_products']) + f'?query={search_query}')
+    #     return redirect(reverse('category', args=['all_products']) + f'?query={search_query}')
     
     return render(request, 'index.html')
 
@@ -281,7 +281,7 @@ def user_site_view(request):
     if not request.user.is_authenticated:
         return redirect('logowanie')
 
+    orders = Order.objects.filter(user=request.user)
 
-
-    return render(request, 'user_site.html')
+    return render(request, 'user_site.html', {'orders': orders} )
 
