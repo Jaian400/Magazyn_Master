@@ -86,6 +86,7 @@
                 >
                 <span id="max_price_value">{{ request.GET.max_price|default:max_price }} zł</span>
                 
+                <br>                
                 <br>
 
                 <!-- Filtr dostawców -->
@@ -100,8 +101,8 @@
                     <label for="supplier_{{ supplier }}">{{ supplier }}</label>
                     <br>
                 {% endfor %}
-        
-                <button type="submit">Filtruj</button>
+                <br>
+                <button class="filter-button" type="submit">Filtruj</button>
             </form>
         </div>
         
