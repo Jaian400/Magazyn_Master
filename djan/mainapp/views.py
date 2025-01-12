@@ -221,7 +221,7 @@ def category_view(request, category_slug):
     max_price = int(max(product.product_price for product in products) + 1)
     suppliers = products.values_list('product_market__supplier__supplier_name', flat=True).distinct()
 
-    # Filter by suppliers
+    # Filter by suppliers 
     supplier_filter = request.GET.getlist('supplier')
     if supplier_filter:
         products = products.filter(product_market__supplier__supplier_name__in=supplier_filter)
