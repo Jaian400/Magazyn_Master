@@ -53,29 +53,32 @@
     </header>
 
     <h1>{{ product.product_name }}</h1>
+    <div style="text-align: center;"> Nr. produktu:  {{ product.id }} </div>
     <div class="product-container">
         <!-- Sekcja obrazek -->
         <img class="product-image left-aligned" src="{% static 'images/products/' %}{{ product.product_image }}" alt="{{ product.product_name }}">
         
         <!-- Sekcja opis -->
         <div class="product-info-box">
+            
+            <p><strong>Kategoria:</strong> {{ product.product_category.category_name }}</p>
+            <p> {{ product.product_description }}</p>
+        </div>
+    
+        <!-- Sekcja ilość i przycisk -->
+        <div class="product-action-box">
             {% if product.product_discount == 0 %}
                 <div class="product-price">
-                    <p><strong>Cena:</strong> {{ product.product_price }} zł</p>
+                    <p><strong></strong> {{ product.product_price }} zł</p>
                 </div>
             {% endif %}
 
             {% if product.product_discount != 0 %}
                 <div class="product-price">
-                    <p><strong>Cena:</strong><strong style="color: #ff1d1d">{{ product.product_price_discounted }} zł </strong><strong><s>{{ product.product_price }} zł</s></strong></p>
+                    <p><strong></strong><strong style="color: #ff1d1d">{{ product.product_price_discounted }} zł </strong><strong><s>{{ product.product_price }} zł</s></strong></p>
                 </div>
             {% endif %}
-            <p><strong>Kategoria:</strong> {{ product.product_category.category_name }}</p>
-            <p><strong>Opis:</strong> {{ product.product_description }}</p>
-        </div>
-    
-        <!-- Sekcja ilość i przycisk -->
-        <div class="product-action-box">
+            cena zawiera VAT 23%
             <form action="{% url 'add_to_cart' product.id %}" method="post">
                 {% csrf_token %}
                 <div class="quantity-container">
@@ -87,10 +90,10 @@
         </div>
     </div>
 
-    {% comment %} <div class="bottom-bar">
+    <div class="bottom-bar">
         <span class="bottom-bar-text">OMNI Productions</span>
         <span class="bottom-bar-text">All rights reserved</span>
-    </div> {% endcomment %}
+    </div> 
 
 </body>
 </html>
