@@ -12,6 +12,7 @@ body {
     margin:auto;
     text-align: left;
     overflow-y: scroll;
+    min-height: 100vh;      
 
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
@@ -175,17 +176,18 @@ p{
 }
 
 .bottom-bar {
-    position: absolute;       /* Pasek znajduje się na końcu zawartości strony */
+    position: absolute;       
     bottom: 0;                /* Przylega do dolnej krawędzi kontenera */
     left: 0;                  /* Rozpoczyna się od lewej krawędzi ekranu */
     width: 100%;              /* Rozciąga się na całą szerokość */
     background-color: #00916e; /* Zielony kolor */
     color: white;             /* Biały kolor tekstu */
     text-align: center;       /* Wyśrodkowanie tekstu */
-    padding: 30px 0;          /* Wysokość paska */
+    padding: 20px 0;          /* Wysokość paska */
     font-size: 9px;          /* Rozmiar tekstu */
     z-index: 1000;            /* Nad innymi elementami */
     border-radius: 0;         /* Brak zaokrągleń */
+    margin-top: 30px;
 }
 
 .bottom-bar-text {
