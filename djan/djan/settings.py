@@ -85,12 +85,8 @@ WSGI_APPLICATION = 'djan.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'magazyn_master_database',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'testdb.sqlite3',
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.mysql',
