@@ -13,8 +13,14 @@ from django.views.decorators.csrf import csrf_protect
 # INDEX -> STRONA GŁOWNA
 
 def index_view(request):
-    products = WarehouseProduct.objects.filter(product_category__category_name="index") #Trzeba przemyśleć jak chcemy wyświetlać rzeczy na głównej
-    return render(request, 'index.html', {'products': products})
+
+    # if request.method == 'POST':
+
+    #     search_query = request.POST.get('query')
+
+    #     return redirect(reverse('category', args=['all_products']) + f'?query={search_query}')
+    
+    return render(request, 'index.html')
 
 # LOGOWANIE I REJESTRACJA
 
@@ -217,7 +223,12 @@ def make_order(request, cart_id):
 
 def category_view(request, category_slug):
     category = get_object_or_404(ProductCategory, slug=category_slug)
-    products = WarehouseProduct.objects.filter(product_category=category)
+
+    if category.category_name == 'All_products':
+        products = WarehouseProduct.objects.all()
+    else:
+        products = WarehouseProduct.objects.filter(product_category=category)
+    
     max_price = int(max(product.product_price for product in products) + 1)
     suppliers = products.values_list('product_market__supplier__supplier_name', flat=True).distinct()
 
@@ -227,6 +238,10 @@ def category_view(request, category_slug):
         products = products.filter(product_market__supplier__supplier_name__in=supplier_filter)
 
     products = filter_products(products, request)
+
+    if request.method == 'POST':
+        search_query = request.POST.get('query')
+        products = products.filter(product_name__icontains=search_query)
 
     return render(request, 'category.html', {'products': products, 'category': category, 'max_price': max_price, 'suppliers': suppliers})
 
@@ -255,6 +270,7 @@ def filter_products(queryset, request):
 
     return queryset
 
+
 # ------------------------------------------------------------------------------------------------------------
 # strona konta uzytkownika
 # ------------------------------------------------------------------------------------------------------------
@@ -265,6 +281,7 @@ def user_site_view(request):
     if not request.user.is_authenticated:
         return redirect('logowanie')
 
+    orders = Order.objects.filter(user=request.user)
 
+    return render(request, 'user_site.html', {'orders': orders} )
 
-    return render(request, 'user_site.html')

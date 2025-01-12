@@ -176,7 +176,7 @@ p{
 }
 
 .bottom-bar {
-    position: absolute;       
+    position: relative;          /* ani relative ani absolute nie sa tu idealne i psuja sie w innych miejscach */
     bottom: 0;                /* Przylega do dolnej krawędzi kontenera */
     left: 0;                  /* Rozpoczyna się od lewej krawędzi ekranu */
     width: 100%;              /* Rozciąga się na całą szerokość */
