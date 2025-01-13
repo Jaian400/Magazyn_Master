@@ -76,23 +76,23 @@ WSGI_APPLICATION = 'djan.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 # ZAKOMENTOWANE = STARE BAZY
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'testdb.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'janpawel',
-        'USER': 'janpawel',
-        'PASSWORD': os.getenv('MM_DB_PASSWORD'),
-        'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'testdb.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'janpawel',
+#         'USER': 'janpawel',
+#         'PASSWORD': os.getenv('MM_DB_PASSWORD'),
+#         'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
+#         'PORT': '3306'
+#     }
+# }
 
 # DATABASES['default']['MIRROR'] = 'janpawe1'
 
