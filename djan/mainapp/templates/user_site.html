@@ -56,15 +56,31 @@
 
     <div class="welcome-message"> 
         Witaj, {{ user.first_name }}
+        <br>
+        <br>
+
+        Dane osobowe
     </div>
 
-    <table>
-        <tr>
-          <td>E-mail</td>
-          <td>{{user.email}}</td>
-        </tr>
-        <tr>
-          <td>Imię i Nazwisko</td>
-          <td>{{user.first_name}} {{user.last_name}}</td>
-        </tr>
-      </table>
+    <div class=info-box> E-mail: {{ user.email }}
+        <br>
+        Imię i Nazwisko: {{user.first_name}} {{user.last_name}}
+     </div>
+        
+    <div class="welcome-message"> 
+        Zamówienia
+    </div>
+
+    {% for order in orders %}
+    {{ order.order_id }} - {{ order.created_at }} - {{ order.total_price }}
+    {% for product in order.orderproduct_set.all %}
+        {{ product.order_product.product_name }} - {{ product.order_product_quantity }} - {{ product.order_product_price }}
+    {% endfor %}
+    {% endfor %}
+
+    <div class="bottom-bar">
+        <span class="bottom-bar-text">OMNI Productions</span>
+        <span class="bottom-bar-text">All rights reserved</span>
+    </div>
+</body>
+</html>
