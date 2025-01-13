@@ -163,7 +163,10 @@ def add_to_cart(request, product_id):
     else:
         cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price)
 
-    cart_product.product_quantity += int(quantity)
+    if not created:
+        cart_product.product_quantity += int(quantity)
+    else:
+        cart_product.product_quantity += int(quantity) - 1
 
     cart_product.save()
 
