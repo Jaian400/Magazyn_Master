@@ -7,6 +7,7 @@ from django.utils.text import slugify
 from decimal import Decimal
 from django.contrib.sessions.models import Session
 from datetime import datetime, timedelta
+from enum import Enum
 
 # MODELE ALE NIE MODELKI
 
@@ -253,24 +254,27 @@ class CartProduct(models.Model):
 # ZAMOWIENIE -> user zamawia od nas
 # ------------------------------------------------------------------------------------------------------------
 
+class OrderStatus(Enum):
+    WAIT_FOR_PAID = 'wait_for_paid'
+    PENDING = 'pending'
+    PAID = 'paid'
+    WAIT_FOR_FULFILMENT = 'wait_for_fulfilment'
+    FULFILLED = 'fulfilled'
+    CANCELLED = 'cancelled'
+
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    status_choices = [
-        ('wait_for_paid', 'Wait_for_paid'),
-        ('pending', 'Pending'),
-        ('paid', 'Paid'),
-        ('wait_for_fulfilment', 'wait_for_fulfilment'),
-        ('fulfilled', 'Fulfilled'),
-    ]
-
-    status = models.CharField(max_length=255, choices=status_choices, default='pending')
+    status = models.CharField(max_length=255, choices=[(status.value, status.name) for status in OrderStatus], default=OrderStatus.PENDING.value)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     
     def calculate_total_price(self):
-        total = sum(item.order_product_price * item.order_product_quantity for item in self.orderproduct_set.all())
+        total = sum(
+            item.order_product_price * item.order_product_quantity
+            for item in self.orderproduct_set.all()
+        )
         self.total_price = total
         self.save()
 
@@ -278,7 +282,11 @@ class Order(models.Model):
         return f"Order {self.order_id} by {self.user.username}"
     
     def make_order(self, cart):
-        self.status = 'wait_for_paid'
+        if not cart.cartproduct_set.exists():
+            raise ValueError("Koszyk jest pusty. Nie można złożyć zamówienia.")
+
+        self.status = OrderStatus.WAIT_FOR_PAID.value
+
         for cart_product in cart.cart_product.set.all():
             OrderProduct.objects.create(order=self, 
                                         order_product=cart_product.product, 
@@ -288,9 +296,21 @@ class Order(models.Model):
         cart.clear_cart()    
         self.save()
     
+    def is_paid(self):
+        return self.status == OrderStatus.PAID.value
+    
+    def is_fulfilled(self):
+        return self.status == OrderStatus.FULFILLED.value
+    
+    def is_canceled(self):
+        return self.status == OrderStatus.CANCELLED.value
+
     def switch_status(self, choice):
-        self.status = self.status_choices[choice]
-        self.save()
+        if 0 <= choice < len(self.status_choices):
+            self.status = self.status_choices[choice][0]
+            self.save()
+        else:
+            raise ValueError("Nieprawidłowy indeks statusu.")
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
