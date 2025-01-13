@@ -169,8 +169,8 @@ class WarehouseProduct(models.Model):
     def calculate_price(self):
         market_price = self.product_market.product_price
 
-        price_with_margin = market_price * (1 + Decimal(self.margin) / 100)
-        price_with_tax = price_with_margin * (1 + Decimal(self.tax) / 100)
+        price_with_margin = Decimal(market_price) * (1 + Decimal(self.margin) / 100)
+        price_with_tax = Decimal(price_with_margin) * (1 + Decimal(self.tax) / 100)
 
         final_price = price_with_tax
 
