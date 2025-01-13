@@ -13,3 +13,17 @@
     padding: 5px;
     margin: 5px;
 }
+
+.order-box{
+    display: inline-block;
+    border-radius:3px;
+    border : 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+
+.order-header{
+    font-size: 20px;
+    font-weight: bold;
+    color: #00916E;
+}

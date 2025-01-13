@@ -72,10 +72,16 @@
     </div>
 
     {% for order in orders %}
-    {{ order.order_id }} - {{ order.created_at }} - {{ order.total_price }}
-    {% for product in order.orderproduct_set.all %}
-        {{ product.order_product.product_name }} - {{ product.order_product_quantity }} - {{ product.order_product_price }}
-    {% endfor %}
+        <div class="order-box">
+            <div class="order-header">
+                Zamowienie nr. {{ order.order_id }}
+            </div>
+            Zamówiono: {{ order.created_at }}
+            <br>
+            {% for product in order.orderproduct_set.all %}
+                {{ product.order_product.product_name }} - {{ product.order_product_quantity }} sztuk - {{ product.order_product_price }} zł
+            {% endfor %}
+        </div>
     {% endfor %}
 
     <div class="bottom-bar">
