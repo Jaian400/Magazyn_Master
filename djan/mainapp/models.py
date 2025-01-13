@@ -276,6 +276,21 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.order_id} by {self.user.username}"
+    
+    def make_order(self, cart):
+        self.status = 'wait_for_paid'
+        for cart_product in cart.cart_product.set.all():
+            OrderProduct.objects.create(order=self, 
+                                        order_product=cart_product.product, 
+                                        order_product_price=cart_product.product_price,
+                                        order_product_quantity=cart_product.product_quantity)
+
+        cart.clear_cart()    
+        self.save()
+    
+    def switch_status(self, choice):
+        self.status = self.status_choices[choice]
+        self.save()
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -285,4 +300,15 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"Product {self.order_product.product_name} in Order {self.order.order_id}"
+    
+    def clear_order_prodcut(self):
+        self.delete(keep_parents=True)
+
+    def save(self, *args, **kwargs):
+        if self.order_product_quantity < 1:
+            self.clear_order_prodcut()
+            
+        super().save(*args, **kwargs)
+        self.order.calculate_total_price()
+        self.order.save()
     
