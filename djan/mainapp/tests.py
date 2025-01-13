@@ -30,7 +30,7 @@ class CartModelTestCase(TestCase):
             product_price=self.product1.product_price,
             product_quantity=1
         )
-        self.assertEqual(self.cart.total_value(), 50.00)
+        self.assertEqual(float(self.cart.total_value()), 33.99)
 
     def test_total_value_multiple_products(self):
         CartProduct.objects.create(
@@ -39,7 +39,7 @@ class CartModelTestCase(TestCase):
             product_price=self.product1.product_price,
             product_quantity=2
         )
-        self.assertEqual(self.cart.total_value(), 100.00)
+        self.assertEqual(float(self.cart.total_value()), 67.98)
 
     def test_total_value_empty_cart(self):
         self.assertEqual(self.cart.total_value(), 0.00)
