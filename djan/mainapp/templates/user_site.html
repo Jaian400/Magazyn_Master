@@ -17,12 +17,13 @@
                 <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
             </a>    
 
-            <div class="search-bar">
-                <input type="text" placeholder="Wyszukaj..." class="search-input">
-                <button class="search-button">
-                    <img src="{% static 'images/lupa.png'%}" alt="Szukaj" class="search-icon">
+            <form class="search-bar" method="POST">
+                {% csrf_token %}
+                <input type="text" name="query" placeholder="Wyszukaj..." class="search-input">
+                <button type="submit" class="search-button">
+                    <img src="{% static 'images/lupa.png' %}" alt="Szukaj" class="search-icon">
                 </button>
-            </div>
+            </form>
             
             <div class="header-buttons">
                 <button class="icon-button" onclick="window.location.href='{% url 'user_site' %}'">
@@ -79,12 +80,14 @@
             Zamówiono: {{ order.created_at }}
             <br>
             {% for product in order.orderproduct_set.all %}
-                <div class = "info-box">                
-                    {% comment %} zdjecia nie dzialaja, trzeba poprawić {% endcomment %}
-                    <img class="product-icon" src="{% static 'images/products/' %}{{ order.order_product.product_image }}" alt="{{ product.product_name }}">
-                    {{ product.order_product.product_name }} - {{ product.order_product_quantity }} sztuk - {{ product.order_product_price }} zł
+                <div class = "order-product-box">                
+                    <img class="product-icon" src="{% static 'images/products/' %}{{ product.order_product.product_image }}" alt="{{ product.order_product.product_name }}">
+                    &emsp;&ensp;{{ product.order_product.product_name }} - {{ product.order_product_price }} zł - {{ product.order_product_quantity }} sztuk 
                 </div>
+                <br>
             {% endfor %}
+            <br>
+            Status zamówienia: {{order.status}} 
             <br>
             Wartość całkowita zamówienia: {{ order.total_price }} zł
         </div>
