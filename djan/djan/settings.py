@@ -79,35 +79,23 @@ WSGI_APPLICATION = 'djan.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'NAME': BASE_DIR / 'testdb.sqlite3',
 #     }
 # }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'testdb.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'janpawel',
+        'USER': 'janpawel',
+        'PASSWORD': 'mv9Sbz5MKVACy36V',
+        'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
+        'PORT': '3306', 
+        'TEST':{
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'testdb.sqlite3',
+        }
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'janpawel',
-    #     'USER': 'janpawel',
-    #     'PASSWORD': 'mv9Sbz5MKVACy36V',
-    #     'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
-    #     'PORT': '3306', 
-    # },
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'janpawe1',
-    #     'USER': 'janpawe1',
-    #     'PASSWORD': 'Ad2WH3Kj2i89Pneq',
-    #     'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
-    #     'PORT': '3306', 
-    #     'TEST': {
-    #         'NAME': 'janpawe1',
-    #         'MIRROR': 'default',
-    #     },
-    # }
 }
 
 # DATABASES['default']['MIRROR'] = 'janpawe1'
