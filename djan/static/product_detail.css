@@ -10,7 +10,7 @@
     height: auto;             /* Zachowanie proporcji */
     /* margin-right: 2%;         Odstęp od sekcji obok */
     margin-right: 1%;
-    margin-left: 2%;          /* Odstęp od lewej krawędzi ekranu */
+    margin-left: 7%;          /* Odstęp od lewej krawędzi ekranu */
 }
 
 .product-info-box {
@@ -19,7 +19,7 @@
     border-radius: 8px;
     padding: 10px;
     /* width: 45%;               Szerokość ramki */
-    width: 40%;
+    width: 30%;
     box-sizing: border-box;
 }
 
