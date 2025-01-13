@@ -88,13 +88,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'janpawel',
         'USER': 'janpawel',
-        'PASSWORD': 'mv9Sbz5MKVACy36V',
+        'PASSWORD': os.getenv('MM_DB_PASSWORD'),
         'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
-        'PORT': '3306', 
-        'TEST':{
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'testdb.sqlite3',
-        }
+        'PORT': '3306'
     }
 }
 
