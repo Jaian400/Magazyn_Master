@@ -232,23 +232,31 @@ class CartProduct(models.Model):
         return self.product_price * self.product_quantity
     
     def quantity_minus(self):
-        self.product_quantity -= 1
+        if self.product_quantity > 0:
+            self.product_quantity -= 1
         self.save()
     
     def quantity_plus(self):
-        self.product_quantity += 1
+        if self.product_quantity < self.product.product_quantity:
+            self.product_quantity += 1
         self.save()
 
     def clear_product(self):
+        self.cart.total_price -= self.total_price()
+        self.cart.save()
         self.delete(keep_parents=True)
 
     def save(self, *args, **kwargs):
+        previous_quantity = self.product_quantity
+        super().save(*args, **kwargs)
         if self.product_quantity < 1:
             self.clear_product()
-            
-        super().save(*args, **kwargs)
-        self.cart.total_price = self.cart.total_value()
-        self.cart.save()
+        elif self.product_quantity < previous_quantity:
+            self.cart.total_price -= (previous_quantity - self.product_quantity) * self.product_price
+            self.cart.save()
+        else:
+            self.cart.total_price = self.cart.total_value()
+            self.cart.save()
 
 # ------------------------------------------------------------------------------------------------------------
 # ZAMOWIENIE -> user zamawia od nas
