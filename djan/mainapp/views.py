@@ -9,6 +9,12 @@ from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_protect
+# from django.contrib.auth.views import (
+#     PasswordResetView, 
+#     PasswordResetDoneView, 
+#     PasswordResetConfirmView,
+#     PasswordResetCompleteView
+# )
 
 # INDEX -> STRONA GŁOWNA
 
@@ -111,6 +117,10 @@ def logout_view(request):
 
     logout(request)
     return redirect(reverse('index')) 
+
+# def PasswordResetView:
+
+
 
 # PRODUKT
 
