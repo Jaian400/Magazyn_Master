@@ -146,6 +146,9 @@ def koszyk_view(request):
 def add_to_cart(request, product_id):
     Cart.delete_old_carts()
 
+    if request.method == 'POST':
+        quantity = request.POST.get('quantity')
+
     product = get_object_or_404(WarehouseProduct, id=product_id)
 
     if request.user.is_authenticated:
@@ -160,8 +163,7 @@ def add_to_cart(request, product_id):
     else:
         cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price)
 
-    if not created:
-        cart_product.product_quantity += 1
+    cart_product.product_quantity += int(quantity)
 
     cart_product.save()
 
@@ -232,7 +234,7 @@ def category_view(request, category_slug):
     max_price = int(max(product.product_price for product in products) + 1)
     suppliers = products.values_list('product_market__supplier__supplier_name', flat=True).distinct()
 
-    # Filter by suppliers
+    # Filter by suppliers 
     supplier_filter = request.GET.getlist('supplier')
     if supplier_filter:
         products = products.filter(product_market__supplier__supplier_name__in=supplier_filter)

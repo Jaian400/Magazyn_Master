@@ -79,18 +79,7 @@ WSGI_APPLICATION = 'djan.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'magazyn_master_database',
-#         'USER': '',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
+#         'NAME': BASE_DIR / 'testdb.sqlite3',
 #     }
 # }
 
@@ -99,11 +88,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'janpawel',
         'USER': 'janpawel',
-        'PASSWORD': 'mv9Sbz5MKVACy36V',
+        'PASSWORD': os.getenv('MM_DB_PASSWORD'),
         'HOST': 'mysql.agh.edu.pl',  # Adres serwera MySQL
-        'PORT': '3306',             # Domyślny port MySQL
+        'PORT': '3306'
     }
 }
+
+# DATABASES['default']['MIRROR'] = 'janpawe1'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
