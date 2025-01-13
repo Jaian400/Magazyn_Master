@@ -81,6 +81,8 @@
             {% for product in order.orderproduct_set.all %}
                 {{ product.order_product.product_name }} - {{ product.order_product_quantity }} sztuk - {{ product.order_product_price }} zł
             {% endfor %}
+            <br>
+            Wartość całkowita zamówienia: {{ order.total_price }} zł
         </div>
     {% endfor %}
 
