@@ -318,7 +318,7 @@ class Order(models.Model):
             self.status = self.status_choices[choice][0]
             self.save()
         else:
-            raise ValueError("Nieprawidłowy indeks statusu.")
+            raise ValueError("Uncorrect order status index")
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
