@@ -301,7 +301,8 @@ class Order(models.Model):
                                         order_product_price=cart_product.product_price,
                                         order_product_quantity=cart_product.product_quantity)
 
-        cart.clear_cart()    
+        cart.clear_cart()
+        self.calculate_total_price()   
         self.save()
     
     def is_paid(self):
