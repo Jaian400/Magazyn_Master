@@ -137,9 +137,6 @@ def koszyk_view(request):
     cart_products = CartProduct.objects.filter(cart=cart)
     total_price = cart.total_price
     
-    # cart_products -> wyswietl w petli, one maja ilosc swoja, jesli chcesz manipulacje nia,
-    # to zglos sie do @Jaian400 i to trzeba bedzie zobaczyc, obsluzyc
-    # total_price -> po prostu wyswietl cene calkowita koszyka
     return render(request, 'koszyk.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
 
 # Dodwanie do koszxyka
@@ -163,7 +160,10 @@ def add_to_cart(request, product_id):
     else:
         cart_product, created = CartProduct.objects.get_or_create(cart=cart, product=product, product_price=product.product_price)
 
-    cart_product.product_quantity += int(quantity)
+    if not created:
+        cart_product.product_quantity += int(quantity)
+    else:
+        cart_product.product_quantity += int(quantity) - 1
 
     cart_product.save()
 
@@ -202,22 +202,23 @@ def clear_product(request, cart_product_id):
 # ------------------------------------------------------------------------------------------------------------
 
 def order(request, cart_id):
+    cart_products = CartProduct.objects.get(cart=cart_id)
 
-    return render(request, 'order.html', )
+    return render(request, 'order.html', {'cart_products' : cart_products})
 
 def make_order(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
     order = Order.objects.create(user=request.user, tota_price=0.)
 
-    for cart_product in cart.items.all():
-        Order.objects.create(order=order, order_product=cart_product.product, order_product_price=cart_product.product_price,
-                             order_product_quantity=cart_product.product_quantity)
+    order.make_order(cart)
+    # for cart_product in cart.items.all():
+    #     Order.objects.create(order=order, order_product=cart_product.product, order_product_price=cart_product.product_price,
+    #                          order_product_quantity=cart_product.product_quantity)
+    # order.calculate_total_price()
 
-    order.calculate_total_price()
     cart.clear_cart()
 
     return redirect('user_site')
-
 
 # ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW - trzeba dynamicznie zrobic
@@ -234,13 +235,13 @@ def category_view(request, category_slug):
     max_price = int(max(product.product_price for product in products) + 1)
     suppliers = products.values_list('product_market__supplier__supplier_name', flat=True).distinct()
 
-    # Filter by suppliers 
     supplier_filter = request.GET.getlist('supplier')
     if supplier_filter:
         products = products.filter(product_market__supplier__supplier_name__in=supplier_filter)
 
     products = filter_products(products, request)
 
+    # Wyszukiwanie 
     if request.method == 'POST':
         search_query = request.POST.get('query')
         products = products.filter(product_name__icontains=search_query)
@@ -274,7 +275,7 @@ def filter_products(queryset, request):
 
 
 # ------------------------------------------------------------------------------------------------------------
-# strona konta uzytkownika
+# STRONA KONTA UŻYTKOWNIKA
 # ------------------------------------------------------------------------------------------------------------
 
 @csrf_protect
