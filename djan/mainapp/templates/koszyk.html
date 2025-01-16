@@ -6,6 +6,7 @@
     <title>WMS</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'koszyk.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/logofav.png' %}">
 </head>
 <body>
@@ -51,56 +52,66 @@
         </div>
         
     </header>
-    <h2>Twój Koszyk</h2>
+    <h2 style="text-align: center;">Twój Koszyk</h2>
 
-{% if cart_products %}
-    <ul>
-        {% for cart_product in cart_products %}
-            <li>
-                <!-- Wyświetlenie obrazu produktu -->
-                <img src="{% static 'images/products/' %}{{ cart_product.product.product_image }}" 
-                     alt="{{ cart_product.product.product_name }}" 
-                     style="width: 100px;">
+    {% if cart_products %}
+        <ul class="cart-list">
+            {% for cart_product in cart_products %}
+                <li class="cart-item">
+                    <img src="{% static 'images/products/' %}{{ cart_product.product.product_image }}" 
+                         alt="{{ cart_product.product.product_name }}">
 
-                <!-- Szczegóły produktu -->
-                <strong>{{ cart_product.product.product_name }}</strong><br>
-                Cena jednostkowa: {{ cart_product.product_price|floatformat:2 }} zł<br>
-                Ilość: {{ cart_product.product_quantity }}<br>
-                Cena łącznie: {{ cart_product.total_price|floatformat:2 }} zł
+                    <div class="cart-item-content">
+                        <div class="cart-item-info">
+                            <div class="product-name">
+                                <strong>{{ cart_product.product.product_name }}</strong>
+                            </div>
+                            <p>
+                                Cena jednostkowa: {{ cart_product.product_price|floatformat:2 }} zł<br>
+                                Ilość: {{ cart_product.product_quantity }}<br>
+                                Cena łącznie: {{ cart_product.total_price|floatformat:2 }} zł
+                            </p>
 
-                <!-- Przyciski manipulacji ilością -->
-                <form action="{% url 'quantity_minus' cart_product.id %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit">-</button>
-                </form>
-                <form action="{% url 'quantity_plus' cart_product.id %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit">+</button>
-                </form>
-                <form action="{% url 'clear_product' cart_product.id %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit">Usuń</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+                            <div class="cart-item-buttons inline-buttons">
+                                <form action="{% url 'quantity_minus' cart_product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">-</button>
+                                </form>
+                                <form action="{% url 'quantity_plus' cart_product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">+</button>
+                                </form>
+                                <form action="{% url 'clear_product' cart_product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit">Usuń</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <!-- Wyświetlenie całkowitej ceny -->
-    <p><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
-    
-    <!-- Formularz do opróżnienia koszyka -->
-    <form action="{% url 'clear_cart' cart.cart_id %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Opróżnij koszyk</button>
-    </form> 
+        <p class="cart-total"><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
 
-    <!-- Formularz do złożenia zamówienia -->
-    <form action="{% url 'order' cart.cart_id %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Zamów</button>
-    </form>
-{% else %}
-    <p>Twój koszyk jest pusty.</p>
-{% endif %}
+        <div class="cart-actions">
+            <form action="{% url 'clear_cart' cart.cart_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Opróżnij koszyk</button>
+            </form>
+            <form action="{% url 'order' cart.cart_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="order-button">Zamów</button>
+            </form>
+        </div>
+    {% else %}
+        <p>Twój koszyk jest pusty.</p>
+    {% endif %}
+
+    <div class="bottom-bar">
+        <span class="bottom-bar-text">OMNI Productions®2025</span>
+        <span class="bottom-bar-text">All rights reserved</span>
+    </div>
+     
 </body>
 </html>
