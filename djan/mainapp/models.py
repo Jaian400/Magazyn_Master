@@ -301,7 +301,8 @@ class Order(models.Model):
                                         order_product_price=cart_product.product_price,
                                         order_product_quantity=cart_product.product_quantity)
 
-        cart.clear_cart()    
+        cart.clear_cart()
+        self.calculate_total_price()   
         self.save()
     
     def is_paid(self):
@@ -318,7 +319,7 @@ class Order(models.Model):
             self.status = self.status_choices[choice][0]
             self.save()
         else:
-            raise ValueError("Nieprawidłowy indeks statusu.")
+            raise ValueError("Uncorrect order status index")
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
