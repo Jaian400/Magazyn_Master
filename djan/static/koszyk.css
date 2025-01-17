@@ -2,13 +2,15 @@
     display: flex;
     align-items: flex-start;
     margin-bottom: 1%;
-    border: 0px solid;
+    border: 1px solid rgb(0,0,0);
     padding: 10px;
     border-radius: 8px;
+    width: 60%;
 }
 
 .cart-item img {
-    width: 15%;
+    width: 300px;
+    height: 300px;
     margin-left: 2%;
     margin-right: 2%;
 }
