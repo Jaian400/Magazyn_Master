@@ -35,7 +35,7 @@
 
 .cart-item-content {
     flex: 6; /* Informacje o produkcie zajmują większą przestrzeń */
-    margin-left: 2%;
+    margin-left: 0%;
 }
 
 .cart-item-details {
