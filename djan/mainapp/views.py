@@ -214,7 +214,7 @@ def clear_product(request, cart_product_id):
 def order(request, cart_id):
     cart_products = CartProduct.objects.get(cart=cart_id)
 
-    return render(request, 'order.html', {'cart_products' : cart_products})
+    return render(request, 'order.html', {'cart_id' : cart_id, 'cart_products' : cart_products})
 
 def make_order(request, cart_id):
     cart = Cart.objects.get(id=cart_id)

@@ -72,6 +72,7 @@
         Zamówienia
     </div>
 
+    <div class="orders-box">
     {% for order in orders %}
         <div class="order-box">
             <div class="order-header">
@@ -91,7 +92,10 @@
             <br>
             Wartość całkowita zamówienia: {{ order.total_price }} zł
         </div>
+        <br>
     {% endfor %}
+    </div>
+    
 
     <div class="bottom-bar">
         <span class="bottom-bar-text">OMNI Productions</span>
