@@ -9,6 +9,12 @@ from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_protect
+# from django.contrib.auth.views import (
+#     PasswordResetView, 
+#     PasswordResetDoneView, 
+#     PasswordResetConfirmView,
+#     PasswordResetCompleteView
+# )
 
 # INDEX -> STRONA GŁOWNA
 
@@ -112,6 +118,10 @@ def logout_view(request):
     logout(request)
     return redirect(reverse('index')) 
 
+# def PasswordResetView:
+
+
+
 # PRODUKT
 
 def product_detail_view(request,category_slug, product_slug): 
@@ -204,7 +214,7 @@ def clear_product(request, cart_product_id):
 def order(request, cart_id):
     cart_products = CartProduct.objects.get(cart=cart_id)
 
-    return render(request, 'order.html', {'cart_products' : cart_products})
+    return render(request, 'order.html', {'cart_id' : cart_id, 'cart_products' : cart_products})
 
 def make_order(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
