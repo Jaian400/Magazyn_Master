@@ -52,7 +52,7 @@
         </div>
         
     </header>
-    <h2 style="text-align: center;">Twój Koszyk</h2>
+    <h2 style="text-align: center;">Twoje zamówienie</h2>
 
     {% if cart_products %}
         <ul class="cart-list">
@@ -91,7 +91,7 @@
                 {% csrf_token %}
                 <button type="submit" class="clear-button">Opróżnij koszyk</button>
             </form>
-            <form action="{% url 'order' cart.cart_id %}" method="post">
+            <form action="{% url 'order'  %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="order-button">Zamów</button>
             </form>
