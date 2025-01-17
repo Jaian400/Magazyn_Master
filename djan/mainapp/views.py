@@ -211,10 +211,21 @@ def clear_product(request, cart_product_id):
 # ZAMOWIENIE
 # ------------------------------------------------------------------------------------------------------------
 
-def order(request, cart_id):
-    cart_products = CartProduct.objects.get(cart=cart_id)
+def order_view(request):
+    if request.user.is_authenticated:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
+    
+    if not cart.cartproduct_set.exists():
+        return render(request, 'koszyk.html', {'error': 'Koszyk jest pusty.'})
 
-    return render(request, 'order.html', {'cart_id' : cart_id, 'cart_products' : cart_products})
+    cart_products = CartProduct.objects.filter(cart=cart)
+    total_price = cart.total_price
+
+    return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
 
 def make_order(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
