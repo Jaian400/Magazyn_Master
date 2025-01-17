@@ -69,7 +69,7 @@
                                     <strong>{{ cart_product.product.product_name }}</strong>
                                 </div>
                                 <p>
-                                    Cena jednostkowa: {{ cart_product.product_price|floatformat:2 }} zł<br>
+                                    Cena: {{ cart_product.product_price|floatformat:2 }} zł<br>
                                     Ilość: {{ cart_product.product_quantity }}<br>
                                     Cena łącznie: {{ cart_product.total_price|floatformat:2 }} zł
                                 </p>
@@ -89,6 +89,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </li>
             {% endfor %}
