@@ -2,6 +2,7 @@
     list-style: none;
     padding: 0;
     align-items: left;
+    margin: 10px;
 }
 
 .cart-item {
@@ -123,6 +124,7 @@
     flex-direction: column;
     align-items: flex-start;
     background-color: #f0f0f0;
+    padding: 10px;
 }
 
 .inline-buttons {
