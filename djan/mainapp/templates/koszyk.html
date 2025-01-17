@@ -102,7 +102,7 @@
                 {% csrf_token %}
                 <button type="submit" class="clear-button">Opróżnij koszyk</button>
             </form>
-            <form action="{% url 'order' cart.cart_id %}" method="post">
+            <form action="{% url 'order' %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="order-button">Zamów</button>
             </form>
