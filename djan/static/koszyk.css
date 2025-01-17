@@ -91,7 +91,7 @@
 .cart-total {
     text-align: center;
     margin-top: 2%;
-    font-size: 18px;
+    font-size: 25px;
     /* margin-left: 2%; */
 }
 
@@ -141,11 +141,11 @@
 }
 
 .cart-item-buttons .remove-button {
-    background-color: #b31010; /* Czerwony kolor dla przycisku Usuń */
+    background-color: #b31010;
 }
 
 .cart-actions .clear-button {
-    background-color: #b31010; /* Czerwony kolor dla przycisku Opróżnij koszyk */
+    background-color: #b31010;
 }
 
 .cart-actions .clear-button:hover {
