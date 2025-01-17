@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="wms_test" content="width=device-width, initial-scale=1.0">
+    <title>WMS</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'koszyk.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logofav.png' %}">
+</head>
+<body>
+    <header>
+        <div class="highest_div">
+            <a href={%url 'index'%} class="logo-button">
+                <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
+            </a>
+            <div class="search-bar">
+                <input type="text" placeholder="Wyszukaj..." class="search-input">
+                <button class="search-button">
+                    <img src="{%static 'images/lupa.png'%}" alt="Szukaj" class="search-icon">
+                </button>
+            </div>
+            
+            <div class="header-buttons">
+                <button class="icon-button" onclick="window.location.href='{% url 'user_site' %}'">
+                    <img src="{% static 'images/user_site_icon.png'%}" alt="Strona uzytkownika" class="icon-image">
+                </button>           
+
+                <button class="icon-button" onclick="window.location.href='{% url 'koszyk' %}'">
+                    <img src="{% static 'images/sklep.png'%}" alt="Sklep" class="icon-image">
+                </button>
+
+                <button class="icon-button" onclick="window.location.href='{% url 'logout' %}'">
+                    <img src="{% static 'images/wyloguj.png' %}" alt="Wyloguj" class="icon-image">
+                </button>
+            </div>
+        </div>
+
+
+        <div tabindex="-1"></div>
+            
+        <div class="second_div">
+            <div class="buttons">
+                <button onclick="location.href='{% url 'category' 'technika' %}'" class="button">Technika</button>
+                <button onclick="location.href='{% url 'category' 'mieszkanie' %}'" class="button">Mieszkanie</button>
+                <button onclick="location.href='{% url 'category' 'budownictwo' %} '" class="button">Budownictwo</button>
+                <button onclick="location.href='{% url 'category' 'ogrod' %}'" class="button">Ogród</button>
+                <button onclick="location.href='{% url 'category' 'lazienka' %}'" class="button">Łazienka</button>
+                <button onclick="location.href='{% url 'category' 'kuchnia' %}'" class="button">Kuchnia</button>
+            </div>      
+        </div>
+        
+    </header>
+    <h2 style="text-align: center;">Twój Koszyk</h2>
+
+    {% if cart_products %}
+        <ul class="cart-list">
+            {% for cart_product in cart_products %}
+                <li class="cart-item">
+                    <div class="cart-item-container">
+                        <div class="cart-item-image">
+                            <img src="{% static 'images/products/' %}{{ cart_product.product.product_image }}" 
+                                 alt="{{ cart_product.product.product_name }}">
+                        </div>
+                        <div class="cart-item-content">
+                            <div class="cart-item-info">
+                                <div class="product-name">
+                                    <strong>{{ cart_product.product.product_name }}</strong>
+                                </div>
+                                <p>
+                                    Cena: {{ cart_product.product_price|floatformat:2 }} zł<br>
+                                    Ilość: {{ cart_product.product_quantity }}<br>
+                                    Cena łącznie: {{ cart_product.total_price|floatformat:2 }} zł
+                                </p>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p class="cart-total"><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
+
+        <div class="cart-actions">
+            <form action="{% url 'clear_cart' cart.cart_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="clear-button">Opróżnij koszyk</button>
+            </form>
+            <form action="{% url 'order' cart.cart_id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="order-button">Zamów</button>
+            </form>
+        </div>
+    {% else %}
+        <p style="text-align: center;">Twój koszyk jest pusty.</p>
+    {% endif %}
+
+    <div class="bottom-bar">
+        <span class="bottom-bar-text">OMNI Productions®2025</span>
+        <span class="bottom-bar-text">All rights reserved</span>
+    </div>
+
+</body>
+</html>
