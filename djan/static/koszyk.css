@@ -20,7 +20,7 @@
     margin: 2% auto; /* Odstęp 2% od krawędzi ekranu */
     align-items: center;
     justify-content: space-between;
-    /* border: 0px solid #ccc; Opcjonalne: ramka dla lepszej widoczności */
+    border: 0px solid #ccc; /* Opcjonalne: ramka dla lepszej widoczności */
     padding: 10px;
     border-radius: 8px;
     width: 100%; /* Szerokość kontenera*/
@@ -138,6 +138,24 @@
 .cart-actions button:hover {
     opacity: 0.9;
     background-color: #007d6c;
+}
+
+.cart-item-buttons .remove-button {
+    background-color: #b31010; /* Czerwony kolor dla przycisku Usuń */
+}
+
+.cart-actions .clear-button {
+    background-color: #b31010; /* Czerwony kolor dla przycisku Opróżnij koszyk */
+}
+
+.cart-actions .clear-button:hover {
+    opacity: 0.9;
+    background-color: #ef2626;
+}
+
+.cart-item-buttons .remove-button:hover {
+    opacity: 0.9;
+    background-color: #ef2626;
 }
 
 .cart-item-buttons button:hover {

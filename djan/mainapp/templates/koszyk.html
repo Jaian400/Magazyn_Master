@@ -84,7 +84,7 @@
                                     </form>
                                     <form action="{% url 'clear_product' cart_product.id %}" method="post">
                                         {% csrf_token %}
-                                        <button type="submit">Usuń</button>
+                                        <button type="submit" class="remove-button">Usuń</button>
                                     </form>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
         <div class="cart-actions">
             <form action="{% url 'clear_cart' cart.cart_id %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Opróżnij koszyk</button>
+                <button type="submit" class="clear-button">Opróżnij koszyk</button>
             </form>
             <form action="{% url 'order' cart.cart_id %}" method="post">
                 {% csrf_token %}
