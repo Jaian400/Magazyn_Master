@@ -214,6 +214,10 @@ def clear_product(request, cart_product_id):
 def order_view(request):
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
+        try:
+            last_order = Order.objects.filter(user=request.user).latest('created_at')
+        except Order.DoesNotExist:
+            last_order = None
     else:
         if not request.session.session_key:
             request.session.create()
@@ -223,9 +227,12 @@ def order_view(request):
         return render(request, 'koszyk.html', {'error': 'Koszyk jest pusty.'})
 
     cart_products = CartProduct.objects.filter(cart=cart)
-    total_price = cart.total_price
+    total_price = cart.total_price + 9.0
 
-    return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
+    # if last_order == None:
+    #     return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
+    # else:
+    return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price, 'last_order' : last_order})
 
 def make_order(request, cart_id):
     cart = Cart.objects.get(id=cart_id)
