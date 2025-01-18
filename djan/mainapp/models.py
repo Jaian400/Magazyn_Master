@@ -272,7 +272,7 @@ class OrderStatus(Enum):
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     status = models.CharField(max_length=255, choices=[(status.value, status.name) for status in OrderStatus], default=OrderStatus.PENDING.value)
@@ -355,6 +355,3 @@ class OrderProduct(models.Model):
         super().save(*args, **kwargs)
         self.order.calculate_total_price()
         self.order.save()
-
-class Nothing(models.Model):
-    description = models.CharField(max_length=255, null=True)

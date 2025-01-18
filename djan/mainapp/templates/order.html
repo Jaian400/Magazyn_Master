@@ -87,7 +87,13 @@
             {% endfor %}
         </ul>
 
-        <p class="cart-total"><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
+        <p class="cart-total">
+            <strong>
+                Całkowita cena: {{ total_price|floatformat:2 }} zł
+            </strong>
+            <br>
+        <h style="font-size:14px" >w tym 9 zł dostawa </h>
+        </p>
 
         {% comment %} <div class="cart-actions">
             <form action="{% url 'order'  %}" method="post">
@@ -157,7 +163,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="building_number">Nr budynku</label>
-                <input type="text" id="building_number" name="building_number" class="form-control" value="{{ last_order.address_building_name }}"placeholder="np. 10" required>
+                <input type="text" id="building_number" name="building_number" class="form-control" value="{{ last_order.address_building_number }}"placeholder="np. 10" required>
             </div>
             <div class="form-group">
                 <label class="form-label" for="apartment_number">Nr mieszkania</label>
@@ -179,23 +185,23 @@
 
             <div class="form-group-radio">
                 <input type="radio" id="delivery_courier_DHL" name="delivery_courier" class="form-control-radio">
-                <label for="delivery_courier_DHL">Kurier DHL</label>
+                <label for="delivery_courier_DHL">(+9zł) Kurier DHL</label>
             </div>
             <div class="form-group-radio">
                 <input type="radio" id="delivery_courier_UPS" name="delivery_courier" class="form-control-radio">
-                <label for="delivery_courier_UPS">Kurier UPS</label>
+                <label for="delivery_courier_UPS">(+9zł) Kurier UPS</label>
             </div>
             <div class="form-group-radio">
                 <input type="radio" id="delivery_courier_FedEx" name="delivery_courier" class="form-control-radio">
-                <label for="delivery_courier_FedEx">Kurier FedEx</label>
+                <label for="delivery_courier_FedEx">(+9zł) Kurier FedEx</label>
             </div>
             <div class="form-group-radio">
                 <input type="radio" id="delivery_courier_PocztaPolska" name="delivery_courier" class="form-control-radio">
-                <label for="delivery_courier_PocztaPolska">Poczta Polska</label>
+                <label for="delivery_courier_PocztaPolska">(+9zł) Poczta Polska</label>
             </div>
             <div class="form-group-radio">
                 <input type="radio" id="delivery_courier_Paczkomat" name="delivery_courier" class="form-control-radio">
-                <label for="delivery_courier_Paczkomat">Paczkomat InPost</label>
+                <label for="delivery_courier_Paczkomat">(+9zł) Paczkomat InPost</label>
             </div>            
             </div>
 
