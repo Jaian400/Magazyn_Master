@@ -35,6 +35,7 @@ urlpatterns = [
     path('<slug:category_slug>', category_view, name='category'),
     
     path('order/', order_view, name='order'),
+    path('make_order/<int:cart_id>/', make_order, name='make_order'),
     
     path('koszyk/', koszyk_view, name='koszyk'),
     path('user_site/', user_site_view, name='user_site'),
