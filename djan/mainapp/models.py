@@ -277,6 +277,21 @@ class Order(models.Model):
 
     status = models.CharField(max_length=255, choices=[(status.value, status.name) for status in OrderStatus], default=OrderStatus.PENDING.value)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    # dane ktore kradniemy
+    first_name = models.CharField(max_length=255, null=True)
+    last_name = models.CharField(max_length=255, null=True)
+    email = models.EmailField(max_length=255, null=True)
+    business_name = models.CharField(max_length=255, blank=True)
+    nip = models.CharField(max_length=255, blank=True)
+    area_code = models.CharField(max_length=255, blank=True)
+    phone_number = models.CharField(max_length=255, blank=True)
+    country = models.CharField(max_length=255, null=True)
+    address_street = models.CharField(max_length=255, null=True) 
+    address_building_number = models.IntegerField(null=True) 
+    address_apartment_number = models.IntegerField(null=True, blank=True)
+    zip_code = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
     
     def calculate_total_price(self):
         total = sum(
@@ -340,4 +355,6 @@ class OrderProduct(models.Model):
         super().save(*args, **kwargs)
         self.order.calculate_total_price()
         self.order.save()
-    
+
+class Nothing(models.Model):
+    description = models.CharField(max_length=255, null=True)
