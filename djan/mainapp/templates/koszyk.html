@@ -71,7 +71,9 @@
                                 <p>
                                     Cena: {{ cart_product.product_price|floatformat:2 }} zł<br>
                                     Ilość: {{ cart_product.product_quantity }}<br>
+                                    {% if cart_product.product_price|floatformat:2 != cart_product.total_price|floatformat:2 %}
                                     Cena łącznie: {{ cart_product.total_price|floatformat:2 }} zł
+                                    {% endif %}
                                 </p>
                                 <div class="cart-item-buttons">
                                     <form action="{% url 'quantity_minus' cart_product.id %}" method="post">
@@ -111,10 +113,10 @@
         <p style="text-align: center;">Twój koszyk jest pusty.</p>
     {% endif %}
 
-    <div class="bottom-bar">
+    <footer class="bottom-bar">
         <span class="bottom-bar-text">OMNI Productions®2025</span>
         <span class="bottom-bar-text">All rights reserved</span>
-    </div>
+    </footer>
 
 </body>
 </html>

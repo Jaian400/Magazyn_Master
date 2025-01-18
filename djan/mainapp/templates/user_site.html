@@ -67,7 +67,11 @@
         <br>
         Imię i Nazwisko: {{user.first_name}} {{user.last_name}}
      </div>
-        
+
+     <form>
+        <label for="favcolor">Twój ulubiony kolor:</label>
+        <input type="color" id="favcolor" name="favcolor" value="#00916E">
+      </form>
     <div class="welcome-message"> 
         Zamówienia
     </div>
@@ -96,10 +100,9 @@
     {% endfor %}
     </div>
     
-
-    <div class="bottom-bar">
+    <footer class="bottom-bar">
         <span class="bottom-bar-text">OMNI Productions</span>
         <span class="bottom-bar-text">All rights reserved</span>
-    </div>
+    </footer>
 </body>
 </html>

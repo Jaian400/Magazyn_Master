@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_protect
+from decimal import Decimal
 # from django.contrib.auth.views import (
 #     PasswordResetView, 
 #     PasswordResetDoneView, 
@@ -227,7 +228,7 @@ def order_view(request):
         return render(request, 'koszyk.html', {'error': 'Koszyk jest pusty.'})
 
     cart_products = CartProduct.objects.filter(cart=cart)
-    total_price = cart.total_price + 9.0
+    total_price = cart.total_price + Decimal(9.0)
 
     # if last_order == None:
     #     return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
@@ -235,8 +236,20 @@ def order_view(request):
     return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price, 'last_order' : last_order})
 
 def make_order(request, cart_id):
-    cart = Cart.objects.get(id=cart_id)
-    order = Order.objects.create(user=request.user, tota_price=0.)
+    
+
+    return redirect('user_site')
+
+def order_complete_view(request):
+    if request.user.is_authenticated:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+    else:
+        if not request.session.session_key:
+            request.session.create()
+        cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
+
+    print(cart)
+    order = Order.objects.create(user=request.user, total_price=0.)
 
     order.make_order(cart)
     # for cart_product in cart.items.all():
@@ -246,7 +259,7 @@ def make_order(request, cart_id):
 
     cart.clear_cart()
 
-    return redirect('user_site')
+    return render(request, 'order_complete.html')
 
 # ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW
