@@ -310,7 +310,7 @@ class Order(models.Model):
 
         self.status = OrderStatus.WAIT_FOR_PAID.value
 
-        for cart_product in cart.cart_product.set.all():
+        for cart_product in cart.cartproduct_set.all():
             OrderProduct.objects.create(order=self, 
                                         order_product=cart_product.product, 
                                         order_product_price=cart_product.product_price,
