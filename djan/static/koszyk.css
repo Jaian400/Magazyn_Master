@@ -1,10 +1,18 @@
+.cart-list {
+    list-style: none;
+    padding: 0;
+    align-items: left;
+    margin: 10px;
+}
+
 .cart-item {
     display: flex;
     align-items: flex-start;
     margin-bottom: 1%;
-    border: 0px solid;
+    border: 1px solid;
     padding: 10px;
     border-radius: 8px;
+    width: 50%;
 }
 
 .cart-item-container {
@@ -27,7 +35,7 @@
 }
 
 .cart-item-image img {
-    width: 32%; /* Zwiększamy szerokość obrazka */
+    width: 80%;
     height: auto;
     display: block;
     margin: 0 auto; /* Wyśrodkowanie obrazu */
@@ -83,7 +91,7 @@
 .cart-total {
     text-align: center;
     margin-top: 2%;
-    font-size: 18px;
+    font-size: 25px;
     /* margin-left: 2%; */
 }
 
@@ -110,12 +118,13 @@
 }
 
 .cart-item-info {
-    width: 25%;
+    width: 80%;
     margin-top: 3%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     background-color: #f0f0f0;
+    padding: 10px;
 }
 
 .inline-buttons {
@@ -132,11 +141,11 @@
 }
 
 .cart-item-buttons .remove-button {
-    background-color: #b31010; /* Czerwony kolor dla przycisku Usuń */
+    background-color: #b31010;
 }
 
 .cart-actions .clear-button {
-    background-color: #b31010; /* Czerwony kolor dla przycisku Opróżnij koszyk */
+    background-color: #b31010;
 }
 
 .cart-actions .clear-button:hover {
@@ -159,7 +168,4 @@
     background-color: #007d6c;
 }
 
-.cart-list {
-    list-style: none;
-    padding: 0;
-}
+

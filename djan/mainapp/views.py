@@ -149,7 +149,7 @@ def koszyk_view(request):
     
     return render(request, 'koszyk.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
 
-# Dodwanie do koszxyka
+# Dodwanie do koszyka
 def add_to_cart(request, product_id):
     Cart.delete_old_carts()
 
@@ -249,7 +249,7 @@ def make_order(request, cart_id):
     return redirect('user_site')
 
 # ------------------------------------------------------------------------------------------------------------
-# PODSTRONY PRODUKTOW - trzeba dynamicznie zrobic
+# PODSTRONY PRODUKTOW
 # ------------------------------------------------------------------------------------------------------------
 
 def category_view(request, category_slug):
