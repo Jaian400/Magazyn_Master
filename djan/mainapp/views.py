@@ -241,6 +241,9 @@ def make_order(request, cart_id):
 
     return redirect('user_site')
 
+def order_complete_view(request):
+    return render(request, 'order_complete.html')
+
 # ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW
 # ------------------------------------------------------------------------------------------------------------

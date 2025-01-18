@@ -1,0 +1,200 @@
+.cart-list {
+    list-style: none;
+    padding: 0;
+    align-items: left;
+    margin: 10px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1%;
+    margin-left:15%;
+    border: 1px solid;
+    padding: 0px;
+    border-radius: 8px;
+    width: 70%;
+}
+
+.cart-item-container {
+    display: flex;
+    margin: 0% auto;
+    align-items: center;
+    justify-content: space-between;
+    border: 0px solid #ccc; /* Opcjonalne: ramka dla lepszej widoczności */
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%; /* Szerokość kontenera*/
+    box-sizing: border-box;
+}
+
+.cart-item-image {
+    flex: 2; /* Obrazek zajmuje proporcjonalnie mniej miejsca */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-item-image img {
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Wyśrodkowanie obrazu */
+}
+
+.cart-item-content {
+    flex: 6; /* Informacje o produkcie zajmują większą przestrzeń */
+    margin-left: 0%;
+}
+
+.cart-item-details {
+    margin-left: 2%;
+    flex-grow: 1;
+}
+
+.cart-item-details strong {
+    font-size: 18px;
+}
+
+.cart-item-details p {
+    margin: 1%;
+}
+
+.cart-item-buttons {
+    display: flex;
+    flex-direction: row; /* Ustawienie wiersza */
+    gap: 2%; /* Odstęp między przyciskami */
+    align-items: center; /* Wyśrodkowanie w pionie */
+    justify-content: center; /* Wyśrodkowanie w poziomie */
+    width: 100%; /* Gwarantuje pełną szerokość kontenera */
+}
+
+.cart-item-buttons button {
+    background-color: #00916e;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    gap: 2%;
+}
+
+.order-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-button {
+    background-color: #00916e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #00916e;
+    width: 35%;
+    margin: 5px;
+}
+
+.cart-total {
+    text-align: center;
+    margin-top: 2%;
+    margin: auto;
+    font-size: 30px;
+    position: sticky;
+    top:0;
+    width: 30%;
+    border: 3px solid #ccc;
+    border-radius: 15px;
+    background-color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.cart-actions button {
+    background-color: #00916e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.product-name {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 1%;
+    text-align: center;
+}
+
+.cart-item-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.cart-item-info {
+    width: 80%;
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.big-price{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.inline-buttons {
+    display: flex;
+    gap: 2%;
+    align-items: center;
+    justify-content: center;
+}
+
+.form{
+    margin-left:15%;
+    margin-right:15%;
+    width:69%;
+}
+
+.form-bigger-group{
+    border: 3px solid #00916e;
+    border-radius: 5px;
+    width: 100%;
+    margin: 5px;
+}
+
+.form-group{
+    margin: 5px;
+    padding:5px;
+    font-size: 15px;
+}
+
+.form-control{
+    margin-right: 10%;
+    font-size: 25px;
+    padding-top:18px;
+    width: 50%;
+}
+
+.form-label{
+    position:absolute;
+    margin-left: 5px;
+    margin-top: -9px;
+    background: white;
+}
+
+.form-group-radio{
+    margin: 3px;
+    margin-right: 70%;
+}
