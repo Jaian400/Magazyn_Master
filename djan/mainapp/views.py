@@ -230,17 +230,31 @@ def order_view(request):
     cart_products = CartProduct.objects.filter(cart=cart)
     total_price = cart.total_price + Decimal(9.0)
 
-    # if last_order == None:
-    #     return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
-    # else:
-    return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price, 'last_order' : last_order})
+    if last_order == None:
+        return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
+    else:
+        return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price, 'last_order' : last_order})
 
 def make_order(request, cart_id):
-    
 
     return redirect('user_site')
 
 def order_complete_view(request):
+    if request.method == "POST":
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        business_name = request.POST.get("company")
+        nip = request.POST.get("NIP")
+        area_code = request.POST.get("area_code")
+        phone_number = request.POST.get("phone_number")
+        country = request.POST.get("country")
+        address_street = request.POST.get("street")
+        address_building_number = request.POST.get("building_number")
+        address_apartment_number = request.POST.get("apartment_number")
+        zip_code = request.POST.get("zip_code")
+        city = request.POST.get("city")
+        
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
     else:
@@ -248,8 +262,14 @@ def order_complete_view(request):
             request.session.create()
         cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
 
-    print(cart)
-    order = Order.objects.create(user=request.user, total_price=0.)
+    order = Order.objects.create(user=request.user, total_price=0.,
+                                 first_name=first_name, last_name=last_name,
+                                 email=email, business_name=business_name,
+                                 nip=nip, area_code=area_code, phone_number=phone_number,
+                                 country=country, address_street=address_street,
+                                 address_building_number=address_building_number, 
+                                 address_apartment_number=address_apartment_number,
+                                 zip_code=zip_code, city=city)
 
     order.make_order(cart)
     # for cart_product in cart.items.all():
