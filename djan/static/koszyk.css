@@ -9,10 +9,11 @@
     display: flex;
     align-items: flex-start;
     margin-bottom: 1%;
+    margin-left:20%;
     border: 1px solid;
     padding: 10px;
     border-radius: 8px;
-    width: 50%;
+    width: 60%;
 }
 
 .cart-item-container {
@@ -81,7 +82,7 @@
     display: flex;
     justify-content: center;
     margin-top: 1%;
-    gap: 2%;
+    gap: 1%;
 }
 
 .cart-actions .order-button {
@@ -91,8 +92,15 @@
 .cart-total {
     text-align: center;
     margin-top: 2%;
-    font-size: 25px;
-    /* margin-left: 2%; */
+    margin: auto;
+    font-size: 30px;
+    position: sticky;
+    top:0;
+    width: 30%;
+    border: 3px solid #ccc;
+    border-radius: 15px;
+    background-color: #ffffff;
+    margin-bottom: 15px;
 }
 
 .cart-actions button {
