@@ -14,6 +14,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 # from django.contrib.auth.views import (
 #     PasswordResetView, 
 #     PasswordResetDoneView, 
@@ -364,7 +366,26 @@ def search_view(request):
 
     if request.method == 'POST':
         search_query = request.POST.get('query')
-        products = products.filter(product_name__icontains=search_query)
+        initial_matches = products.filter(product_name__icontains=search_query)
+        initial_ids = list(initial_matches.values_list('id', flat=True))
+
+        all_product_names = list(products.values_list('id', 'product_name'))
+
+        fuzzy_matches = process.extract(search_query, [name for _, name in all_product_names], scorer=fuzz.partial_ratio, limit=50)
+        matched_ids = [
+            product_id
+            for product_id, product_name in all_product_names
+            if any(product_name == match[0] and match[1] > 70 for match in fuzzy_matches)
+        ]
+
+        all_matched_ids = set(initial_ids + matched_ids)
+
+        products = products.filter(id__in=all_matched_ids)
+
+    # proste wyszukiwanie
+    # if request.method == 'POST':
+    #     search_query = request.POST.get('query')
+    #     products = products.filter(product_name__icontains=search_query)
 
     return render(request, 'search.html', {'products': products})
 
