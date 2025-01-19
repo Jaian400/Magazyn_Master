@@ -355,6 +355,18 @@ def filter_products(queryset, request):
 
     return queryset
 
+# ------------------------------------------------------------------------------------------------------------
+# WYSZUKIWANIE
+# ------------------------------------------------------------------------------------------------------------
+
+def search_view(request):
+    products = WarehouseProduct.objects.all()
+
+    if request.method == 'POST':
+        search_query = request.POST.get('query')
+        products = products.filter(product_name__icontains=search_query)
+
+    return render(request, 'search.html', {'products': products})
 
 # ------------------------------------------------------------------------------------------------------------
 # STRONA KONTA UŻYTKOWNIKA
