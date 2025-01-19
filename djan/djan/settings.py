@@ -96,6 +96,14 @@ DATABASES = {
 
 # DATABASES['default']['MIRROR'] = 'janpawe1'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'magazynmasterhq@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = os.getenv('MM_EMAIL_PASSWORD')    # Replace with your email password
+DEFAULT_FROM_EMAIL = 'magazynmasterhq@gmail.com'
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

@@ -87,7 +87,13 @@
             {% endfor %}
         </ul>
 
-        <p class="cart-total"><strong>Całkowita cena: {{ total_price|floatformat:2 }} zł</strong></p>
+        <p class="cart-total">
+            <strong>
+                Całkowita cena: {{ total_price|floatformat:2 }} zł
+            </strong>
+            <br>
+        <h style="font-size:14px" >w tym dostawa 9 zł oraz VAT </h>
+        </p>
 
         {% comment %} <div class="cart-actions">
             <form action="{% url 'order'  %}" method="post">
@@ -117,15 +123,15 @@
                 <legend>Opcjonalnie</legend>
                 <div class="form-group">
                     <label class="form-label" for="company">Firma</label>
-                    <input type="text" id="company" name="company" class="form-control" placeholder="np. Firma sp. z o.o.">
+                    <input type="text" id="company" name="company" class="form-control" value="{{ last_order.business_name }}" placeholder="np. Firma sp. z o.o.">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="NIP">NIP</label>
-                    <input type="text" id="NIP" name="NIP" class="form-control" placeholder="np. 1234567890">
+                    <input type="text" id="NIP" name="NIP" class="form-control" value="{{ last_order.nip }}" placeholder="np. 1234567890">
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="country_code">Kierunkowy</label>
-                    <select id="country_code" name="country_code" class="form-control">
+                    <label class="form-label" for="area_code">Kierunkowy</label>
+                    <select id="area_code" name="area_code" class="form-control">
                         <option value="+48" selected>PL (+48)</option>
                         <option value="+49">DE (+49)</option>
                         <option value="+44">UK (+44)</option>
@@ -142,8 +148,8 @@
                     </select>                    
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="phone">Telefon komórkowy</label>
-                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="np. 000000000" pattern="[0-9]{9}">
+                    <label class="form-label" for="phone_number">Telefon komórkowy</label>
+                    <input type="tel" id="phone_number" name="phone_number" class="form-control" value="{{ last_order.phone_number }}" placeholder="np. 000000000" pattern="[0-9]{9}">
                 </div>
             </div>
             <div class="form-bigger-group">
@@ -153,48 +159,49 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="street">Ulica</label>
-                <input type="text" id="street" name="street" class="form-control" placeholder="np. Przemysłowa" required>
+                <input type="text" id="street" name="street" class="form-control" value="{{ last_order.address_street }}" placeholder="np. Przemysłowa" required>
             </div>
             <div class="form-group">
                 <label class="form-label" for="building_number">Nr budynku</label>
-                <input type="text" id="building_number" name="building_number" class="form-control" placeholder="np. 10" required>
+                <input type="text" id="building_number" name="building_number" class="form-control" value="{{ last_order.address_building_number }}"placeholder="np. 10" required>
             </div>
             <div class="form-group">
                 <label class="form-label" for="apartment_number">Nr mieszkania</label>
-                <input type="text" id="apartment_number" name="apartment_number" class="form-control" placeholder="np. 15">
+                <input type="text" id="apartment_number" name="apartment_number" class="form-control" value="{{ last_order.address_apartment_number }}" placeholder="np. 15">
             </div>
             <div class="form-group">
-                <label class="form-label" for="postal_code">Kod pocztowy</label>
-                <input type="text" id="postal_code" name="postal_code" class="form-control" placeholder="np. 00-000" required>
+                <label class="form-label" for="zip_code">Kod pocztowy</label>
+                <input type="text" id="zip_code" name="zip_code" class="form-control" value="{{ last_order.zip_code }}" placeholder="np. 00-000" required>
             </div>
             <div class="form-group">
                 <label class="form-label" for="city">Miejscowość</label>
-                <input type="text" id="city" name="city" class="form-control" placeholder="np. Warszawa" required>
+                <input type="text" id="city" name="city" class="form-control" value="{{ last_order.city }}" placeholder="np. Warszawa" required>
             </div>
             </div>
 
             <div class="form-bigger-group">
 
-            Metody dostawy 
+            <div style="font-size:25px;"> Metody dostawy </div>
+
             <div class="form-group-radio">
-                <input type="radio" id="delivery_courier_DHL" name="delivery_courier" class="form-control">
-                <label for="delivery_courier_DHL">Kurier DHL</label>
+                <input type="radio" id="delivery_courier_DHL" name="delivery_courier" class="form-control-radio">
+                <label for="delivery_courier_DHL">(+9zł) Kurier DHL</label>
             </div>
             <div class="form-group-radio">
-                <input type="radio" id="delivery_courier_UPS" name="delivery_courier" class="form-control">
-                <label for="delivery_courier_UPS">Kurier UPS</label>
+                <input type="radio" id="delivery_courier_UPS" name="delivery_courier" class="form-control-radio">
+                <label for="delivery_courier_UPS">(+9zł) Kurier UPS</label>
             </div>
             <div class="form-group-radio">
-                <input type="radio" id="delivery_courier_FedEx" name="delivery_courier" class="form-control">
-                <label for="delivery_courier_FedEx">Kurier FedEx</label>
+                <input type="radio" id="delivery_courier_FedEx" name="delivery_courier" class="form-control-radio">
+                <label for="delivery_courier_FedEx">(+9zł) Kurier FedEx</label>
             </div>
             <div class="form-group-radio">
-                <input type="radio" id="delivery_courier_PocztaPolska" name="delivery_courier" class="form-control">
-                <label for="delivery_courier_PocztaPolska">Poczta Polska</label>
+                <input type="radio" id="delivery_courier_PocztaPolska" name="delivery_courier" class="form-control-radio">
+                <label for="delivery_courier_PocztaPolska">(+9zł) P. Poczta Polska</label>
             </div>
             <div class="form-group-radio">
-                <input type="radio" id="delivery_courier_Paczkomat" name="delivery_courier" class="form-control">
-                <label for="delivery_courier_Paczkomat">Paczkomat InPost</label>
+                <input type="radio" id="delivery_courier_Paczkomat" name="delivery_courier" class="form-control-radio">
+                <label for="delivery_courier_Paczkomat">(+9zł) Paczkomat InPost</label>
             </div>            
             </div>
 
