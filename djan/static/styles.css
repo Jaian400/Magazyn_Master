@@ -1,14 +1,9 @@
 h1{
     text-align: center;
-    /*text-decoration:line-through;*/
     font-weight: bold;
 }
 body {
-    background-color:white;
-    /* margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 80px;
-    margin-left: 80px;*/ 
+    background-color:white; 
     margin:auto;
     text-align: left;
     overflow-y: scroll;
@@ -24,9 +19,9 @@ p{
 .highest_div {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Rozdziela logo, pasek wyszukiwania i przyciski */
+    justify-content: space-between;
     background-color: white;
-    padding: 0 20px; /* Odstępy wewnętrzne z lewej i prawej strony */
+    padding: 0 20px;
 }
 
 .logo-button {
@@ -35,7 +30,7 @@ p{
 }
 
 .search-bar {
-    flex-grow: 1; /* Pasek wyszukiwania zajmuje pozostałą przestrzeń */
+    flex-grow: 1;
     display: flex;
     align-items: center;
     background-color: #e0e0e0;
@@ -47,12 +42,12 @@ p{
 
 .header-buttons {
     display: flex;
-    gap: 10px; /* Odstęp między przyciskami */
+    gap: 10px;
 }
 
 .icon-button {
-    background-color: transparent; /* Brak tła przycisku */
-    border: none; /* Usunięcie obramowania */
+    background-color: transparent;
+    border: none;
     padding: 5px;
     cursor: pointer;
     display: flex;
@@ -62,14 +57,14 @@ p{
 }
 
 .icon-button:hover {
-    transform: scale(1.1); /* Powiększenie przycisku przy najechaniu */
+    transform: scale(1.1);
 }
 
 .logo-image,
 .icon-image {
-    width: 50px; /* Dopasowanie szerokości */
-    height: 50px; /* Dopasowanie wysokości */
-    object-fit: contain; /* Dopasowanie zawartości w obrębie przycisku */
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
 }
 
 .logo-image {
@@ -81,17 +76,17 @@ p{
 }
 
 .logo-image:hover {
-    transform: scale(1.1); /* Powiększenie logo przy najechaniu */
+    transform: scale(1.1);
 }
 
 .search-bar {
     display: flex;
     align-items: center;
-    background-color: #e0e0e0; /* Obecny kolor tła */
+    background-color: #e0e0e0; 
     border-radius: 5px;
     padding: 5px;
     width: 100%;
-    max-width: 500px; /* Maksymalna szerokość paska wyszukiwania */
+    max-width: 500px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -105,7 +100,7 @@ p{
 }
 
 .search-button {
-    background-color: #007d6c; /* Dopasowanie koloru tła */
+    background-color: #007d6c;
     border: none;
     padding: 5px;
     border-radius: 5px;
@@ -117,13 +112,13 @@ p{
 }
 
 .search-icon {
-    width: 16px; /* Rozmiar obrazu lupy */
+    width: 16px;
     height: 16px;
     object-fit: contain;
 }
 
 .search-button:hover {
-    transform: scale(1.1); /* Efekt powiększenia na hover */
+    transform: scale(1.1);
 }
 
 .second_div {
@@ -135,26 +130,20 @@ p{
     padding: 7px 15px;
 }
 
-/* .section-label {
-    font-size: 20px;
-    color: white;
-    margin-right: 10%;
-    white-space: nowrap;} /* Zapobiega zawijaniu tekstu */
-
 
 /* Stylizacja kontenera z przyciskami sekcji */
 .buttons {
     display: flex;
-    justify-content: center; /* Wyśrodkowanie przycisków w poziomie */
-    width: 80%; /* Szerokość kontenera */
-    max-width: 1200px; /* Maksymalna szerokość kontenera */
-    margin: 0 auto; /* Wyśrodkowanie poziome */
-    gap: 2%; /* Odstępy między przyciskami */
-    padding: 8px 17%; /* Przestrzeń po lewej i prawej stronie kontenera */
+    justify-content: center;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2%;
+    padding: 8px 17%;
 }
 
 .button {
-    height: 40px; /*Stała wysokość przycisków  */
+    height: 40px;
     flex: 0 0 20%;
     background-color: white;
     color: black;
@@ -176,7 +165,7 @@ p{
 }
 
 .bottom-bar {
-    position: relative;          /* ani relative ani absolute nie sa tu idealne i psuja sie w innych miejscach */
+    position: relative;
     bottom: 0;                
     left: 0;                  
     width: 100%;              
@@ -185,7 +174,7 @@ p{
     text-align: center;       
     padding: 20px 0;          
     font-size: 9px;          
-    z-index: 1000;            /* Nad innymi elementami */
+    z-index: 1000;
     border-radius: 0;         
     margin-top: 30px;
 }

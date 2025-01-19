@@ -9,11 +9,11 @@
     display: flex;
     align-items: flex-start;
     margin-bottom: 1%;
-    margin-left:20%;
+    margin-left:15%;
     border: 1px solid;
     padding: 0px;
     border-radius: 8px;
-    width: 60%;
+    width: 70%;
 }
 
 .cart-item-container {
@@ -21,15 +21,15 @@
     margin: 0% auto;
     align-items: center;
     justify-content: space-between;
-    border: 0px solid #ccc; /* Opcjonalne: ramka dla lepszej widoczności */
+    border: 0px solid #ccc;
     padding: 10px;
     border-radius: 8px;
-    width: 100%; /* Szerokość kontenera*/
+    width: 100%;
     box-sizing: border-box;
 }
 
 .cart-item-image {
-    flex: 2; /* Obrazek zajmuje proporcjonalnie mniej miejsca */
+    flex: 2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,11 +39,11 @@
     width: 80%;
     height: auto;
     display: block;
-    margin: 0 auto; /* Wyśrodkowanie obrazu */
+    margin: 0 auto;
 }
 
 .cart-item-content {
-    flex: 6; /* Informacje o produkcie zajmują większą przestrzeń */
+    flex: 6;
     margin-left: 0%;
 }
 
@@ -62,11 +62,11 @@
 
 .cart-item-buttons {
     display: flex;
-    flex-direction: row; /* Ustawienie wiersza */
-    gap: 2%; /* Odstęp między przyciskami */
-    align-items: center; /* Wyśrodkowanie w pionie */
-    justify-content: center; /* Wyśrodkowanie w poziomie */
-    width: 100%; /* Gwarantuje pełną szerokość kontenera */
+    flex-direction: row;
+    gap: 2%;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .cart-item-buttons button {

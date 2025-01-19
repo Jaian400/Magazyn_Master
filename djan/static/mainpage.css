@@ -1,28 +1,28 @@
 .banner-container {
     display: flex;
-    justify-content: center; /* Wyśrodkowanie poziome */
-    margin-top: 15px; /* Odstęp 15px od sekcji menu */
+    justify-content: center;
+    margin-top: 15px;
 }
 
 .banner-wrapper {
     position: relative;
-    width: 80%; /* Skalowanie banera - zmniejszenie */
-    max-width: 800px; /* Maksymalna szerokość */
+    width: 80%;
+    max-width: 800px;
 }
 
 .banner-image {
-    width: 100%; /* Skalowanie względem wrappera */
+    width: 100%;
     height: auto;
-    border-radius: 5px; /* Zaokrąglenie rogów */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efekt cienia */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .banner-button {
-    position: absolute; /* Pozycjonowanie na banerze */
-    bottom: 5%; /* Umieszczenie przycisku w dolnej części banera */
+    position: absolute;
+    bottom: 5%;
     left: 17%;
-    transform: translate(-50%, 0); /* Wyśrodkowanie przycisku */
-    background-color: #d8d8d8; /* Dopasowany kolor */
+    transform: translate(-50%, 0);
+    background-color: #d8d8d8;
     color: rgb(0, 0, 0);
     font-size: 11px;
     border: none;

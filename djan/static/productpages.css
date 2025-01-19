@@ -1,12 +1,12 @@
 /* Kontener siatki produktów */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 kolumn */
-    gap: 25px; /* Odstępy */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
     padding: 0.83%;
-    margin-left: 16%; /* Margines po lewej stronie ekranu */
+    margin-left: 16%;
     margin-right: 16%;
-    align-items: stretch; /* Ensures items stretch to match their own height */
+    align-items: stretch;
 }
 
 /* Styl pojedynczego elementu */
@@ -34,17 +34,16 @@
 }
 
 .product-item h3, .product-item p {
-    margin: 2%; /* Marginesy między nazwą a ceną */
+    margin: 2%;
 }
 
 .product-item h3, .product-image {
-    margin-top: 20px; /* Marginesy na górze */
-    margin-bottom: 20px; /* Marginesy na dole */
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .product-name{
     padding-top: 30px;
-    /* padding-bottom: 20px; */
     position: absolute;
 }
 
@@ -56,7 +55,6 @@
 }
 
 .filters-box{
-    /* display: flex; */
     position: absolute;
     top: 0;
     border: 0.5px solid #aaaaaa;
@@ -79,7 +77,7 @@
     outline: none;
     opacity: 0.7;
     box-sizing: border-box;
-    transition: opacity 0.2s; /* Standardized shorthand */
+    transition: opacity 0.2s;
 }
 
 .slider:hover {
@@ -117,10 +115,10 @@
     height: 25px;
     background-color: #00916E;
     cursor: pointer;
-    border-radius: 50%; /* Rounded thumb */
-    border: 2px solid #000000; /* Optional for cleaner look */
+    border-radius: 50%;
+    border: 2px solid #000000;
     -webkit-appearance: none;
-    margin-top: -3px; /* Center thumb vertically */
+    margin-top: -3px;
 }
 
 /* Thumb styles for Mozilla browsers */
@@ -129,7 +127,7 @@
     height: 25px;
     background: #00916E;
     cursor: pointer;
-    border-radius: 50%; /* Rounded thumb */
+    border-radius: 50%;
     border: none;
 }
 
@@ -139,7 +137,7 @@
     height: 25px;
     background: #00916E;
     cursor: pointer;
-    border-radius: 50%; /* Rounded thumb */
+    border-radius: 50%;
     border: none;
 }
 
@@ -150,7 +148,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;              /* Przyciski zajmują pełną szerokość sekcji */
+    width: 100%;
 }
 
 .empty-products{

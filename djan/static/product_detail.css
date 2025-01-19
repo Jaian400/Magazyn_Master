@@ -1,16 +1,15 @@
 .product-container {
-    display: flex;            /* Elementy w jednym wierszu */
-    align-items: flex-start;  /* Wyrównanie elementów do góry */
-    gap: 2%;                  /* Odstęp między sekcjami */
-    flex-wrap: wrap;          /* Umożliwia zawijanie elementów na mniejszych ekranach */
+    display: flex;
+    align-items: flex-start;
+    gap: 2%;
+    flex-wrap: wrap;
 }
 
 .product-image.left-aligned {
-    width: 25%;               /* Szerokość obrazka */
-    height: auto;             /* Zachowanie proporcji */
-    /* margin-right: 2%;         Odstęp od sekcji obok */
+    width: 25%;
+    height: auto;
     margin-right: 1%;
-    margin-left: 7%;          /* Odstęp od lewej krawędzi ekranu */
+    margin-left: 7%;
 }
 
 .product-info-box {
@@ -18,32 +17,31 @@
     border: 2px solid #ccc;
     border-radius: 8px;
     padding: 10px;
-    /* width: 45%;               Szerokość ramki */
     width: 30%;
     box-sizing: border-box;
 }
 
 .product-action-box {
-    background-color: rgba(240, 240, 240, 1); /* Jasne tło */
+    background-color: rgba(240, 240, 240, 1);
     border: 2px solid #ccc;
     border-radius: 8px;
     padding: 15px;
-    width: 20%;               /* Szerokość ramki */
+    width: 20%;
     box-sizing: border-box;
-    text-align: center;       /* Wyśrodkowanie elementów wewnątrz */
-    margin-top: 5%;          /* Obniżenie ramki o 5% */
+    text-align: center;
+    margin-top: 5%;
 }
 
 .quantity-container {
     margin-bottom: 10px;
     display: flex;
-    justify-content: center;  /* Wyśrodkowanie ilości w ramce */
+    justify-content: center;
     align-items: center;
-    gap: 10px;                /* Odstęp między etykietą a polem input */
+    gap: 10px;
 }
 
 .quantity-input {
-    width: 50%;               /* Szerokość input jako 50% rodzica */
+    width: 50%;
     padding: 5px;
 }
 
@@ -54,7 +52,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;              /* Przyciski zajmują pełną szerokość sekcji */
+    width: 100%;
 }
 
 .add-to-cart-button:hover {
