@@ -177,19 +177,19 @@ p{
 
 .bottom-bar {
     position: relative;          /* ani relative ani absolute nie sa tu idealne i psuja sie w innych miejscach */
-    bottom: 0;                /* Przylega do dolnej krawędzi kontenera */
-    left: 0;                  /* Rozpoczyna się od lewej krawędzi ekranu */
-    width: 100%;              /* Rozciąga się na całą szerokość */
-    background-color: #00916e; /* Zielony kolor */
-    color: white;             /* Biały kolor tekstu */
-    text-align: center;       /* Wyśrodkowanie tekstu */
-    padding: 20px 0;          /* Wysokość paska */
-    font-size: 9px;          /* Rozmiar tekstu */
+    bottom: 0;                
+    left: 0;                  
+    width: 100%;              
+    background-color: #00916e; 
+    color: white;             
+    text-align: center;       
+    padding: 20px 0;          
+    font-size: 9px;          
     z-index: 1000;            /* Nad innymi elementami */
-    border-radius: 0;         /* Brak zaokrągleń */
+    border-radius: 0;         
     margin-top: 30px;
 }
 
 .bottom-bar-text {
-    font-weight: bold;         /* Tekst pogrubiony */
+    font-weight: bold;      
 }

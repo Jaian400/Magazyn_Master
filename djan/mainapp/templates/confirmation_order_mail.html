@@ -4,40 +4,63 @@
     <meta charset="UTF-8">
     <meta name="wms_test" content="width=device-width, initial-scale=1.0">
     <title>MagazynMaster</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'user_site.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'productpages.css' %}">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/logofav.png' %}">
 </head>
 <body>
     <header>
         
     </header>
 
-    <div class="orders-box">
-        <div class="order-box">
-            <div class="order-header">
+    <div>
+        <div style="display: inline-block;
+                padding: 5px;
+                margin: 5px;
+                width: 40%;">
+            <div style="font-size: 30px;
+                font-weight: bold;
+                color: #00916E;">
                 Dziękujemy za zakupy!
-                Zamowienie nr. {{ order.order_id }}
             </div>
-            Zamówiono: {{ order.created_at }}
+                <div style="font-size: 15px;">
+                    Zamowienie nr. {{ order.order_id }}
+                    <br>
+                    Zamówiono: {{ order.created_at }}
+                </div>
             <br>
             {% for product in order.orderproduct_set.all %}
-                <div class = "order-product-box">                
-                    {{ product.order_product.product_name }} - {{ product.order_product_quantity }} sztuk 
+                <div style="display: block;
+                    background-color: #f0f0f0;
+                    border-radius:3px;
+                    border : 1px solid #ccc;
+                    padding: 5px;
+                    width:90%;
+                    margin-right: 50px;">                
+                    {{ product.order_product.product_name }} - Ilość: {{ product.order_product_quantity }}
                 </div>
                 <br>
             {% endfor %}
             <br>
-            Adres dostawy: {{ order.city }}{{ order.address_street }}, {{ order.address_building_number }}, {{ order.address_apartment_number }}
+            <div style="font-size: 18px;">
+                Adres dostawy: {{ order.city }}, {{ order.address_street }} {{ order.address_building_number }}, {{ order.address_apartment_number }}
+            </div>
         </div>
         <br>
     </div>
     
-    <footer class="bottom-bar">
-        <span class="bottom-bar-text">OMNI Productions</span>
-        <span class="bottom-bar-text">All rights reserved</span>
+    <footer style="position: relative;        
+    bottom: 0;                
+    left: 0;                  
+    width: 100%;              
+    background-color: #00916e; 
+    color: white;             
+    text-align: center;       
+    padding: 20px 0;          
+    font-size: 9px;
+    z-index: 1000;
+    border-radius: 0;         
+    margin-top: 30px;">
+        <span style="font-weight: bold;"   
+            >OMNI Productions  
+        </span>
     </footer>
 </body>
 </html>

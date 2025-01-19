@@ -12,6 +12,8 @@ from django.views.decorators.csrf import csrf_protect
 from decimal import Decimal
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.conf import settings
 # from django.contrib.auth.views import (
 #     PasswordResetView, 
 #     PasswordResetDoneView, 
@@ -242,6 +244,34 @@ def make_order(request, cart_id):
 
     return redirect('user_site')
 
+# def send_mail(order):
+#     html_content = render_to_string(
+#         "confirmation_order_mail.html",
+#         context={"order": order},
+#     )
+#     msg = EmailMultiAlternatives(
+#         subject=f"Potwierdzenie zamówienia nr {order.order_id}",
+#         body=html_content,
+#         from_email="magazynmaster@wp.pl",
+#         to=[order.email],
+#     )
+#     msg.attach_alternative(html_content, "text/html")
+#     try:
+#         msg.send()
+#     except Exception as e:
+#         print(f"Failed to send email: {e}")
+
+def send_confirmation_mail(order):
+    try:
+        subject=f"Potwierdzenie zamówienia nr {order.order_id}"
+        message = render_to_string(
+            "confirmation_order_mail.html",
+            context={"order": order},
+        )
+        send_mail(subject, '', settings.EMAIL_HOST_USER, [order.email], html_message=message,)
+    except Exception as e:
+        print(f'Error sending email: {e}')
+
 def order_complete_view(request):
     if request.method == "POST":
         first_name = request.POST.get("first_name")
@@ -289,24 +319,10 @@ def order_complete_view(request):
 
     cart.clear_cart()
     
-    send_mail(order)
+    print("Calling send_mail function...")
+    send_confirmation_mail(order)
+
     return render(request, 'order_complete.html')
-
-def send_mail(order):
-    html_content = render_to_string(
-        "templates/confirmation_order_mail.html",
-        context={"order" : order},
-    )
-
-    msg = EmailMultiAlternatives(
-        f"Potwierdzenie zamówienia nr {order.order_id}",
-        html_content,
-        "no-reply@magazynmaster.pl",
-        [order.email],
-        )
-
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
 
 # ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW
