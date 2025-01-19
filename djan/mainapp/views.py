@@ -259,18 +259,19 @@ def order_complete_view(request):
         
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
+        order = Order.objects.create(user=request.user, total_price=0.)
     else:
         if not request.session.session_key:
             request.session.create()
         cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
+        order = Order.objects.create(total_price=0.)
 
-    order = Order.objects.create(user=request.user, total_price=0.,
-                                 first_name=first_name, last_name=last_name,
+    order = Order.objects.create(first_name=first_name, last_name=last_name,
                                  email=email, business_name=business_name,
                                  nip=nip, area_code=area_code, phone_number=phone_number,
                                  country=country, address_street=address_street,
                                  address_building_number=address_building_number, 
-                                 address_apartment_number=address_apartment_number,
+                                 address_apartment_number=address_apartment_number or None,
                                  zip_code=zip_code, city=city)
 
     order.make_order(cart)
