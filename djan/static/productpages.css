@@ -153,3 +153,8 @@
     width: 100%;              /* Przyciski zajmują pełną szerokość sekcji */
 }
 
+.empty-products{
+    font-size:30px;
+    padding: 5px;
+    text-align: center;
+}

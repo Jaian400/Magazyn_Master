@@ -17,7 +17,7 @@
                 <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
             </a>    
 
-            <form class="search-bar" method="POST">
+            <form action="{% url 'search' %}" class="search-bar" method="POST">
                 {% csrf_token %}
                 <input type="text" name="query" placeholder="Wyszukaj..." class="search-input">
                 <button type="submit" class="search-button">

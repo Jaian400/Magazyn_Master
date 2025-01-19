@@ -16,7 +16,7 @@
             <a href={%url 'index'%} class="logo-button">
                 <img src="{% static 'images/logo.png' %}" alt="Logo firmy" class="logo-image">
             </a>
-            <form class="search-bar" method="POST">
+            <form action="{% url 'search' %}" class="search-bar" method="POST">
                 {% csrf_token %}
                 <input type="text" name="query" placeholder="Wyszukaj..." class="search-input">
                 <button type="submit" class="search-button">
@@ -54,11 +54,61 @@
         
     </header>
 
-    Dziękujemy za zamówienie. 
-
-    <footer class="bottom-bar">
-        <span class="bottom-bar-text">OMNI Productions®2025</span>
-        <span class="bottom-bar-text">All rights reserved</span>
+    <div>
+        <div style="display: inline-block;
+                padding: 5px;
+                margin: 5px;
+                width: 40%;">
+            <div style="font-size: 30px;
+                font-weight: bold;
+                color: #00916E;">
+                Dziękujemy za zakupy!
+            </div>
+                <div style="font-size: 15px;">
+                    Zamowienie nr. {{ order.order_id }}
+                    <br>
+                    Zamówiono: {{ order.created_at }}
+                </div>
+            <br>
+            {% for product in order.orderproduct_set.all %}
+                <div style="display: block;
+                    background-color: #f0f0f0;
+                    border-radius:3px;
+                    border : 1px solid #ccc;
+                    padding: 5px;
+                    width:90%;
+                    margin-right: 50px;">                
+                    {{ product.order_product.product_name }} - Ilość: {{ product.order_product_quantity }}
+                </div>
+                <br>
+            {% endfor %}
+            <br>
+            <div style="font-size: 18px;">
+                {% if order.address_apartment_number != None %}
+                Adres dostawy: {{ order.city }}, {{ order.address_street }} {{ order.address_building_number }}, {{ order.address_apartment_number }}
+                {% else %}
+                Adres dostawy: {{ order.city }}, {{ order.address_street }} {{ order.address_building_number }}
+                {% endif %}
+            </div>
+        </div>
+        <br>
+    </div>
+    
+    <footer style="position: relative;        
+    bottom: 0;                
+    left: 0;                  
+    width: 100%;              
+    background-color: #00916e; 
+    color: white;             
+    text-align: center;       
+    padding: 20px 0;          
+    font-size: 9px;
+    z-index: 1000;
+    border-radius: 0;         
+    margin-top: 30px;">
+        <span style="font-weight: bold;"   
+            >OMNI Productions  
+        </span>
     </footer>
 </body>
 </html>

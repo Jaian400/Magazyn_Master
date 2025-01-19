@@ -40,7 +40,11 @@
             {% endfor %}
             <br>
             <div style="font-size: 18px;">
+                {% if order.address_apartment_number != None %}
                 Adres dostawy: {{ order.city }}, {{ order.address_street }} {{ order.address_building_number }}, {{ order.address_apartment_number }}
+                {% else %}
+                Adres dostawy: {{ order.city }}, {{ order.address_street }} {{ order.address_building_number }}
+                {% endif %}
             </div>
         </div>
         <br>
