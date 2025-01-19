@@ -1,7 +1,7 @@
 /* Styl panelu rejestracji */
 .registration-panel {
     width: 400px;
-    margin: 50px auto; /* Wyśrodkowanie na stronie */
+    margin: 50px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
@@ -36,12 +36,12 @@
 
 /* Pola formularza */
 .registration-form .input-field {
-    width: calc(100%); /* szerokość dla wszystkich pól */
-    padding: 10px; /* w polu dookola tekstu */
-    margin: 7px auto; /* między kolejnymi polami */
+    width: calc(100%);
+    padding: 10px;
+    margin: 7px auto;
     border: 1px solid #ccc;
     font-size: 14px;
-    box-sizing: border-box; /* Padding nie powiększa szerokości */
+    box-sizing: border-box;
 }
 
 .submit-button {
@@ -121,7 +121,7 @@ label {
 /* Stylizacja panelu logowania */
 .auth-panel {
     width: 400px;
-    margin: 50px auto; /* Pozycjonowanie panelu na środku */
+    margin: 50px auto;
     padding: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;

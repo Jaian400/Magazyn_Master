@@ -57,10 +57,8 @@
     <h1>{{ product.product_name }}</h1>
     <div style="text-align: center;"> Nr. produktu:  {{ product.id }} </div>
     <div class="product-container">
-        <!-- Sekcja obrazek -->
         <img class="product-image left-aligned" src="{% static 'images/products/' %}{{ product.product_image }}" alt="{{ product.product_name }}">
-        
-        <!-- Sekcja opis -->
+
         <div class="product-info-box">
             
             <p><strong>Kategoria:</strong> {{ product.product_category.category_name }}</p>
@@ -69,7 +67,6 @@
   text-justify: inter-word;"> {{ product.product_description }}</p>
         </div>
     
-        <!-- Sekcja ilość i przycisk -->
         <div class="product-action-box">
             {% if product.product_discount == 0 %}
                 <div class="product-price">
