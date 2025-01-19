@@ -12,8 +12,6 @@ from django.views.decorators.csrf import csrf_protect
 from decimal import Decimal
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.core.mail import send_mail
-from django.conf import settings
 # from django.contrib.auth.views import (
 #     PasswordResetView, 
 #     PasswordResetDoneView, 
@@ -217,7 +215,6 @@ def clear_product(request, cart_product_id):
 # ------------------------------------------------------------------------------------------------------------
 
 def order_view(request):
-    last_order = None
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
         try:
@@ -244,34 +241,6 @@ def make_order(request, cart_id):
 
     return redirect('user_site')
 
-# def send_mail(order):
-#     html_content = render_to_string(
-#         "confirmation_order_mail.html",
-#         context={"order": order},
-#     )
-#     msg = EmailMultiAlternatives(
-#         subject=f"Potwierdzenie zamówienia nr {order.order_id}",
-#         body=html_content,
-#         from_email="magazynmaster@wp.pl",
-#         to=[order.email],
-#     )
-#     msg.attach_alternative(html_content, "text/html")
-#     try:
-#         msg.send()
-#     except Exception as e:
-#         print(f"Failed to send email: {e}")
-
-def send_confirmation_mail(order):
-    try:
-        subject=f"Potwierdzenie zamówienia nr {order.order_id}"
-        message = render_to_string(
-            "confirmation_order_mail.html",
-            context={"order": order},
-        )
-        send_mail(subject, '', settings.EMAIL_HOST_USER, [order.email], html_message=message,)
-    except Exception as e:
-        print(f'Error sending email: {e}')
-
 def order_complete_view(request):
     if request.method == "POST":
         first_name = request.POST.get("first_name")
@@ -290,25 +259,19 @@ def order_complete_view(request):
         
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
-        order = Order.objects.create(user=request.user, total_price=0.,
-                                 first_name=first_name, last_name=last_name,
-                                 email=email, business_name=business_name,
-                                 nip=nip, area_code=area_code, phone_number=phone_number,
-                                 country=country, address_street=address_street,
-                                 address_building_number=address_building_number, 
-                                 address_apartment_number=address_apartment_number,
-                                 zip_code=zip_code, city=city)
+        order = Order.objects.create(user=request.user, total_price=0.)
     else:
         if not request.session.session_key:
             request.session.create()
         cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
-        order = Order.objects.create(total_price=0.,
-                                 first_name=first_name, last_name=last_name,
+        order = Order.objects.create(total_price=0.)
+
+    order = Order.objects.create(first_name=first_name, last_name=last_name,
                                  email=email, business_name=business_name,
                                  nip=nip, area_code=area_code, phone_number=phone_number,
                                  country=country, address_street=address_street,
                                  address_building_number=address_building_number, 
-                                 address_apartment_number=address_apartment_number,
+                                 address_apartment_number=address_apartment_number or None,
                                  zip_code=zip_code, city=city)
 
     order.make_order(cart)
@@ -319,10 +282,24 @@ def order_complete_view(request):
 
     cart.clear_cart()
     
-    print("Calling send_mail function...")
-    send_confirmation_mail(order)
-
+    send_mail(order)
     return render(request, 'order_complete.html')
+
+def send_mail(order):
+    html_content = render_to_string(
+        "templates/confirmation_order_mail.html",
+        context={"order" : order},
+    )
+
+    msg = EmailMultiAlternatives(
+        f"Potwierdzenie zamówienia nr {order.order_id}",
+        html_content,
+        "no-reply@magazynmaster.pl",
+        [order.email],
+        )
+
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
 
 # ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW
