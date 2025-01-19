@@ -12,6 +12,8 @@ from django.views.decorators.csrf import csrf_protect
 from decimal import Decimal
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.conf import settings
 # from django.contrib.auth.views import (
 #     PasswordResetView, 
 #     PasswordResetDoneView, 
@@ -237,9 +239,16 @@ def order_view(request):
     else:
         return render(request, 'order.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price, 'last_order' : last_order})
 
-def make_order(request, cart_id):
-
-    return redirect('user_site')
+def send_confirmation_mail(order):
+    try:
+        subject=f"Potwierdzenie zamówienia nr {order.order_id}"
+        message = render_to_string(
+            "confirmation_order_mail.html",
+            context={"order": order},
+        )
+        send_mail(subject, '', settings.EMAIL_HOST_USER, [order.email], html_message=message,)
+    except Exception as e:
+        print(f'Error sending email: {e}')
 
 def order_complete_view(request):
     if request.method == "POST":
@@ -266,13 +275,21 @@ def order_complete_view(request):
         cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
         order = Order.objects.create(total_price=0.)
 
-    order = Order.objects.create(first_name=first_name, last_name=last_name,
-                                 email=email, business_name=business_name,
-                                 nip=nip, area_code=area_code, phone_number=phone_number,
-                                 country=country, address_street=address_street,
-                                 address_building_number=address_building_number, 
-                                 address_apartment_number=address_apartment_number or None,
-                                 zip_code=zip_code, city=city)
+    order.first_name=first_name
+    order.last_name=last_name
+    order.email=email
+    order.business_name=business_name
+    order.nip=nip
+    order.area_code=area_code
+    order.phone_number=phone_number
+    order.country=country
+    order.address_street=address_street
+    order.address_building_number=address_building_number
+    order.zip_code=zip_code
+    order.city=city
+
+    if address_apartment_number is not '':
+        order.address_apartment_number=address_apartment_number 
 
     order.make_order(cart)
     # for cart_product in cart.items.all():
@@ -282,24 +299,8 @@ def order_complete_view(request):
 
     cart.clear_cart()
     
-    send_mail(order)
-    return render(request, 'order_complete.html')
-
-def send_mail(order):
-    html_content = render_to_string(
-        "templates/confirmation_order_mail.html",
-        context={"order" : order},
-    )
-
-    msg = EmailMultiAlternatives(
-        f"Potwierdzenie zamówienia nr {order.order_id}",
-        html_content,
-        "no-reply@magazynmaster.pl",
-        [order.email],
-        )
-
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+    send_confirmation_mail(order)
+    return render(request, 'order_complete.html', {'order': order})
 
 # ------------------------------------------------------------------------------------------------------------
 # PODSTRONY PRODUKTOW

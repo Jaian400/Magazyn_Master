@@ -167,7 +167,11 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="apartment_number">Nr mieszkania</label>
+                {% if last_order.address_apartment_number != None %}
                 <input type="text" id="apartment_number" name="apartment_number" class="form-control" value="{{ last_order.address_apartment_number }}" placeholder="np. 15">
+                {% else %}
+                <input type="text" id="apartment_number" name="apartment_number" class="form-control" placeholder="np. 15">
+                {% endif %}
             </div>
             <div class="form-group">
                 <label class="form-label" for="zip_code">Kod pocztowy</label>
