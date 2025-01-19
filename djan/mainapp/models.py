@@ -308,7 +308,7 @@ class Order(models.Model):
         if not cart.cartproduct_set.exists():
             raise ValueError("Koszyk jest pusty. Nie można złożyć zamówienia.")
 
-        self.status = OrderStatus.WAIT_FOR_PAID.value
+        self.status = OrderStatus.PAID.value
 
         for cart_product in cart.cartproduct_set.all():
             OrderProduct.objects.create(order=self, 
