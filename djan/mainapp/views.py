@@ -16,23 +16,10 @@ from django.core.mail import send_mail
 from django.conf import settings
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-# from django.contrib.auth.views import (
-#     PasswordResetView, 
-#     PasswordResetDoneView, 
-#     PasswordResetConfirmView,
-#     PasswordResetCompleteView
-# )
 
 # INDEX -> STRONA GŁOWNA
 
 def index_view(request):
-
-    # if request.method == 'POST':
-
-    #     search_query = request.POST.get('query')
-
-    #     return redirect(reverse('category', args=['all_products']) + f'?query={search_query}')
-    
     return render(request, 'index.html')
 
 # LOGOWANIE I REJESTRACJA
@@ -141,6 +128,7 @@ def product_detail_view(request,category_slug, product_slug):
 # KOSZYK
 # ------------------------------------------------------------------------------------------------------------
 
+@csrf_protect
 def koszyk_view(request):
     Cart.delete_old_carts()
 
@@ -157,6 +145,8 @@ def koszyk_view(request):
     return render(request, 'koszyk.html', {'cart': cart, 'cart_products': cart_products, 'total_price': total_price})
 
 # Dodwanie do koszyka
+
+@csrf_protect
 def add_to_cart(request, product_id):
     Cart.delete_old_carts()
 
@@ -218,7 +208,9 @@ def clear_product(request, cart_product_id):
 # ZAMOWIENIE
 # ------------------------------------------------------------------------------------------------------------
 
+@csrf_protect
 def order_view(request):
+    last_order = None
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
         try:

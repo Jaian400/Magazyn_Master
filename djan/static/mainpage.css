@@ -35,3 +35,22 @@
 .banner-button:hover {
     background-color: #9b9b9b;
 }
+
+.banner-button-2 {
+    position: absolute;
+    bottom: 15%;
+    left: 80%;
+    transform: translate(-50%, 0);
+    background-color: #d8d8d8;
+    color: rgb(0, 0, 0);
+    font-size: 11px;
+    border: none;
+    padding: 6px 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.banner-button-2:hover {
+    background-color: #9b9b9b;
+}

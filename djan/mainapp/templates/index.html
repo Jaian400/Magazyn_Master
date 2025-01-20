@@ -60,6 +60,20 @@
         </div>
     </div>
 
+    <div class="banner-container">
+        <div class="banner-wrapper">
+            <img src="{% static 'images/tasma_malarska_banner.jpg' %}" alt="Taśma malarska" class="banner-image">
+            <button onclick="location.href='{% url 'product_detail' 'budownictwo' 'tasmy-zewnetrzna-38-mm-50-m-bluedolphin' %}'" class="banner-button-2">Sprawdź!</button>
+        </div>
+    </div>
+
+    <div class="banner-container">
+        <div class="banner-wrapper">
+            <img src="{% static 'images/odswiezacze_banner.jpg' %}" alt="Odświezacze" class="banner-image">
+            <button onclick="location.href='{% url 'product_detail' 'mieszkanie' 'nawilzacz-ewaporacyjny-smartmi-rainfores' %}'" class="banner-button">Sprawdź!</button>
+        </div>
+    </div>
+
     <div class="product-grid">
         {% for product in products %}
             <div class="product-item">
