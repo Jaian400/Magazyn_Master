@@ -76,6 +76,7 @@
 
             {% if product.product_discount != 0 %}
                 <div class="product-price">
+                    <strong style="color: #ff1d1d; font-size: 25px; margin-left: 75%;"> -{{ product.product_discount }} % </strong>
                     <p><strong></strong><strong style="color: #ff1d1d">{{ product.product_price_discounted }} zł </strong><strong><s>{{ product.product_price }} zł</s></strong></p>
                 </div>
             {% endif %}
@@ -95,8 +96,6 @@
         <span class="bottom-bar-text">All rights reserved</span>
     </footer> 
     
-
 </body>
-
 
 </html>
